@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório Jurídico Premium - Doutora IA</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 2cm;
+            @bottom-right {
+                content: "Página " counter(page) " de " counter(pages);
+                font-size: 9pt;
+                color: #666;
+            }
+        }
+
+        body {
+            font-family: 'Times New Roman', serif;
+            font-size: 12pt;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .cover {
+            page-break-after: always;
+            text-align: center;
+            padding-top: 5cm;
+        }
+
+        .cover h1 {
+            font-size: 24pt;
+            margin-bottom: 2cm;
+            color: #1a5490;
+        }
+
+        .cover .logo {
+            font-size: 18pt;
+            font-weight: bold;
+            color: #1a5490;
+            margin-bottom: 1cm;
+        }
+
+        .cover .case-info {
+            margin-top: 3cm;
+            font-size: 11pt;
+            color: #666;
+        }
+
+        .toc {
+            page-break-after: always;
+        }
+
+        .toc h2 {
+            color: #1a5490;
+            border-bottom: 2px solid #1a5490;
+            padding-bottom: 10px;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .toc li {
+            margin: 15px 0;
+            font-size: 11pt;
+        }
+
+        .disclaimer {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 10pt;
+        }
+
+        .update-stamp {
+            background-color: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 10px;
+            margin: 20px 0;
+            font-size: 10pt;
+            font-weight: bold;
+        }
+
+        h1 {
+            color: #1a5490;
+            font-size: 18pt;
+            margin-top: 30px;
+            border-bottom: 2px solid #1a5490;
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            color: #2c5aa0;
+            font-size: 14pt;
+            margin-top: 25px;
+        }
+
+        h3 {
+            color: #4a7bb7;
+            font-size: 12pt;
+            margin-top: 20px;
+        }
+
+        .section {
+            margin: 25px 0;
+        }
+
+        .probability-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .prob-alta {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .prob-media {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .prob-baixa {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .checklist {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #6c757d;
+            margin: 15px 0;
+        }
+
+        .checklist ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .checklist li:before {
+            content: "☐ ";
+            font-size: 14pt;
+            margin-right: 5px;
+        }
+
+        .petition-draft {
+            background-color: #f1f3f5;
+            padding: 20px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 10pt;
+            line-height: 1.8;
+            margin: 20px 0;
+        }
+
+        .citations {
+            margin-top: 30px;
+            page-break-before: always;
+        }
+
+        .citation-item {
+            background-color: #f8f9fa;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #1a5490;
+            font-size: 10pt;
+        }
+
+        .citation-header {
+            font-weight: bold;
+            color: #1a5490;
+            margin-bottom: 10px;
+        }
+
+        .citation-meta {
+            color: #666;
+            font-size: 9pt;
+            margin-top: 5px;
+        }
+
+        .citation-text {
+            margin-top: 10px;
+            font-style: italic;
+            line-height: 1.5;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #1a5490;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <!-- COVER PAGE -->
+    <div class="cover">
+        <div class="logo">DOUTORA IA</div>
+        <h1>Relatório Jurídico Premium</h1>
+        <div class="case-info">
+            <p><strong>Caso:</strong> #{{ case_id }}</p>
+            <p><strong>Área:</strong> {{ area|title }}{% if sub_area %} - {{ sub_area|title }}{% endif %}</p>
+            <p><strong>Data de Emissão:</strong> {{ data_criacao }}</p>
+        </div>
+    </div>
+
+    <!-- TABLE OF CONTENTS -->
+    <div class="toc">
+        <h2>Sumário</h2>
+        <ul>
+            <li>1. Tipificação da Causa</li>
+            <li>2. Estratégias e Riscos</li>
+            <li>3. Probabilidade de Êxito</li>
+            <li>4. Custos e Prazos</li>
+            <li>5. Checklist de Documentos</li>
+            <li>6. Rascunho de Petição</li>
+            <li>7. Fundamentação Legal e Jurisprudencial</li>
+            <li>8. Anexos - Citações Completas</li>
+        </ul>
+    </div>
+
+    <!-- DISCLAIMER -->
+    <div class="disclaimer">
+        <strong>⚠️ IMPORTANTE:</strong> Este relatório é informativo e não substitui a consulta com um advogado.
+        As análises são baseadas em dados e algoritmos, sem garantia de êxito. Recomendamos fortemente a consulta
+        com um profissional habilitado antes de tomar qualquer decisão judicial.
+    </div>
+
+    <!-- UPDATE STAMP -->
+    <div class="update-stamp">
+        📅 Base normativa atualizada em {{ data_atualizacao }}
+    </div>
+
+    <!-- SECTION 1: TYPIFICATION -->
+    <div class="section">
+        <h1>1. Tipificação da Causa</h1>
+        <p>{{ tipificacao }}</p>
+    </div>
+
+    <!-- SECTION 2: STRATEGIES AND RISKS -->
+    <div class="section">
+        <h1>2. Estratégias e Riscos</h1>
+        <h2>Estratégias Processuais</h2>
+        <p>{{ estrategias }}</p>
+
+        <h2>Riscos e Pontos de Atenção</h2>
+        <p>{{ riscos }}</p>
+    </div>
+
+    <!-- SECTION 3: PROBABILITY -->
+    <div class="section">
+        <h1>3. Probabilidade de Êxito</h1>
+        <div class="probability-badge prob-{{ probabilidade }}">
+            Probabilidade: {{ probabilidade|upper }}
+        </div>
+        <p><em>Classificação baseada em análise da jurisprudência e legislação aplicável.</em></p>
+    </div>
+
+    <!-- SECTION 4: COSTS AND TIMELINE -->
+    <div class="section">
+        <h1>4. Custos e Prazos Estimados</h1>
+        <h2>Custos</h2>
+        <p>{{ custos }}</p>
+
+        <h2>Prazos</h2>
+        <p>{{ prazos }}</p>
+    </div>
+
+    <!-- SECTION 5: CHECKLIST -->
+    <div class="section">
+        <h1>5. Checklist de Documentos</h1>
+        <div class="checklist">
+            <ul>
+                {% for item in checklist %}
+                <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- SECTION 6: DRAFT PETITION -->
+    <div class="section">
+        <h1>6. Rascunho de Petição Inicial</h1>
+        <div class="petition-draft">
+            {{ rascunho }}
+        </div>
+        <p><em>Este rascunho deve ser revisado e adaptado por advogado antes do uso.</em></p>
+    </div>
+
+    <!-- SECTION 7: LEGAL BASIS (SUMMARY) -->
+    <div class="section">
+        <h1>7. Fundamentação Legal e Jurisprudencial</h1>
+        <p>Este relatório está fundamentado em {{ citacoes|length }} referências legais e jurisprudenciais,
+        incluindo legislação, súmulas, precedentes e normas regulatórias. As citações completas encontram-se
+        no Anexo a seguir.</p>
+    </div>
+
+    <!-- SECTION 8: CITATIONS (ANNEX) -->
+    <div class="citations">
+        <h1>8. Anexos - Citações Completas</h1>
+
+        {% for citacao in citacoes %}
+        <div class="citation-item">
+            <div class="citation-header">
+                [{{ loop.index }}] {{ citacao.titulo }}
+            </div>
+            <div class="citation-meta">
+                <strong>Tipo:</strong> {{ citacao.tipo|upper }}
+                {% if citacao.orgao %}| <strong>Órgão:</strong> {{ citacao.orgao }}{% endif %}
+                {% if citacao.tribunal %}| <strong>Tribunal:</strong> {{ citacao.tribunal }}{% endif %}
+                {% if citacao.data %}| <strong>Data:</strong> {{ citacao.data }}{% endif %}
+            </div>
+            <div class="citation-text">
+                {{ citacao.texto }}
+            </div>
+            {% if citacao.fonte_url %}
+            <div class="citation-meta">
+                <strong>Fonte:</strong> <a href="{{ citacao.fonte_url }}">{{ citacao.fonte_url }}</a>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- FOOTER -->
+    <div style="margin-top: 50px; padding-top: 20px; border-top: 1px solid #ddd; text-align: center; font-size: 9pt; color: #666;">
+        <p>Relatório gerado por <strong>Doutora IA</strong> | www.doutoraia.com.br</p>
+        <p>Este documento é confidencial e destinado exclusivamente ao destinatário.</p>
+    </div>
+</body>
+</html>

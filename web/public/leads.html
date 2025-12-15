@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Leads - Doutora IA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a5490;
+            --success: #28a745;
+            --danger: #dc3545;
+        }
+
+        .lead-card {
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .lead-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .lead-card.quente {
+            border-color: #ffc107;
+            background: linear-gradient(to right, #fff9e6 0%, white 100%);
+        }
+
+        .badge-score {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.2rem;
+            padding: 8px 15px;
+        }
+
+        .score-alta { background: #28a745; }
+        .score-media { background: #ffc107; color: #000; }
+        .score-baixa { background: #dc3545; }
+
+        .valor-estimado {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--success);
+        }
+
+        .timer {
+            font-size: 0.9rem;
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .btn-aceitar {
+            background: var(--success);
+            color: white;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+        }
+
+        .btn-rejeitar {
+            background: #6c757d;
+            color: white;
+            padding: 12px 30px;
+        }
+
+        .stats-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/advogado.html">
+                <i class="fas fa-balance-scale"></i> DOUTORA IA
+            </a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/advogado.html">Pesquisar</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/leads.html">Meus Leads</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/processos.html">Processos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/agenda.html">Agenda</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="bg-primary text-white py-4">
+        <div class="container">
+            <h1><i class="fas fa-users"></i> Meus Leads Qualificados</h1>
+            <p class="lead mb-0">Clientes que já pagaram relatório e estão aguardando contato</p>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="py-4 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="stats-box">
+                        <div class="stat-number" id="statPendentes">0</div>
+                        <div>Leads Pendentes</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-box">
+                        <div class="stat-number text-success" id="statAceitos">0</div>
+                        <div>Aceitos (Mês)</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-box">
+                        <div class="stat-number" id="statTaxa">0%</div>
+                        <div>Taxa de Conversão</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-box">
+                        <div class="stat-number text-success" id="statValor">R$ 0</div>
+                        <div>Valor Estimado</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leads List -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <!-- Filters -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-filter"></i> Filtros</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">Área</label>
+                                <select class="form-select" id="filterArea">
+                                    <option value="">Todas</option>
+                                    <option value="familia">Família</option>
+                                    <option value="consumidor">Consumidor</option>
+                                    <option value="bancario">Bancário</option>
+                                    <option value="saude">Saúde</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Probabilidade</label>
+                                <select class="form-select" id="filterProb">
+                                    <option value="">Todas</option>
+                                    <option value="alta">Alta</option>
+                                    <option value="media">Média</option>
+                                    <option value="baixa">Baixa</option>
+                                </select>
+                            </div>
+
+                            <button class="btn btn-primary w-100" onclick="filtrarLeads()">
+                                <i class="fas fa-search"></i> Aplicar Filtros
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Tips -->
+                    <div class="card mt-3">
+                        <div class="card-header bg-info text-white">
+                            <h6><i class="fas fa-lightbulb"></i> Dicas</h6>
+                        </div>
+                        <div class="card-body">
+                            <small>
+                                <ul class="mb-0 ps-3">
+                                    <li>Responda em até 4h para melhor conversão</li>
+                                    <li>Use WhatsApp para primeiro contato</li>
+                                    <li>Ofereça consulta grátis de 15min</li>
+                                    <li>Seja empático e profissional</li>
+                                </ul>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-9">
+                    <div id="leadsList">
+                        <!-- Leads will be loaded here -->
+                        <div class="text-center py-5">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Carregando...</span>
+                            </div>
+                            <p class="mt-3">Carregando seus leads...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal de Detalhes do Lead -->
+    <div class="modal fade" id="modalLeadDetalhes" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Detalhes do Cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="modalLeadBody">
+                    <!-- Detalhes do lead após aceitação -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="leads.js"></script>
+</body>
+</html>

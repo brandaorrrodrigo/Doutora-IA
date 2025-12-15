@@ -1,0 +1,65 @@
+# ============================================
+# DOCKERFILE - Doutora IA + Ollama
+# Self-contained LLM deployment
+# ============================================
+
+FROM python:3.11-slim as builder
+
+WORKDIR /app
+
+# Install build dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    libpq-dev \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements
+COPY api/requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir --user -r requirements.txt
+
+# ============================================
+# Final stage with Ollama
+# ============================================
+
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install runtime dependencies + Ollama
+RUN apt-get update && apt-get install -y \
+    libpq5 \
+    curl \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Ollama
+RUN curl -fsSL https://ollama.com/install.sh | sh
+
+# Copy Python dependencies from builder
+COPY --from=builder /root/.local /root/.local
+
+# Copy application code
+COPY api/ .
+
+# Make sure scripts in .local are usable
+ENV PATH=/root/.local/bin:$PATH
+
+# Create directories
+RUN mkdir -p /app/uploads /root/.ollama
+
+# Expose ports
+EXPOSE 8000 11434
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:8000/health || exit 1
+
+# Startup script
+COPY start-ollama.sh /start-ollama.sh
+RUN chmod +x /start-ollama.sh
+
+CMD ["/start-ollama.sh"]

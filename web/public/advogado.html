@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doutora IA - Para Advogados</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a5490;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1a5490 0%, #2c5aa0 100%);
+            color: white;
+            padding: 60px 0;
+        }
+
+        .plan-card {
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: transform 0.3s;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .plan-card.featured {
+            border-color: var(--primary-color);
+            background: #f8f9fa;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-list i {
+            color: green;
+            margin-right: 10px;
+        }
+
+        .search-section {
+            background: #f8f9fa;
+            padding: 40px 0;
+        }
+
+        .citation-item {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .citation-actions {
+            margin-top: 10px;
+        }
+
+        #cart {
+            background: white;
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            padding: 20px;
+            position: sticky;
+            top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary" href="/">
+                <i class="fas fa-balance-scale"></i> DOUTORA IA
+            </a>
+            <div class="ms-auto">
+                <a class="btn btn-outline-primary" href="/">Para Clientes</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container text-center">
+            <h1 class="display-5 fw-bold mb-3">Modo Advogado</h1>
+            <p class="lead">Pesquisa jurídica + Geração de peças + Captação de clientes</p>
+        </div>
+    </section>
+
+    <!-- Plans Section -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Escolha seu Plano</h2>
+
+            <div class="row">
+                <!-- Plan: Pesquisa -->
+                <div class="col-md-4">
+                    <div class="plan-card">
+                        <h3>Pesquisa</h3>
+                        <div class="price">R$ 79<small>/mês</small></div>
+                        <hr>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check"></i> Busca unificada (leis, súmulas, jurisprudência)</li>
+                            <li><i class="fas fa-check"></i> Filtros por tribunal, órgão, data</li>
+                            <li><i class="fas fa-check"></i> Jurimetria básica</li>
+                            <li><i class="fas fa-check"></i> Exportar referências</li>
+                            <li><i class="fas fa-times text-muted"></i> Geração de peças</li>
+                            <li><i class="fas fa-times text-muted"></i> Leads de clientes</li>
+                        </ul>
+                        <button class="btn btn-outline-primary w-100 mt-3">Assinar</button>
+                    </div>
+                </div>
+
+                <!-- Plan: Pro (Featured) -->
+                <div class="col-md-4">
+                    <div class="plan-card featured">
+                        <div class="badge bg-primary mb-2">MAIS POPULAR</div>
+                        <h3>Pro</h3>
+                        <div class="price">R$ 229<small>/mês</small></div>
+                        <hr>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check"></i> Pesquisa avançada</li>
+                            <li><i class="fas fa-check"></i> Jurimetria ampliada</li>
+                            <li><i class="fas fa-check"></i> Gerador de peças profissional</li>
+                            <li><i class="fas fa-check"></i> Templates premium</li>
+                            <li><i class="fas fa-check"></i> 50 docs/mês</li>
+                            <li><i class="fas fa-times text-muted"></i> Leads de clientes</li>
+                        </ul>
+                        <button class="btn btn-primary w-100 mt-3">Assinar</button>
+                    </div>
+                </div>
+
+                <!-- Plan: Full -->
+                <div class="col-md-4">
+                    <div class="plan-card">
+                        <h3>Full</h3>
+                        <div class="price">R$ 299<small>/mês</small></div>
+                        <hr>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check"></i> Tudo do Pro</li>
+                            <li><i class="fas fa-check"></i> Leads prioritários</li>
+                            <li><i class="fas fa-check"></i> 1 lead/mês incluso</li>
+                            <li><i class="fas fa-check"></i> Perfil no diretório</li>
+                            <li><i class="fas fa-check"></i> Docs ilimitados</li>
+                            <li><i class="fas fa-check"></i> Suporte prioritário</li>
+                        </ul>
+                        <button class="btn btn-primary w-100 mt-3">Assinar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <p class="text-muted">Todos os planos incluem atualização automática da base normativa</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Demo Section -->
+    <section class="search-section">
+        <div class="container">
+            <h2 class="text-center mb-5">Menu de Pesquisas</h2>
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Search Form -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-8 mb-3">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="searchQuery"
+                                        placeholder="Buscar leis, súmulas, jurisprudência... (Ctrl+K)"
+                                    >
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <select class="form-select" id="searchType">
+                                        <option value="">Todos os tipos</option>
+                                        <option value="lei">Leis</option>
+                                        <option value="sumula">Súmulas</option>
+                                        <option value="juris">Jurisprudência</option>
+                                        <option value="regulatorio">Regulatório</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <select class="form-select" id="searchArea">
+                                        <option value="">Todas as áreas</option>
+                                        <option value="familia">Família</option>
+                                        <option value="consumidor">Consumidor</option>
+                                        <option value="bancario">Bancário</option>
+                                        <option value="saude">Saúde</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <select class="form-select" id="searchTribunal">
+                                        <option value="">Todos os tribunais</option>
+                                        <option value="STF">STF</option>
+                                        <option value="STJ">STJ</option>
+                                        <option value="TST">TST</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <button class="btn btn-primary w-100" id="btnSearch">
+                                        <i class="fas fa-search"></i> Buscar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Results -->
+                    <div id="searchResults">
+                        <!-- Results will be inserted here -->
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <!-- Citations Cart -->
+                    <div id="cart">
+                        <h5><i class="fas fa-shopping-cart"></i> Carrinho de Citações</h5>
+                        <hr>
+                        <div id="cartItems">
+                            <p class="text-muted text-center">Nenhuma citação adicionada</p>
+                        </div>
+                        <hr>
+                        <button class="btn btn-success w-100" id="btnCompose" disabled>
+                            <i class="fas fa-file-alt"></i> Gerar Peça
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2025 Doutora IA - Modo Advogado</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="advogado.js"></script>
+</body>
+</html>
