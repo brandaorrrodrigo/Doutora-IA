@@ -23,9 +23,8 @@ bcrypt==4.1.2
 openai==1.7.2
 httpx==0.26.0
 
-# Embeddings - Lightweight (Ollama handles embeddings)
-# sentence-transformers and torch removed to reduce build size
-# Ollama will handle all ML workloads
+# Embeddings - Required for RAG (lightweight versions)
+sentence-transformers==2.2.2
 
 # PDF Generation
 weasyprint==60.2
