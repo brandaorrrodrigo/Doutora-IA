@@ -32,7 +32,7 @@ reportlab==4.1.0
 PyPDF2==3.0.1
 
 # DOCX Generation
-python-docx==1.1.0
+python-docx>=1.1.1
 docxtpl==0.17.0
 
 # Templates
