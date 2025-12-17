@@ -134,7 +134,7 @@ export default function Pricing() {
 
               <button
                 onClick={() => {
-                  trackPlanSelect(plan.name);
+                  trackPlanSelect(plan.name, String(plan.price));
                   setSelectedPlan(plan.name);
                   document.getElementById(`payment-modal-${plan.name}`)?.classList.remove('hidden');
                 }}

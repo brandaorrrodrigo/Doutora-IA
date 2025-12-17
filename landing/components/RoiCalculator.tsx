@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import Container from './Container';
-import { trackROICalculated } from '@/lib/analytics';
+import { trackROICalculation } from '@/lib/analytics';
 
 export default function RoiCalculator() {
   const [pecasPorMes, setPecasPorMes] = useState(10);
@@ -17,7 +17,7 @@ export default function RoiCalculator() {
   const roi = ((economiaLiquida / custoPlano) * 100);
 
   React.useEffect(() => {
-    trackROICalculated(economiaLiquida);
+    trackROICalculation(economiaLiquida);
   }, [economiaLiquida]);
 
   return (
