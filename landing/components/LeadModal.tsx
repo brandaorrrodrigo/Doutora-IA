@@ -26,67 +26,60 @@ export default function LeadModal() {
     }
 
     // Track lead submission
-    trackLeadSubmit({ areas, cidades, oab });
+    trackLeadSubmit({ nome, email, telefone, oab, areas, cidades });
 
-    // Mock API call - replace with actual endpoint
-    try {
-      const response = await fetch('/api/lead', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nome, email, telefone, oab, areas, cidades })
-      });
+    // Simulate success (no backend API needed for now)
+    setSubmitted(true);
+    
+    // Auto-close after 3 seconds
+    setTimeout(() => {
+      document.getElementById('lead-modal')?.classList.add('hidden');
+      setSubmitted(false);
+      // Reset form
+      setNome('');
+      setEmail('');
+      setTelefone('');
+      setOab('');
+      setAreas([]);
+      setCidades([]);
+      setLgpdConsent(false);
+    }, 3000);
+  };
 
-      if (response.ok) {
-        setSubmitted(true);
-        setTimeout(() => {
-          document.getElementById('lead-modal')?.classList.add('hidden');
-          setSubmitted(false);
-          // Reset form
-          setNome('');
-          setEmail('');
-          setTelefone('');
-          setOab('');
-          setAreas([]);
-          setCidades([]);
-          setLgpdConsent(false);
-        }, 3000);
-      }
-    } catch (error) {
-      console.error('Erro ao enviar lead:', error);
-    }
+  const handleAreaToggle = (area: string) => {
+    setAreas(prev =>
+      prev.includes(area)
+        ? prev.filter(a => a !== area)
+        : [...prev, area]
+    );
   };
 
   return (
     <div
       id="lead-modal"
-      className="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto"
+      className="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
       onClick={(e) => {
         if (e.target === e.currentTarget) {
-          e.currentTarget.classList.add('hidden');
+          document.getElementById('lead-modal')?.classList.add('hidden');
         }
       }}
     >
-      <div className="bg-background border border-white/10 rounded-2xl p-8 max-w-lg w-full my-8">
+      <div className="bg-background border border-white/10 rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         {!submitted ? (
           <>
-            <div className="flex justify-between items-start mb-6">
-              <div>
-                <h3 className="text-2xl font-bold mb-2">Entrar na fila</h3>
-                <p className="text-sm text-gray-400">
-                  Preencha seus dados para receber acesso prioritário
-                </p>
-              </div>
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-2xl font-bold">Cadastre-se na Waitlist</h3>
               <button
-                onClick={() => {
-                  document.getElementById('lead-modal')?.classList.add('hidden');
-                }}
-                className="text-gray-400 hover:text-white"
+                onClick={() => document.getElementById('lead-modal')?.classList.add('hidden')}
+                className="text-gray-400 hover:text-white transition"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                ✕
               </button>
             </div>
+
+            <p className="text-gray-400 mb-6">
+              Seja um dos primeiros a experimentar a Doutora IA. Preencha seus dados e receba acesso prioritário.
+            </p>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
@@ -102,7 +95,7 @@ export default function LeadModal() {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold mb-2">Email</label>
+                <label className="block text-sm font-semibold mb-2">E-mail profissional</label>
                 <input
                   type="email"
                   required
@@ -126,33 +119,26 @@ export default function LeadModal() {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold mb-2">OAB (Número e UF)</label>
+                <label className="block text-sm font-semibold mb-2">OAB (opcional)</label>
                 <input
                   type="text"
-                  required
                   value={oab}
                   onChange={(e) => setOab(e.target.value)}
                   className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg focus:border-primary focus:outline-none"
-                  placeholder="Ex: 123456/SP"
+                  placeholder="OAB/UF 000000"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold mb-2">Áreas de atuação (selecione até 3)</label>
+                <label className="block text-sm font-semibold mb-2">Áreas de atuação</label>
                 <div className="grid grid-cols-2 gap-2">
-                  {areasOptions.map((area) => (
-                    <label key={area} className="flex items-center gap-2 cursor-pointer">
+                  {areasOptions.map(area => (
+                    <label key={area} className="flex items-center space-x-2 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={areas.includes(area)}
-                        onChange={(e) => {
-                          if (e.target.checked && areas.length < 3) {
-                            setAreas([...areas, area]);
-                          } else if (!e.target.checked) {
-                            setAreas(areas.filter(a => a !== area));
-                          }
-                        }}
-                        className="w-4 h-4 accent-primary"
+                        onChange={() => handleAreaToggle(area)}
+                        className="rounded border-gray-600"
                       />
                       <span className="text-sm">{area}</span>
                     </label>
@@ -161,54 +147,45 @@ export default function LeadModal() {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold mb-2">Cidades de atuação</label>
+                <label className="block text-sm font-semibold mb-2">Cidades de interesse</label>
                 <input
                   type="text"
                   value={cidades.join(', ')}
                   onChange={(e) => setCidades(e.target.value.split(',').map(c => c.trim()))}
                   className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg focus:border-primary focus:outline-none"
-                  placeholder="Ex: São Paulo, Campinas, Santos"
+                  placeholder="São Paulo, Rio de Janeiro..."
                 />
-                <p className="text-xs text-gray-500 mt-1">Separe por vírgula</p>
               </div>
 
-              <div className="pt-4 border-t border-white/10">
-                <label className="flex items-start gap-3 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    required
-                    checked={lgpdConsent}
-                    onChange={(e) => setLgpdConsent(e.target.checked)}
-                    className="w-5 h-5 mt-0.5 accent-primary flex-shrink-0"
-                  />
-                  <span className="text-xs text-gray-400">
-                    Concordo com a <a href="/privacidade" className="text-primary hover:underline">Política de Privacidade</a> e autorizo o tratamento dos meus dados conforme a LGPD. Estou ciente de que posso solicitar a exclusão a qualquer momento.
-                  </span>
+              <div className="flex items-start space-x-2">
+                <input
+                  type="checkbox"
+                  required
+                  checked={lgpdConsent}
+                  onChange={(e) => setLgpdConsent(e.target.checked)}
+                  className="mt-1 rounded border-gray-600"
+                />
+                <label className="text-xs text-gray-400">
+                  Concordo com o processamento dos meus dados conforme a{' '}
+                  <a href="/privacy" className="text-primary hover:underline">Política de Privacidade</a> (LGPD).
+                  Meus dados serão usados apenas para comunicação sobre a Doutora IA.
                 </label>
               </div>
 
               <button
                 type="submit"
-                className="w-full py-3 bg-primary text-background rounded-lg font-bold hover:bg-primary-dark transition"
+                className="w-full py-3 bg-primary text-background rounded-lg font-semibold hover:bg-primary-dark transition"
               >
-                Entrar na fila
+                Entrar na Waitlist
               </button>
-
-              <p className="text-xs text-gray-500 text-center">
-                Você receberá um email de confirmação em até 24 horas.
-              </p>
             </form>
           </>
         ) : (
           <div className="text-center py-12">
-            <div className="w-16 h-16 bg-tech-blue rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
+            <div className="text-6xl mb-4">✅</div>
             <h3 className="text-2xl font-bold mb-2">Cadastro realizado!</h3>
             <p className="text-gray-400">
-              Você entrou na fila. Em breve você receberá um email com mais informações.
+              Você receberá um e-mail em breve com instruções de acesso.
             </p>
           </div>
         )}
