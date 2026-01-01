@@ -26,8 +26,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 
 # Copia requirements e instala dependências Python
-COPY requirements_api.txt .
-RUN pip install --user --no-warn-script-location -r requirements_api.txt
+COPY requirements.txt .
+RUN pip install --user --no-warn-script-location -r requirements.txt
 
 # Stage 2: Runtime
 FROM python:3.11-slim
