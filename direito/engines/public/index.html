@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doutora IA - Orientação Jurídica Profissional</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --marrom-escuro: #3e2723;
+            --marrom-medio: #5d4037;
+            --marrom-claro: #8d6e63;
+            --dourado: #d4af37;
+            --dourado-escuro: #b8860b;
+            --bege: #f5f5dc;
+            --creme: #faf0e6;
+            --preto: #1a1a1a;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: var(--creme);
+            color: var(--preto);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--marrom-escuro) 0%, var(--marrom-medio) 100%);
+            color: var(--bege);
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '⚖️';
+            position: absolute;
+            font-size: 20em;
+            opacity: 0.05;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: var(--dourado);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.4em;
+            margin-bottom: 30px;
+            font-weight: 300;
+            line-height: 1.6;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .hero-price {
+            background: var(--dourado);
+            color: var(--marrom-escuro);
+            padding: 20px 50px;
+            border-radius: 50px;
+            display: inline-block;
+            font-size: 1.8em;
+            font-weight: bold;
+            margin: 20px 0;
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+            border: 3px solid var(--dourado-escuro);
+        }
+
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            text-align: center;
+        }
+
+        .badge-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--dourado);
+        }
+
+        .badge-text {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 2.5em;
+            color: var(--marrom-escuro);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--dourado);
+        }
+
+        .section-subtitle {
+            font-size: 1.1em;
+            color: var(--marrom-claro);
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Card */
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(62, 39, 35, 0.15);
+            border-top: 4px solid var(--dourado);
+            margin-bottom: 30px;
+        }
+
+        /* Progress Steps */
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--dourado) 0%, var(--dourado) 100%);
+            z-index: 0;
+        }
+
+        .step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--marrom-claro);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 0 auto 15px;
+            border: 4px solid var(--creme);
+        }
+
+        .step.active .step-number {
+            background: var(--dourado);
+            color: var(--marrom-escuro);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.2);
+        }
+
+        .step.completed .step-number {
+            background: var(--marrom-escuro);
+        }
+
+        .step-label {
+            font-size: 0.95em;
+            color: var(--marrom-medio);
+            font-weight: 600;
+        }
+
+        /* Casos Grid */
+        .casos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .caso-card {
+            background: linear-gradient(135deg, var(--marrom-escuro) 0%, var(--marrom-medio) 100%);
+            color: var(--bege);
+            padding: 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.4s;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .caso-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: var(--dourado);
+            opacity: 0.1;
+            border-radius: 0 0 0 100%;
+        }
+
+        .caso-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(62, 39, 35, 0.3);
+            border-color: var(--dourado);
+        }
+
+        .caso-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .caso-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 12px;
+            color: var(--dourado);
+        }
+
+        .caso-card p {
+            font-size: 0.95em;
+            line-height: 1.5;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .popularity-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--dourado);
+            color: var(--marrom-escuro);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Questions */
+        .question {
+            margin-bottom: 35px;
+            padding: 25px;
+            background: var(--bege);
+            border-radius: 8px;
+            border-left: 4px solid var(--dourado);
+        }
+
+        .question-label {
+            font-size: 1.15em;
+            color: var(--marrom-escuro);
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .question-help {
+            color: var(--marrom-claro);
+            font-size: 0.9em;
+            margin: 8px 0;
+            font-style: italic;
+            font-family: 'Arial', sans-serif;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        input[type="tel"],
+        select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid var(--marrom-claro);
+            border-radius: 6px;
+            font-size: 1em;
+            background: white;
+            color: var(--marrom-escuro);
+            font-family: 'Arial', sans-serif;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--dourado);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+
+        .radio-option {
+            padding: 18px;
+            border: 2px solid var(--marrom-claro);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 12px;
+            background: white;
+        }
+
+        .radio-option:hover {
+            border-color: var(--dourado);
+            background: var(--bege);
+        }
+
+        .radio-option.selected {
+            background: var(--dourado);
+            color: var(--marrom-escuro);
+            border-color: var(--dourado-escuro);
+            font-weight: 600;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 16px 40px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--dourado);
+            color: var(--marrom-escuro);
+            border: 2px solid var(--dourado-escuro);
+        }
+
+        .btn-primary:hover {
+            background: var(--dourado-escuro);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(184, 134, 11, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--marrom-claro);
+            color: white;
+            border: 2px solid var(--marrom-medio);
+        }
+
+        .btn-success {
+            background: var(--marrom-escuro);
+            color: var(--dourado);
+            font-size: 1.4em;
+            padding: 20px 60px;
+            border: 3px solid var(--dourado);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+
+        /* Results */
+        .result-box {
+            background: linear-gradient(135deg, var(--marrom-escuro) 0%, var(--marrom-medio) 100%);
+            color: var(--bege);
+            padding: 30px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 3px solid var(--dourado);
+        }
+
+        .result-box h3 {
+            color: var(--dourado);
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            border-top: 4px solid var(--dourado);
+        }
+
+        .stat-label {
+            color: var(--marrom-claro);
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            color: var(--marrom-escuro);
+            font-size: 2.2em;
+            font-weight: bold;
+        }
+
+        .badge-status {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin: 5px;
+        }
+
+        .badge-high {
+            background: #4caf50;
+            color: white;
+        }
+
+        .badge-medium {
+            background: var(--dourado);
+            color: var(--marrom-escuro);
+        }
+
+        .alert {
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 5px solid;
+        }
+
+        .alert-info {
+            background: #e3f2fd;
+            border-color: #1976d2;
+            color: #0d47a1;
+        }
+
+        .alert-warning {
+            background: #fff3e0;
+            border-color: var(--dourado);
+            color: var(--marrom-escuro);
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 60px;
+        }
+
+        .spinner {
+            border: 5px solid var(--bege);
+            border-top: 5px solid var(--dourado);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: var(--bege);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 25px 0;
+            border: 2px solid var(--marrom-claro);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--dourado) 0%, var(--dourado-escuro) 100%);
+            transition: width 0.5s;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2em;
+            }
+
+            .section-title {
+                font-size: 1.8em;
+            }
+
+            .casos-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="hero-content">
+            <h1>⚖️ Doutora IA</h1>
+            <p class="hero-subtitle">
+                Orientação Jurídica Profissional com Inteligência Artificial<br>
+                Parecer Completo Elaborado por Especialistas
+            </p>
+            <div class="hero-price">
+                Apenas R$ 7,00
+            </div>
+            <p style="margin-top: 20px; font-size: 1.1em;">
+                Parecer profissional • Jurisprudência • Base legal • Modelos de documentos
+            </p>
+
+            <div class="trust-badges">
+                <div class="badge">
+                    <div class="badge-number">10</div>
+                    <div class="badge-text">Áreas do Direito</div>
+                </div>
+                <div class="badge">
+                    <div class="badge-number">98%</div>
+                    <div class="badge-text">Satisfação</div>
+                </div>
+                <div class="badge">
+                    <div class="badge-number">24/7</div>
+                    <div class="badge-text">Disponível</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div id="wizardContainer"></div>
+    </div>
+
+    <script>
+        // Configuração da API - detecta automaticamente ambiente
+        const API_CONFIG = {
+            development: 'http://localhost:8116',
+            production: 'https://doutora-ia-production.up.railway.app'
+        };
+
+        const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+        const API_BASE_URL = isProduction ? API_CONFIG.production : API_CONFIG.development;
+
+        console.log('Ambiente:', isProduction ? 'PRODUÇÃO' : 'DESENVOLVIMENTO');
+        console.log('API URL:', API_BASE_URL);
+
+        const state = {
+            currentStep: 1,
+            selectedCaso: null,
+            quiz: null,
+            respostas: {},
+            analiseGratuita: null,
+            apiBase: API_BASE_URL
+        };
+
+        async function init() {
+            renderStep1();
+        }
+
+        function renderStep1() {
+            state.currentStep = 1;
+
+            const container = document.getElementById('wizardContainer');
+            container.innerHTML = `
+                <div class="section-header">
+                    <h2 class="section-title">Escolha Sua Área Jurídica</h2>
+                    <p class="section-subtitle">
+                        Selecione o tipo de questão jurídica que você está enfrentando
+                    </p>
+                </div>
+
+                <div class="steps">
+                    <div class="step active">
+                        <div class="step-number">1</div>
+                        <div class="step-label">Escolher Área</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-label">Questionário</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-label">Análise Gratuita</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-label">Parecer Completo</div>
+                    </div>
+                </div>
+
+                <div id="casosContainer" class="loading">
+                    <div class="spinner"></div>
+                    <p style="color: var(--marrom-medio);">Carregando áreas jurídicas...</p>
+                </div>
+            `;
+
+            loadCasos();
+        }
+
+        async function loadCasos() {
+            try {
+                const response = await fetch(`${state.apiBase}/api/casos`);
+                const data = await response.json();
+
+                const icons = {
+                    'pensao_alimenticia': '👨‍👩‍👧',
+                    'direito_consumidor': '🛒',
+                    'transito': '🚗',
+                    'briga_vizinhos': '🏘️',
+                    'trabalhista': '💼',
+                    'divorcio': '💔',
+                    'inventario': '🏛️',
+                    'danos_morais': '⚖️',
+                    'inss': '🏥',
+                    'contratos': '📜'
+                };
+
+                const casosHTML = `
+                    <div class="casos-grid">
+                        ${data.casos.map(caso => `
+                            <div class="caso-card" onclick="selecionarCaso('${caso.tipo}')">
+                                <div class="popularity-badge">TOP ${caso.popularidade}%</div>
+                                <div class="caso-icon">${icons[caso.tipo] || '⚖️'}</div>
+                                <h3>${caso.titulo}</h3>
+                                <p>${caso.descricao}</p>
+                                <p style="margin-top: 15px; font-size: 0.85em; opacity: 0.9;">
+                                    ⏱️ ${caso.tempo_estimado} minutos
+                                </p>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+
+                document.getElementById('casosContainer').innerHTML = casosHTML;
+            } catch (error) {
+                document.getElementById('casosContainer').innerHTML = `
+                    <div class="alert alert-warning">
+                        <strong>Erro ao carregar áreas:</strong> ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        async function selecionarCaso(tipoCaso) {
+            state.selectedCaso = tipoCaso;
+            state.respostas = {};
+
+            try {
+                const response = await fetch(`${state.apiBase}/api/casos/${tipoCaso}/quiz`);
+                state.quiz = await response.json();
+                renderStep2();
+            } catch (error) {
+                alert('Erro ao carregar questionário: ' + error.message);
+            }
+        }
+
+        function renderStep2() {
+            state.currentStep = 2;
+
+            const perguntas = state.quiz.perguntas;
+            const respondidas = Object.keys(state.respostas).length;
+            const progresso = (respondidas / perguntas.length) * 100;
+
+            const container = document.getElementById('wizardContainer');
+            container.innerHTML = `
+                <div class="section-header">
+                    <h2 class="section-title">${state.quiz.titulo}</h2>
+                    <p class="section-subtitle">${state.quiz.descricao}</p>
+                </div>
+
+                <div class="steps">
+                    <div class="step completed">
+                        <div class="step-number">✓</div>
+                        <div class="step-label">Área Escolhida</div>
+                    </div>
+                    <div class="step active">
+                        <div class="step-number">2</div>
+                        <div class="step-label">Questionário</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-label">Análise Gratuita</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-label">Parecer Completo</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${progresso}%"></div>
+                    </div>
+                    <p style="text-align: center; color: var(--marrom-medio); margin-bottom: 30px; font-size: 1.1em;">
+                        <strong>${respondidas}</strong> de <strong>${perguntas.length}</strong> perguntas respondidas
+                    </p>
+
+                    <div id="perguntasContainer"></div>
+
+                    <div class="navigation">
+                        <button class="btn btn-secondary" onclick="renderStep1()">
+                            ← Voltar
+                        </button>
+                        <button class="btn btn-primary" onclick="submitQuiz()" ${respondidas < perguntas.length ? 'disabled' : ''}>
+                            Ver Análise Gratuita →
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            renderPerguntas();
+        }
+
+        function renderPerguntas() {
+            const container = document.getElementById('perguntasContainer');
+            const perguntas = state.quiz.perguntas.filter(p => shouldShowQuestion(p));
+
+            container.innerHTML = perguntas.map((p, idx) => {
+                const valor = state.respostas[p.id];
+
+                if (p.tipo === 'multipla_escolha' && p.opcoes.length > 0) {
+                    return `
+                        <div class="question">
+                            <label class="question-label">
+                                ${idx + 1}. ${p.texto}
+                                ${p.obrigatoria ? '<span style="color: var(--dourado);">*</span>' : ''}
+                            </label>
+                            ${p.ajuda ? `<p class="question-help">${p.ajuda}</p>` : ''}
+                            <div style="margin-top: 15px;">
+                                ${p.opcoes.map(opcao => `
+                                    <label class="radio-option ${valor === opcao.valor ? 'selected' : ''}"
+                                           onclick="responderPergunta('${p.id}', '${opcao.valor}')">
+                                        <input type="radio" name="${p.id}" value="${opcao.valor}"
+                                               ${valor === opcao.valor ? 'checked' : ''} style="margin-right: 10px;">
+                                        ${opcao.texto}
+                                    </label>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    return `
+                        <div class="question">
+                            <label class="question-label">
+                                ${idx + 1}. ${p.texto}
+                                ${p.obrigatoria ? '<span style="color: var(--dourado);">*</span>' : ''}
+                            </label>
+                            ${p.ajuda ? `<p class="question-help">${p.ajuda}</p>` : ''}
+                            <input type="${p.tipo === 'numero' || p.tipo === 'moeda' ? 'number' : 'text'}"
+                                   value="${valor || ''}"
+                                   onchange="responderPergunta('${p.id}', this.value)"
+                                   placeholder="Digite sua resposta">
+                        </div>
+                    `;
+                }
+            }).join('');
+        }
+
+        function shouldShowQuestion(p) {
+            if (!p.condicao) return true;
+            try {
+                const match = p.condicao.match(/(\w+)\s*==\s*'(\w+)'/);
+                if (match) {
+                    const [, campo, valorEsperado] = match;
+                    return state.respostas[campo] === valorEsperado;
+                }
+            } catch (e) {}
+            return true;
+        }
+
+        function responderPergunta(id, valor) {
+            state.respostas[id] = valor;
+            renderStep2();
+        }
+
+        async function submitQuiz() {
+            const container = document.getElementById('wizardContainer');
+            container.innerHTML = `
+                <div class="card loading">
+                    <div class="spinner"></div>
+                    <h3 style="color: var(--marrom-escuro); margin-bottom: 10px;">Analisando seu caso...</h3>
+                    <p style="color: var(--marrom-claro);">Nossa IA está processando suas informações</p>
+                </div>
+            `;
+
+            try {
+                const payload = {
+                    tipo_caso: state.selectedCaso,
+                    respostas: Object.entries(state.respostas).map(([pergunta_id, valor]) => ({
+                        pergunta_id, valor
+                    }))
+                };
+
+                const response = await fetch(`${state.apiBase}/api/analise-gratuita`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                state.analiseGratuita = await response.json();
+                renderStep3();
+            } catch (error) {
+                alert('Erro: ' + error.message);
+                renderStep2();
+            }
+        }
+
+        function renderStep3() {
+            const a = state.analiseGratuita;
+
+            const container = document.getElementById('wizardContainer');
+            container.innerHTML = `
+                <div class="section-header">
+                    <h2 class="section-title">Análise Jurídica do Seu Caso</h2>
+                    <p class="section-subtitle">Resultado preliminar gratuito</p>
+                </div>
+
+                <div class="steps">
+                    <div class="step completed"><div class="step-number">✓</div></div>
+                    <div class="step completed"><div class="step-number">✓</div></div>
+                    <div class="step active"><div class="step-number">3</div></div>
+                    <div class="step"><div class="step-number">4</div></div>
+                </div>
+
+                <div class="result-box">
+                    <h3>📋 Resumo da Análise</h3>
+                    <p style="font-size: 1.1em; line-height: 1.6;">${a.resumo}</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-label">Viabilidade</div>
+                        <div class="stat-value">${a.viabilidade.toUpperCase()}</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Chance de Êxito</div>
+                        <div class="stat-value">${a.probabilidade_sucesso}</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Tempo Estimado</div>
+                        <div class="stat-value">${a.tempo_estimado_meses}m</div>
+                    </div>
+                </div>
+
+                ${a.valores_estimados ? `
+                    <div class="result-box">
+                        <h3>💰 Valores Estimados</h3>
+                        <div class="stats-grid" style="margin-top: 20px;">
+                            <div class="stat-box">
+                                <div class="stat-label">Mínimo</div>
+                                <div class="stat-value" style="font-size: 1.5em;">R$ ${a.valores_estimados.minimo.toFixed(2)}</div>
+                            </div>
+                            <div class="stat-box" style="border-top-color: var(--dourado); border-top-width: 6px;">
+                                <div class="stat-label">Médio Esperado</div>
+                                <div class="stat-value" style="color: var(--dourado);">R$ ${a.valores_estimados.medio.toFixed(2)}</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">Máximo</div>
+                                <div class="stat-value" style="font-size: 1.5em;">R$ ${a.valores_estimados.maximo.toFixed(2)}</div>
+                            </div>
+                        </div>
+                    </div>
+                ` : ''}
+
+                <div class="card">
+                    <h3 style="color: var(--marrom-escuro); margin-bottom: 20px;">⚖️ Seus Direitos</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        ${a.direitos_principais.map(d => `
+                            <li style="padding: 12px; margin: 8px 0; background: var(--bege); border-left: 4px solid var(--dourado); border-radius: 4px;">
+                                ✓ ${d}
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+
+                <div class="alert alert-info">
+                    <h4 style="margin-bottom: 15px; font-size: 1.2em;">📊 ${a.estatisticas.total_casos_similares} casos similares analisados</h4>
+                    <p style="font-size: 1.05em;">
+                        <strong>Taxa de êxito:</strong> ${a.estatisticas.taxa_sucesso} •
+                        <strong>Tempo médio:</strong> ${a.estatisticas.tempo_medio_meses} meses
+                    </p>
+                </div>
+
+                <div class="alert alert-warning">
+                    <h4 style="margin-bottom: 15px; font-size: 1.3em;">💼 Deseja o Parecer Jurídico Completo?</h4>
+                    <p style="font-size: 1.05em; margin-bottom: 15px;">Por apenas R$ 7,00 você recebe:</p>
+                    <ul style="margin-left: 25px; line-height: 1.8;">
+                        <li><strong>Jurisprudência detalhada</strong> (STF, STJ, Tribunais Estaduais)</li>
+                        <li><strong>Base legal completa</strong> com todos os artigos aplicáveis</li>
+                        <li><strong>Estratégia jurídica passo-a-passo</strong> recomendada</li>
+                        <li><strong>Modelos de documentos</strong> prontos para uso</li>
+                        <li><strong>Lista de documentos</strong> necessários</li>
+                        <li><strong>Conexão com 3 advogados</strong> especializados na sua região</li>
+                    </ul>
+                </div>
+
+                <div class="navigation">
+                    <button class="btn btn-secondary" onclick="renderStep2()">
+                        ← Voltar ao Questionário
+                    </button>
+                    <button class="btn btn-success" onclick="renderStep4()">
+                        Adquirir Parecer Completo - R$ 7,00 →
+                    </button>
+                </div>
+            `;
+        }
+
+        function renderStep4() {
+            const container = document.getElementById('wizardContainer');
+            container.innerHTML = `
+                <div class="section-header">
+                    <h2 class="section-title">Finalizar Aquisição</h2>
+                    <p class="section-subtitle">Pagamento seguro</p>
+                </div>
+
+                <div class="card" style="max-width: 700px; margin: 0 auto;">
+                    <div style="text-align: center; padding: 30px; background: linear-gradient(135deg, var(--marrom-escuro), var(--marrom-medio)); color: var(--bege); border-radius: 8px; margin-bottom: 30px;">
+                        <h2 style="color: var(--dourado); margin-bottom: 15px;">Investimento</h2>
+                        <div style="font-size: 3em; font-weight: bold; margin: 20px 0;">R$ 7,00</div>
+                        <p>Pagamento único • Acesso imediato ao parecer</p>
+                    </div>
+
+                    <h3 style="color: var(--marrom-escuro); margin-bottom: 20px;">Seus Dados</h3>
+                    <div style="display: grid; gap: 15px; margin-bottom: 30px;">
+                        <input type="text" id="nome" placeholder="Nome completo *">
+                        <input type="email" id="email" placeholder="E-mail *">
+                        <input type="tel" id="telefone" placeholder="Telefone *">
+                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 15px;">
+                            <input type="text" id="cidade" placeholder="Cidade *">
+                            <input type="text" id="estado" placeholder="UF *" maxlength="2">
+                        </div>
+                    </div>
+
+                    <h3 style="color: var(--marrom-escuro); margin-bottom: 20px;">Forma de Pagamento</h3>
+                    <div style="display: grid; gap: 12px;">
+                        <label class="radio-option selected" onclick="selecionarMetodo('pix')">
+                            <input type="radio" name="metodo" value="pix" checked style="margin-right: 12px;">
+                            <strong style="font-size: 1.1em;">PIX - Aprovação Instantânea</strong>
+                        </label>
+                        <label class="radio-option" onclick="selecionarMetodo('cartao_credito')">
+                            <input type="radio" name="metodo" value="cartao_credito" style="margin-right: 12px;">
+                            <strong style="font-size: 1.1em;">Cartão de Crédito</strong>
+                        </label>
+                    </div>
+
+                    <div class="navigation" style="margin-top: 40px;">
+                        <button class="btn btn-secondary" onclick="renderStep3()">← Voltar</button>
+                        <button class="btn btn-success" onclick="alert('Em produção, aqui processaria o pagamento!')">
+                            Finalizar Pagamento
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        let metodoSelecionado = 'pix';
+        function selecionarMetodo(m) {
+            metodoSelecionado = m;
+            document.querySelectorAll('.radio-option').forEach(el => el.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+        }
+
+        init();
+    </script>
+</body>
+</html>
