@@ -1,25 +1,53 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useState } from 'react';
 
 export default function HomePage() {
+  const [showBetaModal, setShowBetaModal] = useState(false);
+
+  const handleBetaAccess = () => {
+    // Registrar consentimento (pode adicionar analytics aqui)
+    console.log('Usuário consentiu acesso ao beta');
+    // Redirecionar para página de login/cadastro
+    window.location.href = '/login';
+  };
+
   return (
     <>
       <style jsx global>{`
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Georgia', 'Times New Roman', serif; background: #0a0a0a; color: #f5f5dc; line-height: 1.8; }
 
-        header { position: relative; text-align: center; padding: 80px 20px; background: linear-gradient(135deg, #1a1410, #2d1f17); border-bottom: 2px solid #d4af37; overflow: hidden; }
-        header .logo-watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.08; z-index: 0; pointer-events: none; }
+        header { position: relative; text-align: center; padding: 100px 20px; background: linear-gradient(135deg, #1a1410, #2d1f17); border-bottom: 2px solid #d4af37; overflow: hidden; }
+        header .logo-watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.15; z-index: 0; pointer-events: none; }
         header .header-content { position: relative; z-index: 1; }
-        header h1 { font-size: 2.8em; color: #d4af37; font-weight: 400; letter-spacing: 2px; margin: 10px 0; }
+        header h1 { font-size: 2.8em; color: #d4af37; font-weight: 400; letter-spacing: 2px; margin: 10px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
         header .subtitle { font-size: 1.3em; color: #f5f5dc; margin: 15px 0; }
         header .stats { font-size: 1em; color: #d4af37; margin-top: 20px; font-weight: 300; }
 
-        .cta { display: inline-block; padding: 16px 40px; margin: 10px; background: #d4af37; color: #1a1410; text-decoration: none; border-radius: 6px; font-weight: 600; transition: all 0.3s; }
+        .cta { display: inline-block; padding: 16px 40px; margin: 10px; background: #d4af37; color: #1a1410; text-decoration: none; border-radius: 6px; font-weight: 600; transition: all 0.3s; cursor: pointer; border: none; font-family: inherit; font-size: 1em; }
         .cta:hover { background: #b8860b; transform: translateY(-2px); }
         .cta-outline { background: transparent; border: 2px solid #d4af37; color: #d4af37; }
         .cta-outline:hover { background: rgba(212, 175, 55, 0.1); }
+
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.85); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .modal { background: linear-gradient(135deg, #1a1410, #2d1f17); border: 2px solid #d4af37; border-radius: 12px; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; }
+        .modal-header { background: linear-gradient(135deg, #2d1f17, #1a1410); padding: 30px; text-align: center; border-bottom: 2px solid #d4af37; position: relative; }
+        .modal-close { position: absolute; top: 15px; right: 15px; background: transparent; border: none; color: #d4af37; font-size: 2em; cursor: pointer; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+        .modal-close:hover { color: #f5f5dc; transform: rotate(90deg); }
+        .modal-title { font-size: 2em; color: #d4af37; font-weight: 400; letter-spacing: 1px; margin-bottom: 10px; }
+        .modal-subtitle { font-size: 0.9em; color: #d4af37; text-transform: uppercase; letter-spacing: 2px; opacity: 0.8; }
+        .modal-body { padding: 40px; }
+        .modal-intro { font-size: 1.1em; color: #f5f5dc; margin-bottom: 30px; line-height: 1.8; text-align: center; }
+        .modal-section { margin: 30px 0; }
+        .modal-section-title { font-size: 1.3em; color: #d4af37; font-weight: 500; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .modal-list { list-style: none; }
+        .modal-list li { padding: 12px 0; padding-left: 30px; position: relative; color: #f5f5dc; line-height: 1.6; }
+        .modal-list li:before { content: '•'; position: absolute; left: 0; color: #d4af37; font-size: 1.5em; line-height: 1; }
+        .modal-footer { padding: 30px 40px; border-top: 2px solid #d4af37; text-align: center; }
+        .btn-beta { display: inline-block; padding: 18px 50px; background: #d4af37; color: #1a1410; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 1.1em; cursor: pointer; border: none; transition: all 0.3s; }
+        .btn-beta:hover { background: #b8860b; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3); }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 60px 40px; }
 
@@ -57,7 +85,7 @@ export default function HomePage() {
 
       <header>
         <div className="logo-watermark">
-          <Image src="/logodoutoraia.png" alt="" width={400} height={400} />
+          <Image src="/logodoutoraia.png" alt="" width={800} height={800} />
         </div>
         <div className="header-content">
           <h1>DOUTORA IA</h1>
@@ -65,10 +93,56 @@ export default function HomePage() {
           <p className="stats">1.326 engines jurídicas · 15 áreas do Direito · 539 PDFs de jurisprudência processados</p>
           <div style={{marginTop: '30px'}}>
             <Link href="/pricing" className="cta">VER PLANOS</Link>
-            <Link href="/login" className="cta cta-outline">ENTRAR</Link>
+            <button onClick={() => setShowBetaModal(true)} className="cta cta-outline">ENTRAR</button>
           </div>
         </div>
       </header>
+
+      {showBetaModal && (
+        <div className="modal-overlay" onClick={() => setShowBetaModal(false)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <button className="modal-close" onClick={() => setShowBetaModal(false)}>&times;</button>
+              <h2 className="modal-title">DOUTORA IA</h2>
+              <p className="modal-subtitle">BETA FECHADO — ACESSO POR CONVITE</p>
+            </div>
+            <div className="modal-body">
+              <p className="modal-intro">
+                Este ambiente faz parte da fase de testes da Doutora IA.
+                <br/><br/>
+                Todas as funcionalidades estão liberadas exclusivamente para validação técnica e jurídica, antes da abertura comercial da plataforma.
+              </p>
+
+              <div className="modal-section">
+                <h3 className="modal-section-title">O QUE ESTÁ LIBERADO</h3>
+                <ul className="modal-list">
+                  <li>Consultas e pesquisas jurídicas com IA</li>
+                  <li>Geração de peças e contratos</li>
+                  <li>Jurisprudência integrada</li>
+                  <li>Análises de risco processual</li>
+                  <li>Dashboard e histórico de uso</li>
+                </ul>
+              </div>
+
+              <div className="modal-section">
+                <h3 className="modal-section-title">IMPORTANTE</h3>
+                <ul className="modal-list">
+                  <li>Ambiente não comercial</li>
+                  <li>Uso monitorado para melhoria do sistema</li>
+                  <li>Não há garantia de resultados processuais</li>
+                  <li>A responsabilidade final é sempre do advogado</li>
+                  <li>Dados processados no Brasil (LGPD)</li>
+                </ul>
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button onClick={handleBetaAccess} className="btn-beta">
+                Entrar com convite
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="container">
         <section className="authority">
@@ -221,7 +295,7 @@ export default function HomePage() {
           <p>Advogados: 14 dias de teste, sem cartão de crédito</p>
           <div style={{marginTop: '30px'}}>
             <Link href="/pricing" className="cta">COMEÇAR AGORA</Link>
-            <Link href="/login" className="cta cta-outline">JÁ TENHO CONTA</Link>
+            <button onClick={() => setShowBetaModal(true)} className="cta cta-outline">JÁ TENHO CONTA</button>
           </div>
         </section>
       </div>
