@@ -3,348 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doutora IA - Inteligência Artificial Jurídica</title>
+    <title>Doutora IA - Plataforma de Gestão Jurídica com Inteligência Artificial</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --marrom-escuro: #3e2723; --marrom-medio: #5d4037;
+            --marrom-claro: #8d6e63; --dourado: #d4af37;
+            --dourado-escuro: #b8860b; --bege: #f5f5dc;
+            --creme: #faf0e6; --preto: #1a1a1a;
         }
-
-        body {
-            font-family: 'Cormorant Garamond', serif;
-            overflow: hidden;
-            background: #0a0a0a;
-            height: 100vh;
-            position: relative;
-        }
-
-        /* Ambiente escuro com gradiente */
-        .dark-room {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(ellipse at center bottom, #1a1510 0%, #050505 60%, #000000 100%);
-            z-index: 1;
-        }
-
-        /* Névoa/Poeira no ar */
-        .dust-particle {
-            position: absolute;
-            background: rgba(255, 230, 180, 0.15);
-            border-radius: 50%;
-            animation: float-dust 20s infinite ease-in-out;
-            filter: blur(1px);
-        }
-
-        @keyframes float-dust {
-            0%, 100% {
-                transform: translate(0, 0) scale(1);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.3;
-            }
-            50% {
-                transform: translate(var(--x), var(--y)) scale(1.2);
-                opacity: 0.5;
-            }
-            90% {
-                opacity: 0.2;
-            }
-        }
-
-        /* Luz amarela fraca de baixo */
-        .light-glow {
-            position: absolute;
-            bottom: -20%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle,
-                rgba(255, 220, 120, 0.4) 0%,
-                rgba(255, 200, 80, 0.25) 20%,
-                rgba(255, 180, 60, 0.1) 40%,
-                transparent 70%);
-            filter: blur(40px);
-            animation: light-flicker 4s infinite ease-in-out;
-            z-index: 2;
-        }
-
-        @keyframes light-flicker {
-            0%, 100% { opacity: 0.8; }
-            25% { opacity: 0.6; }
-            50% { opacity: 0.9; }
-            75% { opacity: 0.7; }
-        }
-
-        /* Container da balança */
-        .scale-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 3;
-        }
-
-        /* Imagem da balança */
-        .balance-scale {
-            max-width: 500px;
-            max-height: 500px;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-            filter:
-                drop-shadow(0 30px 60px rgba(0, 0, 0, 0.9))
-                brightness(0.85)
-                contrast(1.1);
-            opacity: 0.95;
-        }
-
-        /* Texto sobre a balança */
-        .title-container {
-            position: absolute;
-            top: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
-            z-index: 4;
-            animation: fade-in 2s ease-out;
-        }
-
-        @keyframes fade-in {
-            from {
-                opacity: 0;
-                transform: translateX(-50%) translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(-50%) translateY(0);
-            }
-        }
-
-        .title {
-            font-family: 'Cinzel', serif;
-            font-size: 4rem;
-            font-weight: 700;
-            color: #c9b58c;
-            text-shadow:
-                0 0 20px rgba(201, 181, 140, 0.5),
-                0 0 40px rgba(201, 181, 140, 0.3),
-                2px 2px 4px rgba(0, 0, 0, 0.8);
-            letter-spacing: 8px;
-            margin-bottom: 10px;
-        }
-
-        .subtitle {
-            font-size: 1.5rem;
-            color: #a89775;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
-            letter-spacing: 3px;
-            font-weight: 300;
-        }
-
-        /* Botão de entrada */
-        .enter-button {
-            position: absolute;
-            bottom: 15%;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 4;
-            animation: fade-in 3s ease-out 1s backwards;
-        }
-
-        .btn-enter {
-            font-family: 'Cinzel', serif;
-            font-size: 1.3rem;
-            padding: 18px 50px;
-            background: linear-gradient(135deg, #8b7355 0%, #6d5d4b 100%);
-            color: #fff;
-            border: 2px solid #c9b58c;
-            border-radius: 50px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.4s ease;
-            box-shadow:
-                0 10px 30px rgba(0, 0, 0, 0.5),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            letter-spacing: 2px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-enter::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s;
-        }
-
-        .btn-enter:hover::before {
-            left: 100%;
-        }
-
-        .btn-enter:hover {
-            transform: translateY(-3px);
-            box-shadow:
-                0 15px 40px rgba(201, 181, 140, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3);
-            border-color: #d4c4a0;
-        }
-
-        .btn-enter:active {
-            transform: translateY(-1px);
-        }
-
-        /* Detalhes ornamentais */
-        .ornament {
-            position: absolute;
-            color: #c9b58c;
-            font-size: 2rem;
-            opacity: 0.3;
-            animation: ornament-float 8s infinite ease-in-out;
-        }
-
-        @keyframes ornament-float {
-            0%, 100% {
-                transform: translateY(0) rotate(0deg);
-            }
-            50% {
-                transform: translateY(-20px) rotate(5deg);
-            }
-        }
-
-        .ornament-left {
-            top: 35%;
-            left: 15%;
-            animation-delay: 0s;
-        }
-
-        .ornament-right {
-            top: 35%;
-            right: 15%;
-            animation-delay: 3s;
-        }
-
-        /* Vinheta escura nas bordas */
-        .vignette {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            box-shadow: inset 0 0 200px rgba(0, 0, 0, 0.9);
-            z-index: 5;
-        }
-
-        /* Responsivo */
+        body { font-family: 'Cormorant Garamond', serif; background: var(--creme); color: var(--preto); line-height: 1.6; }
+        header { background: linear-gradient(135deg, var(--marrom-escuro) 0%, var(--marrom-medio) 100%); padding: 20px 0; position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        nav { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
+        .logo { font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 700; color: var(--dourado); letter-spacing: 2px; }
+        .nav-buttons a { color: var(--bege); text-decoration: none; padding: 10px 25px; border: 2px solid var(--dourado); border-radius: 25px; transition: all 0.3s; font-weight: 600; }
+        .nav-buttons a:hover { background: var(--dourado); color: var(--marrom-escuro); }
+        .hero { margin-top: 80px; background: linear-gradient(135deg, var(--marrom-escuro) 0%, var(--marrom-medio) 100%); padding: 100px 20px; text-align: center; color: var(--bege); }
+        .hero h1 { font-family: 'Cinzel', serif; font-size: 3.5rem; font-weight: 700; color: var(--dourado); margin-bottom: 20px; letter-spacing: 3px; }
+        .hero p { font-size: 1.5rem; margin-bottom: 40px; color: var(--bege); max-width: 800px; margin-left: auto; margin-right: auto; }
+        .cta-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+        .btn { padding: 18px 45px; border-radius: 50px; text-decoration: none; font-size: 1.2rem; font-weight: 600; transition: all 0.3s; display: inline-block; font-family: 'Cinzel', serif; letter-spacing: 1px; }
+        .btn-primary { background: var(--dourado); color: var(--marrom-escuro); border: 2px solid var(--dourado); }
+        .btn-primary:hover { background: var(--dourado-escuro); border-color: var(--dourado-escuro); transform: translateY(-3px); box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3); }
+        .btn-secondary { background: transparent; color: var(--bege); border: 2px solid var(--bege); }
+        .btn-secondary:hover { background: var(--bege); color: var(--marrom-escuro); transform: translateY(-3px); }
+        .features { max-width: 1200px; margin: 80px auto; padding: 0 20px; }
+        .section-title { text-align: center; font-family: 'Cinzel', serif; font-size: 2.5rem; color: var(--marrom-escuro); margin-bottom: 60px; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+        .feature-card { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); border-top: 4px solid var(--dourado); transition: all 0.3s; }
+        .feature-card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0,0,0,0.15); }
+        .feature-icon { font-size: 3rem; margin-bottom: 20px; }
+        .feature-card h3 { font-family: 'Cinzel', serif; font-size: 1.5rem; color: var(--marrom-escuro); margin-bottom: 15px; }
+        .feature-card p { color: var(--marrom-claro); font-size: 1.1rem; }
+        .pricing { background: var(--bege); padding: 80px 20px; }
+        .pricing-content { max-width: 1200px; margin: 0 auto; text-align: center; }
+        .pricing-cta { margin-top: 40px; }
+        footer { background: var(--marrom-escuro); color: var(--bege); text-align: center; padding: 40px 20px; }
+        footer p { margin: 10px 0; }
         @media (max-width: 768px) {
-            .title {
-                font-size: 2.5rem;
-                letter-spacing: 4px;
-            }
-            .subtitle {
-                font-size: 1rem;
-                letter-spacing: 2px;
-            }
-            .balance-scale {
-                max-width: 350px;
-                max-height: 350px;
-            }
-            .btn-enter {
-                font-size: 1rem;
-                padding: 15px 40px;
-            }
-            .ornament {
-                display: none;
-            }
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1.2rem; }
+            .cta-buttons { flex-direction: column; align-items: center; }
+            .nav-buttons { display: none; }
         }
     </style>
 </head>
 <body>
-    <!-- Ambiente escuro -->
-    <div class="dark-room"></div>
-
-    <!-- Luz amarela de baixo -->
-    <div class="light-glow"></div>
-
-    <!-- Partículas de poeira -->
-    <div id="dust-container"></div>
-
-    <!-- Título -->
-    <div class="title-container">
-        <h1 class="title">DOUTORA IA</h1>
-        <p class="subtitle">Inteligência Artificial Jurídica</p>
-    </div>
-
-    <!-- Ornamentos -->
-    <div class="ornament ornament-left">⚜</div>
-    <div class="ornament ornament-right">⚜</div>
-
-    <!-- Balança -->
-    <div class="scale-container">
-        <img
-            class="balance-scale"
-            src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=1000"
-            alt="Balança da Justiça Vintage"
-            onerror="this.src='https://cdn.pixabay.com/photo/2016/03/31/19/50/chess-1297690_1280.png'"
-        />
-    </div>
-
-    <!-- Botão de entrada -->
-    <div class="enter-button">
-        <a href="https://public-ij8unr3l7-rodrigos-projects-2fb5b2ab.vercel.app" class="btn-enter" style="margin-right: 20px;" target="_blank">VER DEMONSTRAÇÃO</a>
-        <a href="/login.html" class="btn-enter">ENTRAR</a>
-    </div>
-
-    <!-- Vinheta -->
-    <div class="vignette"></div>
-
-    <script>
-        // Criar partículas de poeira flutuando
-        const dustContainer = document.getElementById('dust-container');
-        const dustCount = 30;
-
-        for (let i = 0; i < dustCount; i++) {
-            const dust = document.createElement('div');
-            dust.className = 'dust-particle';
-
-            // Tamanho aleatório
-            const size = Math.random() * 4 + 1;
-            dust.style.width = `${size}px`;
-            dust.style.height = `${size}px`;
-
-            // Posição inicial aleatória
-            dust.style.left = `${Math.random() * 100}%`;
-            dust.style.top = `${Math.random() * 100}%`;
-
-            // Movimento aleatório
-            dust.style.setProperty('--x', `${(Math.random() - 0.5) * 200}px`);
-            dust.style.setProperty('--y', `${(Math.random() - 0.5) * 200}px`);
-
-            // Delay aleatório na animação
-            dust.style.animationDelay = `${Math.random() * 20}s`;
-            dust.style.animationDuration = `${15 + Math.random() * 10}s`;
-
-            dustContainer.appendChild(dust);
-        }
-
-        // Efeito de som ao hover no botão (opcional)
-        const btnEnter = document.querySelector('.btn-enter');
-        btnEnter.addEventListener('mouseenter', () => {
-            // Pode adicionar som aqui se quiser
-        });
-    </script>
+    <header>
+        <nav>
+            <div class="logo">DOUTORA IA</div>
+            <div class="nav-buttons"><a href="/login.html">ENTRAR</a></div>
+        </nav>
+    </header>
+    
+    <section class="hero">
+        <h1>Gestão Jurídica Inteligente</h1>
+        <p>Plataforma completa para advogados gerenciarem clientes, leads e processos com tecnologia de ponta</p>
+        <div class="cta-buttons">
+            <a href="/pricing.html" class="btn btn-primary">VER PLANOS</a>
+            <a href="/login.html" class="btn btn-secondary">ACESSAR SISTEMA</a>
+        </div>
+    </section>
+    
+    <section class="features">
+        <h2 class="section-title">O que oferecemos</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Dashboard Completo</h3>
+                <p>Visualize todas as métricas importantes do seu escritório em tempo real</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">👥</div>
+                <h3>Gestão de Leads</h3>
+                <p>Organize e acompanhe seus potenciais clientes de forma eficiente</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚖️</div>
+                <h3>Painel do Advogado</h3>
+                <p>Acesso rápido a todas as ferramentas essenciais para o seu dia a dia</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="pricing">
+        <div class="pricing-content">
+            <h2 class="section-title">Planos acessíveis</h2>
+            <p style="font-size: 1.3rem; color: var(--marrom-medio); margin-bottom: 30px;">
+                A partir de <strong style="color: var(--dourado); font-size: 2rem;">R$ 49/mês</strong>
+            </p>
+            <div class="pricing-cta">
+                <a href="/pricing.html" class="btn btn-primary">CONHECER PLANOS</a>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <p><strong>Doutora IA</strong> - Tecnologia Jurídica</p>
+        <p>&copy; 2026 Todos os direitos reservados</p>
+    </footer>
 </body>
 </html>
