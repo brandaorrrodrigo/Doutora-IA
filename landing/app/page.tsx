@@ -9,8 +9,9 @@ export default function HomePage() {
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Georgia', 'Times New Roman', serif; background: #0a0a0a; color: #f5f5dc; line-height: 1.8; }
 
-        header { text-align: center; padding: 40px 20px; background: linear-gradient(135deg, #1a1410, #2d1f17); border-bottom: 2px solid #d4af37; }
-        header .logo { margin-bottom: 20px; }
+        header { position: relative; text-align: center; padding: 80px 20px; background: linear-gradient(135deg, #1a1410, #2d1f17); border-bottom: 2px solid #d4af37; overflow: hidden; }
+        header .logo-watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.08; z-index: 0; pointer-events: none; }
+        header .header-content { position: relative; z-index: 1; }
         header h1 { font-size: 2.8em; color: #d4af37; font-weight: 400; letter-spacing: 2px; margin: 10px 0; }
         header .subtitle { font-size: 1.3em; color: #f5f5dc; margin: 15px 0; }
         header .stats { font-size: 1em; color: #d4af37; margin-top: 20px; font-weight: 300; }
@@ -55,15 +56,17 @@ export default function HomePage() {
       `}</style>
 
       <header>
-        <div className="logo">
-          <Image src="/logodoutoraia.png" alt="Doutora IA" width={120} height={120} priority />
+        <div className="logo-watermark">
+          <Image src="/logodoutoraia.png" alt="" width={400} height={400} />
         </div>
-        <h1>DOUTORA IA</h1>
-        <p className="subtitle">A maior plataforma de inteligência jurídica já construída no Brasil</p>
-        <p className="stats">1.326 engines jurídicas · 15 áreas do Direito · 539 PDFs de jurisprudência processados</p>
-        <div style={{marginTop: '30px'}}>
-          <Link href="/pricing" className="cta">VER PLANOS</Link>
-          <Link href="/login" className="cta cta-outline">ENTRAR</Link>
+        <div className="header-content">
+          <h1>DOUTORA IA</h1>
+          <p className="subtitle">A maior plataforma de inteligência jurídica já construída no Brasil</p>
+          <p className="stats">1.326 engines jurídicas · 15 áreas do Direito · 539 PDFs de jurisprudência processados</p>
+          <div style={{marginTop: '30px'}}>
+            <Link href="/pricing" className="cta">VER PLANOS</Link>
+            <Link href="/login" className="cta cta-outline">ENTRAR</Link>
+          </div>
         </div>
       </header>
 
