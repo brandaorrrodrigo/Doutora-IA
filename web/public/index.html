@@ -14,12 +14,32 @@
         header h1 { font-size: 2.8em; color: #d4af37; font-weight: 400; letter-spacing: 2px; margin: 10px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
         header .subtitle { font-size: 1.3em; color: #f5f5dc; margin: 15px 0; }
         header .stats { font-size: 1em; color: #d4af37; margin-top: 20px; font-weight: 300; }
-        header .intro { font-size: 1.1em; color: #f5f5dc; margin-top: 25px; max-width: 800px; margin-left: auto; margin-right: auto; opacity: 0.95; }
         .cta { display: inline-block; padding: 16px 40px; margin: 10px; background: #d4af37; color: #1a1410; text-decoration: none; border-radius: 6px; font-weight: 600; transition: all 0.3s; cursor: pointer; border: none; font-family: inherit; font-size: 1em; }
         .cta:hover { background: #b8860b; transform: translateY(-2px); }
         .cta-outline { background: transparent; border: 2px solid #d4af37; color: #d4af37; }
         .cta-outline:hover { background: rgba(212, 175, 55, 0.1); }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.85); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+        .modal-overlay.active { display: flex; }
+        .modal { background: linear-gradient(135deg, #1a1410, #2d1f17); border: 2px solid #d4af37; border-radius: 12px; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; }
+        .modal-header { background: linear-gradient(135deg, #2d1f17, #1a1410); padding: 30px; text-align: center; border-bottom: 2px solid #d4af37; position: relative; }
+        .modal-close { position: absolute; top: 15px; right: 15px; background: transparent; border: none; color: #d4af37; font-size: 2em; cursor: pointer; width: 40px; height: 40px; transition: all 0.3s; }
+        .modal-close:hover { color: #f5f5dc; transform: rotate(90deg); }
+        .modal-title { font-size: 2em; color: #d4af37; font-weight: 400; letter-spacing: 1px; margin-bottom: 10px; }
+        .modal-subtitle { font-size: 0.9em; color: #d4af37; text-transform: uppercase; letter-spacing: 2px; opacity: 0.8; }
+        .modal-body { padding: 40px; }
+        .modal-intro { font-size: 1.1em; color: #f5f5dc; margin-bottom: 30px; line-height: 1.8; text-align: center; }
+        .modal-section { margin: 30px 0; }
+        .modal-section-title { font-size: 1.3em; color: #d4af37; font-weight: 500; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .modal-list { list-style: none; }
+        .modal-list li { padding: 12px 0 12px 30px; position: relative; color: #f5f5dc; line-height: 1.6; }
+        .modal-list li:before { content: '•'; position: absolute; left: 0; color: #d4af37; font-size: 1.5em; line-height: 1; }
+        .modal-footer { padding: 30px 40px; border-top: 2px solid #d4af37; text-align: center; }
+        .btn-beta { display: inline-block; padding: 18px 50px; background: #d4af37; color: #1a1410; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 1.1em; transition: all 0.3s; }
+        .btn-beta:hover { background: #b8860b; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3); }
         .container { max-width: 1200px; margin: 0 auto; padding: 60px 40px; }
+        .transparency { background: rgba(212, 175, 55, 0.08); padding: 40px; border-radius: 8px; margin: 40px 0; text-align: center; border: 1px solid #d4af37; }
+        .transparency h2 { color: #d4af37; margin-bottom: 20px; }
+        .transparency p { color: #f5f5dc; font-size: 1.1em; line-height: 1.8; }
         footer { background: #1a1410; color: #f5f5dc; text-align: center; padding: 40px 20px; margin-top: 80px; border-top: 2px solid #d4af37; }
         footer p { margin: 10px 0; font-size: 0.95em; }
     </style>
@@ -32,23 +52,74 @@
         <div class="header-content">
             <h1>DOUTORA IA</h1>
             <p class="subtitle">A maior plataforma de inteligência jurídica já construída no Brasil</p>
-            <p class="stats">1.326 engines jurídicas especializadas · 15 áreas do Direito cobertas · 539 PDFs de jurisprudência processados</p>
-            <p class="intro">A Doutora IA une automação processual, análise de risco com inteligência artificial, jurisprudência real e gestão completa de escritórios. Uma plataforma jurídica de nova geração, com IA operando localmente no Brasil.</p>
+            <p class="stats">1.326 engines jurídicas · 15 áreas do Direito · 539 PDFs de jurisprudência processados</p>
             <div style="margin-top: 30px;">
-                <a href="/pricing.html" class="cta">VER PLANOS E FUNCIONALIDADES</a>
-                <a href="/login.html" class="cta cta-outline">ENTRAR</a>
+                <a href="/pricing.html" class="cta">VER PLANOS</a>
+                <button onclick="openBetaModal()" class="cta cta-outline">ENTRAR</button>
             </div>
         </div>
     </header>
 
+    <div id="betaModal" class="modal-overlay" onclick="closeBetaModal()">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <button class="modal-close" onclick="closeBetaModal()">&times;</button>
+                <h2 class="modal-title">DOUTORA IA</h2>
+                <p class="modal-subtitle">BETA FECHADO — ACESSO POR CONVITE</p>
+            </div>
+            <div class="modal-body">
+                <p class="modal-intro">
+                    Este ambiente faz parte da fase de testes da Doutora IA.<br><br>
+                    Todas as funcionalidades estão liberadas exclusivamente para validação técnica e jurídica, antes da abertura comercial da plataforma.
+                </p>
+                <div class="modal-section">
+                    <h3 class="modal-section-title">O QUE ESTÁ LIBERADO</h3>
+                    <ul class="modal-list">
+                        <li>Consultas e pesquisas jurídicas com IA</li>
+                        <li>Geração de peças e contratos</li>
+                        <li>Jurisprudência integrada</li>
+                        <li>Análises de risco processual</li>
+                        <li>Dashboard e histórico de uso</li>
+                    </ul>
+                </div>
+                <div class="modal-section">
+                    <h3 class="modal-section-title">IMPORTANTE</h3>
+                    <ul class="modal-list">
+                        <li>Ambiente não comercial</li>
+                        <li>Uso monitorado para melhoria do sistema</li>
+                        <li>Não há garantia de resultados processuais</li>
+                        <li>A responsabilidade final é sempre do advogado</li>
+                        <li>Dados processados no Brasil (LGPD)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="/login.html" class="btn-beta">Entrar com convite</a>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
-        <h2 style="color: #d4af37; text-align: center; font-size: 3em;">VERSÃO NOVA v2.0 - TESTE</h2>
+        <section class="transparency">
+            <h2>Transparência Total</h2>
+            <p>Estamos em fase de testes. Alguns recursos ainda estão sendo calibrados. Não há depoimentos falsos aqui - preferimos honestidade a marketing enganoso.</p>
+            <p>Se encontrar bugs ou tiver sugestões, queremos ouvir. Esta plataforma está sendo construída COM advogados e cidadãos, não apenas PARA eles.</p>
+        </section>
     </div>
 
     <footer>
-        <p><strong>DOUTORA IA</strong> - Tecnologia Jurídica Brasileira</p>
-        <p>1.326 Engines especializadas · 15 Áreas do Direito cobertas · 539 PDFs de jurisprudência processados</p>
-        <p>&copy; 2026 - Democratizando o acesso à Justiça - v2.0 TESTE WEB</p>
+        <p><strong>Doutora IA</strong> - Tecnologia Jurídica Brasileira</p>
+        <p>1.326 Engines · 15 Áreas do Direito · 539 PDFs Processados</p>
+        <p>&copy; 2026 - Democratizando o acesso à Justiça</p>
     </footer>
+
+    <script>
+        function openBetaModal() {
+            document.getElementById('betaModal').classList.add('active');
+        }
+        function closeBetaModal() {
+            document.getElementById('betaModal').classList.remove('active');
+        }
+    </script>
 </body>
 </html>
