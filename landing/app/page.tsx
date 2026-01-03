@@ -317,7 +317,7 @@ export default function HomePage() {
       <footer>
         <p><strong>DOUTORA IA</strong> - Tecnologia Jurídica Brasileira</p>
         <p>1.326 Engines especializadas · 15 Áreas do Direito cobertas · 539 PDFs de jurisprudência processados</p>
-        <p>&copy; 2026 - Democratizando o acesso à Justiça</p>
+        <p>&copy; 2026 - Democratizando o acesso à Justiça - v2.0 NOVA</p>
       </footer>
     </>
   );
