@@ -5,16 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="/favicondoutoraia.png">
     <link rel="apple-touch-icon" href="/favicondoutoraia.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
     <title>Doutora IA - Inteligência Jurídica</title>
     <style>
+@keyframes glow-pulse {
+    0%, 100% { filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.3)) drop-shadow(0 0 30px rgba(212, 175, 55, 0.2)); opacity: 0.15; }
+    50% { filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.6)) drop-shadow(0 0 60px rgba(212, 175, 55, 0.4)) drop-shadow(0 0 90px rgba(212, 175, 55, 0.3)); opacity: 0.25; }
+}
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Georgia', 'Times New Roman', serif; background: #0a0a0a; color: #f5f5dc; line-height: 1.8; }
 
         header { position: relative; text-align: center; padding: 100px 20px; background: linear-gradient(135deg, #1a1410, #2d1f17); border-bottom: 2px solid #d4af37; overflow: hidden; }
-        header .logo-watermark { width: auto !important; height: calc(100% - 2cm) !important; max-height: 600px !important; } header .logo-watermark-old { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.15; z-index: 0; pointer-events: none; height: calc(100% - 2cm); width: auto; }
+        header .logo-watermark { animation: glow-pulse 4s ease-in-out infinite; }  header .logo-watermark-base { width: auto !important; height: calc(100% - 2cm) !important; max-height: 600px !important; } header .logo-watermark-old { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.15; z-index: 0; pointer-events: none; height: calc(100% - 2cm); width: auto; }
         header .header-content { position: relative; z-index: 1; }
-        header h1 { font-size: 2.8em; color: #d4af37; font-weight: 400; letter-spacing: 2px; margin: 10px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        header h1 { font-family: 'Cinzel', serif !important; font-size: 2.8em; color: #d4af37; font-weight: 400; letter-spacing: 2px; margin: 10px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
         header .subtitle { font-size: 1.3em; color: #f5f5dc; margin: 15px 0; }
         header .stats { font-size: 1em; color: #d4af37; margin-top: 20px; font-weight: 300; }
         header .intro { font-size: 1.1em; color: #f5f5dc; margin-top: 25px; max-width: 800px; margin-left: auto; margin-right: auto; opacity: 0.95; }
@@ -89,9 +96,9 @@
         body { font-family: 'Georgia', 'Times New Roman', serif; background: #0a0a0a; color: #f5f5dc; line-height: 1.8; }
 
         header { position: relative; text-align: center; padding: 100px 20px; background: linear-gradient(135deg, #1a1410, #2d1f17); border-bottom: 2px solid #d4af37; overflow: hidden; }
-        header .logo-watermark { width: auto !important; height: calc(100% - 2cm) !important; max-height: 600px !important; } header .logo-watermark-old { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.15; z-index: 0; pointer-events: none; height: calc(100% - 2cm); width: auto; }
+        header .logo-watermark { animation: glow-pulse 4s ease-in-out infinite; }  header .logo-watermark-base { width: auto !important; height: calc(100% - 2cm) !important; max-height: 600px !important; } header .logo-watermark-old { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.15; z-index: 0; pointer-events: none; height: calc(100% - 2cm); width: auto; }
         header .header-content { position: relative; z-index: 1; }
-        header h1 { font-size: 2.8em; color: #d4af37; font-weight: 400; letter-spacing: 2px; margin: 10px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        header h1 { font-family: 'Cinzel', serif !important; font-size: 2.8em; color: #d4af37; font-weight: 400; letter-spacing: 2px; margin: 10px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
         header .subtitle { font-size: 1.3em; color: #f5f5dc; margin: 15px 0; }
         header .stats { font-size: 1em; color: #d4af37; margin-top: 20px; font-weight: 300; }
         header .intro { font-size: 1.1em; color: #f5f5dc; margin-top: 25px; max-width: 800px; margin-left: auto; margin-right: auto; opacity: 0.95; }
@@ -161,7 +168,7 @@
 
       <header>
         <div class="logo-watermark">
-          <img src="/favicondoutoraia.png" alt="" style="width: 100%; height: 100%;">
+          <img src="/favicondoutoraia.png?v=2" alt="" style="width: 100%; height: 100%;">
         </div>
         <div class="header-content">
           <h1>DOUTORA IA</h1>
