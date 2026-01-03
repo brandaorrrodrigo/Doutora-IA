@@ -21,12 +21,12 @@ export default function LoginPage() {
 
         .login-container { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; background: linear-gradient(135deg, #0a0a0a, #1a1410); }
 
-        .login-box { background: linear-gradient(135deg, #1a1410, #2d1f17); border: 2px solid #d4af37; border-radius: 12px; padding: 50px 40px; max-width: 450px; width: 100%; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); }
+        .login-box { background: linear-gradient(135deg, #1a1410, #2d1f17); border: 2px solid #d4af37; border-radius: 12px; padding: 50px 40px; max-width: 500px; width: 100%; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); }
 
         .login-header { text-align: center; margin-bottom: 40px; }
-        .login-logo { margin-bottom: 20px; display: flex; justify-content: center; }
-        .login-title { font-size: 2.2em; color: #d4af37; font-weight: 400; letter-spacing: 2px; margin-bottom: 10px; }
-        .login-subtitle { font-size: 0.95em; color: #f5f5dc; opacity: 0.8; }
+        .login-logo { margin-bottom: 30px; display: flex; justify-content: center; }
+        .login-title { font-size: 2.5em; color: #d4af37; font-weight: 400; letter-spacing: 2px; margin-bottom: 10px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .login-subtitle { font-size: 1em; color: #f5f5dc; opacity: 0.9; }
 
         .login-form { display: flex; flex-direction: column; gap: 25px; }
 
@@ -60,7 +60,8 @@ export default function LoginPage() {
 
         @media (max-width: 600px) {
           .login-box { padding: 40px 30px; }
-          .login-title { font-size: 1.8em; }
+          .login-title { font-size: 2em; }
+          .login-logo img { width: 180px !important; height: 180px !important; }
         }
       `}</style>
 
@@ -68,7 +69,7 @@ export default function LoginPage() {
         <div className="login-box">
           <div className="login-header">
             <div className="login-logo">
-              <Image src="/logodoutoraia.png" alt="Doutora IA" width={80} height={80} priority />
+              <Image src="/logodoutoraia.png" alt="Doutora IA" width={250} height={250} priority />
             </div>
             <h1 className="login-title">DOUTORA IA</h1>
             <p className="login-subtitle">Beta Fechado - Acesso por Convite</p>
