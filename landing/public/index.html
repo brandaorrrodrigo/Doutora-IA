@@ -3,71 +3,399 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doutora IA</title>
+    <title>Doutora IA - Inteligência Jurídica</title>
     <style>
-        * { margin:0; padding:0; box-sizing:border-box }
-        body { font-family:serif; background:#faf0e6 }
-        header { background:#3e2723; padding:20px; text-align:center; color:#d4af37; font-size:2rem; font-weight:bold }
-        .hero { background:linear-gradient(135deg,#3e2723,#5d4037); color:#f5f5dc; padding:100px 20px; text-align:center }
-        .hero h1 { font-size:3rem; color:#d4af37; margin-bottom:20px }
-        .hero p { font-size:1.3rem; margin-bottom:30px }
-        .btn { display:inline-block; padding:15px 40px; margin:10px; background:#d4af37; color:#3e2723; text-decoration:none; border-radius:30px; font-weight:bold; transition:all 0.3s }
-        .btn:hover { background:#b8860b }
-        .btn-outline { background:transparent; border:2px solid #f5f5dc; color:#f5f5dc }
-        .btn-outline:hover { background:rgba(245,245,220,0.1) }
-        .features { max-width:1000px; margin:60px auto; padding:20px }
-        .feature { background:white; padding:30px; margin:20px 0; border-radius:10px; border-left:4px solid #d4af37; box-shadow:0 2px 8px rgba(0,0,0,0.1) }
-        .feature h3 { color:#3e2723; margin-bottom:15px; font-size:1.5rem }
-        .feature p { color:#555; line-height:1.6 }
-        footer { background:#3e2723; color:#f5f5dc; text-align:center; padding:30px; margin-top:60px }
-        footer p { margin:5px 0 }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Georgia', 'Times New Roman', serif; background: #0a0a0a; color: #f5f5dc; line-height: 1.8; }
+
+        header { position: relative; text-align: center; padding: 100px 20px; background: linear-gradient(135deg, #1a1410, #2d1f17); border-bottom: 2px solid #d4af37; overflow: hidden; }
+        header .logo-watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.15; z-index: 0; pointer-events: none; }
+        header .header-content { position: relative; z-index: 1; }
+        header h1 { font-size: 2.8em; color: #d4af37; font-weight: 400; letter-spacing: 2px; margin: 10px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        header .subtitle { font-size: 1.3em; color: #f5f5dc; margin: 15px 0; }
+        header .stats { font-size: 1em; color: #d4af37; margin-top: 20px; font-weight: 300; }
+        header .intro { font-size: 1.1em; color: #f5f5dc; margin-top: 25px; max-width: 800px; margin-left: auto; margin-right: auto; opacity: 0.95; }
+
+        .cta { display: inline-block; padding: 16px 40px; margin: 10px; background: #d4af37; color: #1a1410; text-decoration: none; border-radius: 6px; font-weight: 600; transition: all 0.3s; cursor: pointer; border: none; font-family: inherit; font-size: 1em; }
+        .cta:hover { background: #b8860b; transform: translateY(-2px); }
+        .cta-outline { background: transparent; border: 2px solid #d4af37; color: #d4af37; }
+        .cta-outline:hover { background: rgba(212, 175, 55, 0.1); }
+
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.85); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+        .modal-overlay.active { display: flex; }
+        .modal { background: linear-gradient(135deg, #1a1410, #2d1f17); border: 2px solid #d4af37; border-radius: 12px; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; }
+        .modal-header { background: linear-gradient(135deg, #2d1f17, #1a1410); padding: 30px; text-align: center; border-bottom: 2px solid #d4af37; position: relative; }
+        .modal-close { position: absolute; top: 15px; right: 15px; background: transparent; border: none; color: #d4af37; font-size: 2em; cursor: pointer; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+        .modal-close:hover { color: #f5f5dc; transform: rotate(90deg); }
+        .modal-title { font-size: 2em; color: #d4af37; font-weight: 400; letter-spacing: 1px; margin-bottom: 10px; }
+        .modal-subtitle { font-size: 0.9em; color: #d4af37; text-transform: uppercase; letter-spacing: 2px; opacity: 0.8; }
+        .modal-body { padding: 40px; }
+        .modal-intro { font-size: 1.1em; color: #f5f5dc; margin-bottom: 30px; line-height: 1.8; text-align: center; }
+        .modal-section { margin: 30px 0; }
+        .modal-section-title { font-size: 1.3em; color: #d4af37; font-weight: 500; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .modal-list { list-style: none; }
+        .modal-list li { padding: 12px 0; padding-left: 30px; position: relative; color: #f5f5dc; line-height: 1.6; }
+        .modal-list li:before { content: '•'; position: absolute; left: 0; color: #d4af37; font-size: 1.5em; line-height: 1; }
+        .modal-footer { padding: 30px 40px; border-top: 2px solid #d4af37; text-align: center; }
+        .btn-beta { display: inline-block; padding: 18px 50px; background: #d4af37; color: #1a1410; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 1.1em; cursor: pointer; border: none; transition: all 0.3s; }
+        .btn-beta:hover { background: #b8860b; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3); }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 60px 40px; }
+
+        .authority { background: linear-gradient(135deg, #1a1410, #2d1f17); padding: 50px 40px; border-radius: 8px; margin: 40px 0; border: 1px solid #d4af37; }
+        .authority h2 { color: #d4af37; font-size: 2.2em; margin-bottom: 15px; text-align: center; font-weight: 400; }
+        .authority .subtitle-section { color: #f5f5dc; font-size: 1.1em; text-align: center; margin-bottom: 20px; opacity: 0.9; }
+        .authority .intro-text { color: #f5f5dc; font-size: 1em; text-align: center; margin-bottom: 30px; line-height: 1.7; }
+        .authority-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 30px; }
+        .authority-item { text-align: center; padding: 20px; background: rgba(212, 175, 55, 0.05); border-radius: 6px; }
+        .authority-item .number { font-size: 2.5em; color: #d4af37; font-weight: 600; }
+        .authority-item .label { font-size: 1em; color: #f5f5dc; margin-top: 10px; }
+        .authority .footer-text { color: #f5f5dc; font-size: 0.95em; text-align: center; margin-top: 30px; line-height: 1.7; opacity: 0.85; }
+
+        .section { margin: 60px 0; }
+        .section h2 { color: #d4af37; font-size: 2.2em; margin-bottom: 20px; text-align: center; font-weight: 400; border-bottom: 2px solid #d4af37; padding-bottom: 15px; }
+        .section .subtitle-section { color: #f5f5dc; font-size: 1.1em; text-align: center; margin-bottom: 40px; opacity: 0.9; }
+
+        .feature-item { margin: 30px 0; padding: 25px; background: rgba(212, 175, 55, 0.03); border-left: 3px solid #d4af37; border-radius: 4px; }
+        .feature-item h3 { color: #d4af37; font-size: 1.4em; margin-bottom: 15px; font-weight: 500; }
+        .feature-item p { color: #f5f5dc; font-size: 1em; line-height: 1.7; }
+
+        .differentials { background: linear-gradient(135deg, #2d1f17, #1a1410); padding: 50px 40px; border-radius: 8px; margin: 60px 0; }
+        .differentials h2 { color: #d4af37; text-align: center; margin-bottom: 40px; font-size: 2.2em; }
+        .differential-item { margin: 25px 0; padding: 20px; background: rgba(212, 175, 55, 0.05); border-radius: 6px; }
+        .differential-item h3 { color: #d4af37; font-size: 1.3em; margin-bottom: 10px; }
+        .differential-item p { color: #f5f5dc; }
+
+        .transparency { background: rgba(212, 175, 55, 0.08); padding: 40px; border-radius: 8px; margin: 40px 0; text-align: center; border: 1px solid #d4af37; }
+        .transparency h2 { color: #d4af37; margin-bottom: 15px; font-size: 2em; }
+        .transparency .subtitle-section { color: #d4af37; font-size: 1em; margin-bottom: 25px; opacity: 0.9; }
+        .transparency p { color: #f5f5dc; font-size: 1.05em; line-height: 1.8; margin-bottom: 15px; }
+
+        .final-cta { text-align: center; padding: 60px 20px; background: linear-gradient(135deg, #1a1410, #2d1f17); border-radius: 8px; margin: 60px 0; }
+        .final-cta h2 { color: #d4af37; font-size: 2.5em; margin-bottom: 20px; }
+        .final-cta p { color: #f5f5dc; font-size: 1.2em; margin-bottom: 10px; }
+
+        footer { background: #1a1410; color: #f5f5dc; text-align: center; padding: 40px 20px; margin-top: 80px; border-top: 2px solid #d4af37; }
+        footer p { margin: 10px 0; font-size: 0.95em; }
+      
     </style>
 </head>
 <body>
-    <header>DOUTORA IA</header>
+      <style jsx global>{`
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Georgia', 'Times New Roman', serif; background: #0a0a0a; color: #f5f5dc; line-height: 1.8; }
 
-    <div class="hero">
-        <h1>Gestão Jurídica Inteligente</h1>
-        <p>Plataforma completa para advogados gerenciarem leads e clientes</p>
-        <a href="/pricing.html" class="btn">VER PLANOS</a>
-        <a href="/login.html" class="btn btn-outline">ENTRAR</a>
-    </div>
+        header { position: relative; text-align: center; padding: 100px 20px; background: linear-gradient(135deg, #1a1410, #2d1f17); border-bottom: 2px solid #d4af37; overflow: hidden; }
+        header .logo-watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.15; z-index: 0; pointer-events: none; }
+        header .header-content { position: relative; z-index: 1; }
+        header h1 { font-size: 2.8em; color: #d4af37; font-weight: 400; letter-spacing: 2px; margin: 10px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        header .subtitle { font-size: 1.3em; color: #f5f5dc; margin: 15px 0; }
+        header .stats { font-size: 1em; color: #d4af37; margin-top: 20px; font-weight: 300; }
+        header .intro { font-size: 1.1em; color: #f5f5dc; margin-top: 25px; max-width: 800px; margin-left: auto; margin-right: auto; opacity: 0.95; }
 
-    <div class="features">
-        <div class="feature">
-            <h3>📊 Dashboard Completo</h3>
-            <p>Visualize métricas e KPIs do seu escritório em tempo real. Acompanhe conversões, receita e performance da equipe em um só lugar.</p>
+        .cta { display: inline-block; padding: 16px 40px; margin: 10px; background: #d4af37; color: #1a1410; text-decoration: none; border-radius: 6px; font-weight: 600; transition: all 0.3s; cursor: pointer; border: none; font-family: inherit; font-size: 1em; }
+        .cta:hover { background: #b8860b; transform: translateY(-2px); }
+        .cta-outline { background: transparent; border: 2px solid #d4af37; color: #d4af37; }
+        .cta-outline:hover { background: rgba(212, 175, 55, 0.1); }
+
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.85); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+        .modal-overlay.active { display: flex; }
+        .modal { background: linear-gradient(135deg, #1a1410, #2d1f17); border: 2px solid #d4af37; border-radius: 12px; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; }
+        .modal-header { background: linear-gradient(135deg, #2d1f17, #1a1410); padding: 30px; text-align: center; border-bottom: 2px solid #d4af37; position: relative; }
+        .modal-close { position: absolute; top: 15px; right: 15px; background: transparent; border: none; color: #d4af37; font-size: 2em; cursor: pointer; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+        .modal-close:hover { color: #f5f5dc; transform: rotate(90deg); }
+        .modal-title { font-size: 2em; color: #d4af37; font-weight: 400; letter-spacing: 1px; margin-bottom: 10px; }
+        .modal-subtitle { font-size: 0.9em; color: #d4af37; text-transform: uppercase; letter-spacing: 2px; opacity: 0.8; }
+        .modal-body { padding: 40px; }
+        .modal-intro { font-size: 1.1em; color: #f5f5dc; margin-bottom: 30px; line-height: 1.8; text-align: center; }
+        .modal-section { margin: 30px 0; }
+        .modal-section-title { font-size: 1.3em; color: #d4af37; font-weight: 500; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .modal-list { list-style: none; }
+        .modal-list li { padding: 12px 0; padding-left: 30px; position: relative; color: #f5f5dc; line-height: 1.6; }
+        .modal-list li:before { content: '•'; position: absolute; left: 0; color: #d4af37; font-size: 1.5em; line-height: 1; }
+        .modal-footer { padding: 30px 40px; border-top: 2px solid #d4af37; text-align: center; }
+        .btn-beta { display: inline-block; padding: 18px 50px; background: #d4af37; color: #1a1410; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 1.1em; cursor: pointer; border: none; transition: all 0.3s; }
+        .btn-beta:hover { background: #b8860b; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3); }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 60px 40px; }
+
+        .authority { background: linear-gradient(135deg, #1a1410, #2d1f17); padding: 50px 40px; border-radius: 8px; margin: 40px 0; border: 1px solid #d4af37; }
+        .authority h2 { color: #d4af37; font-size: 2.2em; margin-bottom: 15px; text-align: center; font-weight: 400; }
+        .authority .subtitle-section { color: #f5f5dc; font-size: 1.1em; text-align: center; margin-bottom: 20px; opacity: 0.9; }
+        .authority .intro-text { color: #f5f5dc; font-size: 1em; text-align: center; margin-bottom: 30px; line-height: 1.7; }
+        .authority-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 30px; }
+        .authority-item { text-align: center; padding: 20px; background: rgba(212, 175, 55, 0.05); border-radius: 6px; }
+        .authority-item .number { font-size: 2.5em; color: #d4af37; font-weight: 600; }
+        .authority-item .label { font-size: 1em; color: #f5f5dc; margin-top: 10px; }
+        .authority .footer-text { color: #f5f5dc; font-size: 0.95em; text-align: center; margin-top: 30px; line-height: 1.7; opacity: 0.85; }
+
+        .section { margin: 60px 0; }
+        .section h2 { color: #d4af37; font-size: 2.2em; margin-bottom: 20px; text-align: center; font-weight: 400; border-bottom: 2px solid #d4af37; padding-bottom: 15px; }
+        .section .subtitle-section { color: #f5f5dc; font-size: 1.1em; text-align: center; margin-bottom: 40px; opacity: 0.9; }
+
+        .feature-item { margin: 30px 0; padding: 25px; background: rgba(212, 175, 55, 0.03); border-left: 3px solid #d4af37; border-radius: 4px; }
+        .feature-item h3 { color: #d4af37; font-size: 1.4em; margin-bottom: 15px; font-weight: 500; }
+        .feature-item p { color: #f5f5dc; font-size: 1em; line-height: 1.7; }
+
+        .differentials { background: linear-gradient(135deg, #2d1f17, #1a1410); padding: 50px 40px; border-radius: 8px; margin: 60px 0; }
+        .differentials h2 { color: #d4af37; text-align: center; margin-bottom: 40px; font-size: 2.2em; }
+        .differential-item { margin: 25px 0; padding: 20px; background: rgba(212, 175, 55, 0.05); border-radius: 6px; }
+        .differential-item h3 { color: #d4af37; font-size: 1.3em; margin-bottom: 10px; }
+        .differential-item p { color: #f5f5dc; }
+
+        .transparency { background: rgba(212, 175, 55, 0.08); padding: 40px; border-radius: 8px; margin: 40px 0; text-align: center; border: 1px solid #d4af37; }
+        .transparency h2 { color: #d4af37; margin-bottom: 15px; font-size: 2em; }
+        .transparency .subtitle-section { color: #d4af37; font-size: 1em; margin-bottom: 25px; opacity: 0.9; }
+        .transparency p { color: #f5f5dc; font-size: 1.05em; line-height: 1.8; margin-bottom: 15px; }
+
+        .final-cta { text-align: center; padding: 60px 20px; background: linear-gradient(135deg, #1a1410, #2d1f17); border-radius: 8px; margin: 60px 0; }
+        .final-cta h2 { color: #d4af37; font-size: 2.5em; margin-bottom: 20px; }
+        .final-cta p { color: #f5f5dc; font-size: 1.2em; margin-bottom: 10px; }
+
+        footer { background: #1a1410; color: #f5f5dc; text-align: center; padding: 40px 20px; margin-top: 80px; border-top: 2px solid #d4af37; }
+        footer p { margin: 10px 0; font-size: 0.95em; }
+      `}</style>
+
+      <header>
+        <div class="logo-watermark">
+          <img src="/logodoutoraia.png" alt="" style="max-width: 100%; height: auto;">
         </div>
-
-        <div class="feature">
-            <h3>👥 Gestão de Leads</h3>
-            <p>Organize e acompanhe seus potenciais clientes. Sistema inteligente de qualificação e distribuição automática de leads.</p>
+        <div class="header-content">
+          <h1>DOUTORA IA</h1>
+          <p class="subtitle">A maior plataforma de inteligência jurídica já construída no Brasil</p>
+          <p class="stats">1.326 engines jurídicas especializadas · 15 áreas do Direito cobertas · 539 PDFs de jurisprudência processados</p>
+          <p class="intro">A Doutora IA une automação processual, análise de risco com inteligência artificial, jurisprudência real e gestão completa de escritórios. Uma plataforma jurídica de nova geração, com IA operando localmente no Brasil.</p>
+          <div style="marginTop: '30px'">
+            <a href="/pricing" class="cta">VER PLANOS E FUNCIONALIDADES</a>
+            <button onClick={() => setShowBetaModal(true class="cta cta-outline">ENTRAR</button>
+          </div>
         </div>
+      </header>
 
-        <div class="feature">
-            <h3>⚖️ Painel do Advogado</h3>
-            <p>Ferramentas essenciais para o dia a dia do advogado. Acesso rápido a processos, prazos e documentos importantes.</p>
+      
+        <div class="modal-overlay" onClick={() => setShowBetaModal(false>
+          <div class="modal" onClick={(e) => e.stopPropagation(>
+            <div class="modal-header">
+              <button class="modal-close" onClick={() => setShowBetaModal(false>&times;</button>
+              <h2 class="modal-title">DOUTORA IA</h2>
+              <p class="modal-subtitle">BETA FECHADO — ACESSO POR CONVITE</p>
+            </div>
+            <div class="modal-body">
+              <p class="modal-intro">
+                Este ambiente faz parte da fase de testes da Doutora IA.
+                <br><br>
+                Todas as funcionalidades estão liberadas exclusivamente para validação técnica e jurídica, antes da abertura comercial da plataforma.
+              </p>
+
+              <div class="modal-section">
+                <h3 class="modal-section-title">O QUE ESTÁ LIBERADO</h3>
+                <ul class="modal-list">
+                  <li>Consultas e pesquisas jurídicas com IA</li>
+                  <li>Geração de peças e contratos</li>
+                  <li>Jurisprudência integrada</li>
+                  <li>Análises de risco processual</li>
+                  <li>Dashboard e histórico de uso</li>
+                </ul>
+              </div>
+
+              <div class="modal-section">
+                <h3 class="modal-section-title">IMPORTANTE</h3>
+                <ul class="modal-list">
+                  <li>Ambiente não comercial</li>
+                  <li>Uso monitorado para melhoria do sistema</li>
+                  <li>Não há garantia de resultados processuais</li>
+                  <li>A responsabilidade final é sempre do advogado</li>
+                  <li>Dados processados no Brasil (LGPD)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button href="/login.html" class="btn-beta">
+                Entrar com convite
+              </button>
+            </div>
+          </div>
         </div>
+      
 
-        <div class="feature">
-            <h3>📈 Relatórios Avançados</h3>
-            <p>Análises detalhadas de performance, origem de leads e ROI. Tome decisões baseadas em dados reais.</p>
-        </div>
+      <div class="container">
+        <section class="authority">
+          <h2>AUTORIDADE TÉCNICA</h2>
+          <p class="subtitle-section">Os números da plataforma</p>
+          <p class="intro-text">Não trabalhamos com promessas. Trabalhamos com base técnica já construída.</p>
 
-        <div class="feature">
-            <h3>🔔 Notificações Inteligentes</h3>
-            <p>Nunca perca um prazo ou oportunidade. Alertas automáticos para prazos processuais e follow-up de clientes.</p>
-        </div>
+          <div class="authority-grid">
+            <div class="authority-item">
+              <div class="number">1.326</div>
+              <div class="label">engines processuais jurídicas ativas</div>
+            </div>
+            <div class="authority-item">
+              <div class="number">15</div>
+              <div class="label">áreas do Direito estruturadas</div>
+            </div>
+            <div class="authority-item">
+              <div class="number">539</div>
+              <div class="label">PDFs reais de jurisprudência processados</div>
+            </div>
+            <div class="authority-item">
+              <div class="number">92%</div>
+              <div class="label">de cobertura jurisprudencial ativa</div>
+            </div>
+          </div>
 
-        <div class="feature">
-            <h3>🔐 Segurança Total</h3>
-            <p>Seus dados protegidos com criptografia de ponta. Conformidade com LGPD e melhores práticas de segurança.</p>
-        </div>
-    </div>
+          <p class="footer-text">Esses números representam estrutura já implementada, não projeções futuras. A plataforma está em fase de lançamento, com testes reais em andamento junto a advogados parceiros.</p>
+        </section>
 
-    <footer>
-        <p><strong>Doutora IA</strong> - Tecnologia Jurídica</p>
-        <p>&copy; 2026 - Todos os direitos reservados</p>
-    </footer>
+        <section class="section">
+          <h2>PARA ADVOGADOS</h2>
+          <p class="subtitle-section">Escala, redução de risco e produtividade</p>
+          <div>
+            <div class="feature-item">
+              <h3>Geração automática de 1.326 tipos de peças jurídicas</h3>
+              <p>Petições iniciais, contestações, recursos e manifestações produzidas em aproximadamente 30 segundos, sempre com base jurídica real.</p>
+            </div>
+            <div class="feature-item">
+              <h3>Calculadoras jurídicas automáticas</h3>
+              <p>Honorários, custas processuais, cálculos trabalhistas, previdenciários, juros e correções monetárias.</p>
+            </div>
+            <div class="feature-item">
+              <h3>IA de análise de risco processual</h3>
+              <p>Estimativa de chance de sucesso, tempo médio do processo, custo estimado e análise jurisprudencial automatizada.</p>
+            </div>
+            <div class="feature-item">
+              <h3>Dashboard profissional do escritório</h3>
+              <p>KPIs, gráficos de performance, conversão de leads e visão estratégica do negócio jurídico em tempo real.</p>
+            </div>
+            <div class="feature-item">
+              <h3>Alertas automáticos de prazos</h3>
+              <p>Notificações por WhatsApp, e-mail e SMS com antecedência configurável para cada tipo de prazo processual.</p>
+            </div>
+            <div class="feature-item">
+              <h3>Jurisprudência automática integrada às peças</h3>
+              <p>Busca em 539 PDFs reais e inserção contextual nas petições, com citações adequadas.</p>
+            </div>
+            <div class="feature-item">
+              <h3>Marketplace de leads jurídicos</h3>
+              <p>Distribuição por rodízio, sem favorecimento, garantindo acesso justo aos casos que chegam pela plataforma.</p>
+            </div>
+            <div class="feature-item">
+              <h3>CRM jurídico completo</h3>
+              <p>Gestão de clientes, processos, documentos e histórico de atendimento centralizado.</p>
+            </div>
+            <div class="feature-item">
+              <h3>Perfil público profissional</h3>
+              <p>Escritório virtual com apresentação institucional, agendamento online e avaliações futuras de clientes.</p>
+            </div>
+            <div class="feature-item">
+              <h3>Relatórios mensais e analytics</h3>
+              <p>Visão clara da evolução do escritório e apoio à tomada de decisão baseada em dados.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2>PARA CIDADÃOS</h2>
+          <p class="subtitle-section">Acesso gratuito e informação responsável</p>
+          <div>
+            <div class="feature-item">
+              <h3>Triagem jurídica inteligente</h3>
+              <p>O cidadão descreve o problema e recebe análise inicial sobre área do Direito, viabilidade e próximos passos.</p>
+            </div>
+            <div class="feature-item">
+              <h3>Geração de documentos básicos</h3>
+              <p>Notificações extrajudiciais, cartas de cobrança, procurações simples e petições para Juizado Especial.</p>
+            </div>
+            <div class="feature-item">
+              <h3>Chat jurídico 24 horas por dia, 7 dias por semana</h3>
+              <p>Respostas em linguagem simples, sem juridiquês, sobre dúvidas básicas e direcionamento.</p>
+            </div>
+            <div class="feature-item">
+              <h3>Busca de advogados por especialidade</h3>
+              <p>Filtros por área do Direito, localização, valores estimados e avaliações futuras de outros clientes.</p>
+            </div>
+            <div class="feature-item">
+              <h3>Educação jurídica acessível</h3>
+              <p>Artigos explicativos, perguntas frequentes e conteúdos didáticos sobre direitos básicos do cidadão.</p>
+            </div>
+            <div class="feature-item">
+              <h3>Calculadoras jurídicas gratuitas</h3>
+              <p>Rescisão trabalhista, pensão alimentícia, dívidas, indenizações e valores estimados para diversos casos.</p>
+            </div>
+            <div class="feature-item">
+              <h3>Verificação de prescrição</h3>
+              <p>Identifica automaticamente se ainda há prazo legal para ingressar com ação judicial.</p>
+            </div>
+            <div class="feature-item">
+              <h3>Modelos para Juizado Especial</h3>
+              <p>Possibilidade de autopropositura em causas de até 40 mil reais, sem necessidade de advogado.</p>
+            </div>
+            <div class="feature-item">
+              <h3>Acompanhamento de processos</h3>
+              <p>Consulta de andamento processual por número, com explicações em linguagem acessível.</p>
+            </div>
+            <div class="feature-item">
+              <h3>Biblioteca jurídica acessível</h3>
+              <p>Leis, códigos e súmulas organizados de forma didática para consulta do cidadão.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="differentials">
+          <h2>POR QUE A DOUTORA IA É DIFERENTE</h2>
+          <div class="differential-item">
+            <h3>Mais completa</h3>
+            <p>1.326 engines jurídicas especializadas, contra 50 a 100 engines da maioria das plataformas concorrentes.</p>
+          </div>
+          <div class="differential-item">
+            <h3>IA de verdade</h3>
+            <p>Predição de risco processual e análise jurisprudencial automatizada, não apenas chatbot genérico de perguntas e respostas.</p>
+          </div>
+          <div class="differential-item">
+            <h3>Democrática</h3>
+            <p>Ferramentas gratuitas para cidadãos, gerando leads mais qualificados e já triados antes do primeiro contato com o advogado.</p>
+          </div>
+          <div class="differential-item">
+            <h3>Privada</h3>
+            <p>Inteligência artificial operando localmente, com dados processados no Brasil, respeitando LGPD e confidencialidade profissional.</p>
+          </div>
+          <div class="differential-item">
+            <h3>Justa</h3>
+            <p>Marketplace de leads com rodízio igualitário, sem leilão de casos e sem favorecimento por pagamento.</p>
+          </div>
+        </section>
+
+        <section class="transparency">
+          <h2>LANÇAMENTO TRANSPARENTE</h2>
+          <p class="subtitle-section">Fase de testes com advogados parceiros</p>
+          <p>A Doutora IA está em fase de lançamento. A plataforma está sendo testada por advogados parceiros, incluindo família, colegas e escritórios convidados.</p>
+          <p>Não utilizamos depoimentos fictícios. Os primeiros feedbacks públicos serão publicados conforme os testes avançarem e os resultados forem validados.</p>
+          <p>Transparência, ética e responsabilidade jurídica fazem parte do projeto desde o primeiro dia.</p>
+        </section>
+
+        <section class="final-cta">
+          <h2>CONHEÇA A PLATAFORMA POR DENTRO</h2>
+          <p>Veja como a inteligência jurídica pode transformar a forma de advogar.</p>
+          <div style="marginTop: '30px'">
+            <a href="/pricing" class="cta">VER PLANOS E FUNCIONALIDADES</a>
+            <button onClick={() => setShowBetaModal(true class="cta cta-outline">ENTRAR</button>
+          </div>
+        </section>
+      </div>
+
+      <footer>
+        <p><strong>DOUTORA IA</strong> - Tecnologia Jurídica Brasileira</p>
+        <p>1.326 Engines especializadas · 15 Áreas do Direito cobertas · 539 PDFs de jurisprudência processados</p>
+        <p>&copy; 2026 - Democratizando o acesso à Justiça</p>
+      </footer>
+    
+    <script>
+        function openBetaModal() {
+            document.getElementById('betaModal').classList.add('active');
+        }
+        function closeBetaModal() {
+            document.getElementById('betaModal').classList.remove('active');
+        }
+    </script>
 </body>
 </html>
