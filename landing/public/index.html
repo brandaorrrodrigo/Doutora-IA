@@ -12,7 +12,7 @@
         body { font-family: 'Georgia', 'Times New Roman', serif; background: #0a0a0a; color: #f5f5dc; line-height: 1.8; }
 
         header { position: relative; text-align: center; padding: 100px 20px; background: linear-gradient(135deg, #1a1410, #2d1f17); border-bottom: 2px solid #d4af37; overflow: hidden; }
-        header .logo-watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.15; z-index: 0; pointer-events: none; }
+        header .logo-watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.15; z-index: 0; pointer-events: none; height: calc(100% - 2cm); width: auto; }
         header .header-content { position: relative; z-index: 1; }
         header h1 { font-size: 2.8em; color: #d4af37; font-weight: 400; letter-spacing: 2px; margin: 10px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
         header .subtitle { font-size: 1.3em; color: #f5f5dc; margin: 15px 0; }
@@ -89,7 +89,7 @@
         body { font-family: 'Georgia', 'Times New Roman', serif; background: #0a0a0a; color: #f5f5dc; line-height: 1.8; }
 
         header { position: relative; text-align: center; padding: 100px 20px; background: linear-gradient(135deg, #1a1410, #2d1f17); border-bottom: 2px solid #d4af37; overflow: hidden; }
-        header .logo-watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.15; z-index: 0; pointer-events: none; }
+        header .logo-watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.15; z-index: 0; pointer-events: none; height: calc(100% - 2cm); width: auto; }
         header .header-content { position: relative; z-index: 1; }
         header h1 { font-size: 2.8em; color: #d4af37; font-weight: 400; letter-spacing: 2px; margin: 10px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
         header .subtitle { font-size: 1.3em; color: #f5f5dc; margin: 15px 0; }
@@ -176,7 +176,7 @@
       </header>
 
       
-        <div class="modal-overlay" onclick="closeBetaModal()">
+        <div id="betaModal" class="modal-overlay" onclick="closeBetaModal()">
           <div class="modal" onclick="event.stopPropagation()">
             <div class="modal-header">
               <button class="modal-close" onclick="closeBetaModal()">&times;</button>
