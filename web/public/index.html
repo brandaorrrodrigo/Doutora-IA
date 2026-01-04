@@ -3,16 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/logo-brilhante.png">
+    <link rel="apple-touch-icon" href="/logo-brilhante.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
     <title>Doutora IA - Inteligência Jurídica</title>
     <style>
+.header-logo {
+    animation: glow-pulse 3s ease-in-out infinite;
+}
+@keyframes glow-pulse {
+    0%, 100% { 
+        filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.8)) 
+                drop-shadow(0 0 40px rgba(212, 175, 55, 0.6)) 
+                drop-shadow(0 0 60px rgba(212, 175, 55, 0.4)) 
+                drop-shadow(0 0 80px rgba(212, 175, 55, 0.3));
+        transform: scale(1);
+    }
+    50% { 
+        filter: drop-shadow(0 0 30px rgba(212, 175, 55, 1)) 
+                drop-shadow(0 0 60px rgba(212, 175, 55, 0.9)) 
+                drop-shadow(0 0 90px rgba(212, 175, 55, 0.7)) 
+                drop-shadow(0 0 120px rgba(212, 175, 55, 0.5)) 
+                drop-shadow(0 0 150px rgba(212, 175, 55, 0.3));
+        transform: scale(1.02);
+    }
+}
+@keyframes old-glow-pulse {
+    0%, 100% { filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.8)) drop-shadow(0 0 40px rgba(212, 175, 55, 0.6)); }
+    50% { filter: drop-shadow(0 0 40px rgba(212, 175, 55, 1)) drop-shadow(0 0 80px rgba(212, 175, 55, 0.8)) drop-shadow(0 0 120px rgba(212, 175, 55, 0.6)); }
+}
+@keyframes glow-pulse {
+    0%, 100% { 
+        filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.8)) 
+                drop-shadow(0 0 40px rgba(212, 175, 55, 0.6)) 
+                drop-shadow(0 0 60px rgba(212, 175, 55, 0.4)) 
+                drop-shadow(0 0 80px rgba(212, 175, 55, 0.3));
+        transform: scale(1);
+    }
+    50% { 
+        filter: drop-shadow(0 0 30px rgba(212, 175, 55, 1)) 
+                drop-shadow(0 0 60px rgba(212, 175, 55, 0.9)) 
+                drop-shadow(0 0 90px rgba(212, 175, 55, 0.7)) 
+                drop-shadow(0 0 120px rgba(212, 175, 55, 0.5)) 
+                drop-shadow(0 0 150px rgba(212, 175, 55, 0.3));
+        transform: scale(1.02);
+    }
+}
+@keyframes old-glow-pulse {
+    0%, 100% { filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.3)) drop-shadow(0 0 30px rgba(212, 175, 55, 0.2)); opacity: 0.15; }
+    50% { filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.6)) drop-shadow(0 0 60px rgba(212, 175, 55, 0.4)) drop-shadow(0 0 90px rgba(212, 175, 55, 0.3)); opacity: 0.25; }
+}
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Georgia', 'Times New Roman', serif; background: #0a0a0a; color: #f5f5dc; line-height: 1.8; }
 
         header { position: relative; text-align: center; padding: 100px 20px; background: linear-gradient(135deg, #1a1410, #2d1f17); border-bottom: 2px solid #d4af37; overflow: hidden; }
-        header .logo-watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.15; z-index: 0; pointer-events: none; }
         header .header-content { position: relative; z-index: 1; }
-        header h1 { font-size: 2.8em; color: #d4af37; font-weight: 400; letter-spacing: 2px; margin: 10px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        header h1 { font-family: 'Cinzel', serif !important; font-size: 2.8em; color: #d4af37; font-weight: 400; letter-spacing: 2px; margin: 10px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
         header .subtitle { font-size: 1.3em; color: #f5f5dc; margin: 15px 0; }
         header .stats { font-size: 1em; color: #d4af37; margin-top: 20px; font-weight: 300; }
         header .intro { font-size: 1.1em; color: #f5f5dc; margin-top: 25px; max-width: 800px; margin-left: auto; margin-right: auto; opacity: 0.95; }
@@ -87,9 +136,8 @@
         body { font-family: 'Georgia', 'Times New Roman', serif; background: #0a0a0a; color: #f5f5dc; line-height: 1.8; }
 
         header { position: relative; text-align: center; padding: 100px 20px; background: linear-gradient(135deg, #1a1410, #2d1f17); border-bottom: 2px solid #d4af37; overflow: hidden; }
-        header .logo-watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.15; z-index: 0; pointer-events: none; }
         header .header-content { position: relative; z-index: 1; }
-        header h1 { font-size: 2.8em; color: #d4af37; font-weight: 400; letter-spacing: 2px; margin: 10px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        header h1 { font-family: 'Cinzel', serif !important; font-size: 2.8em; color: #d4af37; font-weight: 400; letter-spacing: 2px; margin: 10px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
         header .subtitle { font-size: 1.3em; color: #f5f5dc; margin: 15px 0; }
         header .stats { font-size: 1em; color: #d4af37; margin-top: 20px; font-weight: 300; }
         header .intro { font-size: 1.1em; color: #f5f5dc; margin-top: 25px; max-width: 800px; margin-left: auto; margin-right: auto; opacity: 0.95; }
@@ -158,26 +206,24 @@
       `}</style>
 
       <header>
-        <div class="logo-watermark">
-          <img src="/logodoutoraia.png" alt="" style="max-width: 100%; height: auto;">
-        </div>
         <div class="header-content">
-          <h1>DOUTORA IA</h1>
+          <h1 style="margin-bottom: 15px;">DOUTORA IA</h1>
+          <img src="/logo-brilhante.png?v=3" alt="Doutora IA" class="header-logo" style="width: 500px; height: 500px; object-fit: contain; aspect-ratio: 1/1; margin: 0 auto 15px; display: block; filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.8)) drop-shadow(0 0 40px rgba(212, 175, 55, 0.6));">
           <p class="subtitle">A maior plataforma de inteligência jurídica já construída no Brasil</p>
           <p class="stats">1.326 engines jurídicas especializadas · 15 áreas do Direito cobertas · 539 PDFs de jurisprudência processados</p>
           <p class="intro">A Doutora IA une automação processual, análise de risco com inteligência artificial, jurisprudência real e gestão completa de escritórios. Uma plataforma jurídica de nova geração, com IA operando localmente no Brasil.</p>
           <div style="marginTop: '30px'">
-            <a href="/pricing" class="cta">VER PLANOS E FUNCIONALIDADES</a>
-            <button onClick={() => setShowBetaModal(true class="cta cta-outline">ENTRAR</button>
+            <a href="/pricing.html" class="cta">VER PLANOS E FUNCIONALIDADES</a>
+            <button onclick="openBetaModal()" class="cta cta-outline">ENTRAR</button>
           </div>
         </div>
       </header>
 
       
-        <div class="modal-overlay" onClick={() => setShowBetaModal(false>
-          <div class="modal" onClick={(e) => e.stopPropagation(>
+        <div id="betaModal" class="modal-overlay" onclick="closeBetaModal()">
+          <div class="modal" onclick="event.stopPropagation()">
             <div class="modal-header">
-              <button class="modal-close" onClick={() => setShowBetaModal(false>&times;</button>
+              <button class="modal-close" onclick="closeBetaModal()">&times;</button>
               <h2 class="modal-title">DOUTORA IA</h2>
               <p class="modal-subtitle">BETA FECHADO — ACESSO POR CONVITE</p>
             </div>
@@ -211,9 +257,9 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button href="/login.html" class="btn-beta">
+              <a href="/login.html" class="btn-beta">
                 Entrar com convite
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -377,8 +423,8 @@
           <h2>CONHEÇA A PLATAFORMA POR DENTRO</h2>
           <p>Veja como a inteligência jurídica pode transformar a forma de advogar.</p>
           <div style="marginTop: '30px'">
-            <a href="/pricing" class="cta">VER PLANOS E FUNCIONALIDADES</a>
-            <button onClick={() => setShowBetaModal(true class="cta cta-outline">ENTRAR</button>
+            <a href="/pricing.html" class="cta">VER PLANOS E FUNCIONALIDADES</a>
+            <button onclick="openBetaModal()" class="cta cta-outline">ENTRAR</button>
           </div>
         </section>
       </div>
