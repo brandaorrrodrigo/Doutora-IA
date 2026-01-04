@@ -17,9 +17,9 @@ export default function HomePage() {
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Georgia', 'Times New Roman', serif; background: #0a0a0a; color: #f5f5dc; line-height: 1.8; }
 
-        header { position: relative; text-align: center; padding: 40px 20px; background: linear-gradient(135deg, #1a1410, #2d1f17); border-bottom: 2px solid #d4af37; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; }
+        header { position: relative; text-align: center; padding: 20px 20px; background: linear-gradient(135deg, #1a1410, #2d1f17); border-bottom: 2px solid #d4af37; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; }
         header .logo-watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.15; z-index: 0; pointer-events: none; }
-        header .header-content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 15px; width: 100%; }
+        header .header-content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; width: 100%; }
         header h1 { font-size: 2.8em; color: #d4af37; font-weight: 400; letter-spacing: 2px; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
         header .subtitle { font-size: 1.3em; color: #f5f5dc; margin: 0; }
         header .stats { font-size: 1em; color: #d4af37; margin: 0; font-weight: 300; }
@@ -94,6 +94,7 @@ export default function HomePage() {
         </div>
         <div className="header-content">
           <h1>DOUTORA IA</h1>
+          <Image src="/logo-brilhante.png" alt="Doutora IA" width={300} height={300} priority style={{objectFit: 'contain'}} />
           <p className="subtitle">A maior plataforma de inteligência jurídica já construída no Brasil</p>
           <p className="stats">1.326 engines jurídicas especializadas · 15 áreas do Direito cobertas · 539 PDFs de jurisprudência processados</p>
           <p className="intro">A Doutora IA une automação processual, análise de risco com inteligência artificial, jurisprudência real e gestão completa de escritórios. Uma plataforma jurídica de nova geração, com IA operando localmente no Brasil.</p>
