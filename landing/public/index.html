@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Doutora IA - Inteligência Jurídica</title>
   <link rel="icon" type="image/png" href="/logo-brilhante.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { height: 100%; }
@@ -13,6 +16,11 @@
       background: #0a0a0a;
       color: #f5f5dc;
       line-height: 1.8;
+    }
+
+    h1, h2, .feature-title {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
     }
 
     header {
@@ -88,32 +96,44 @@
     }
 
     button, .btn {
-      padding: 14px 35px;
-      background: #d4af37;
+      padding: 16px 40px;
+      background: linear-gradient(135deg, #d4af37, #e6c547);
       color: #1a1410;
       border: 2px solid #d4af37;
-      border-radius: 4px;
-      font-weight: 600;
+      border-radius: 6px;
+      font-weight: 700;
       cursor: pointer;
       font-size: 0.95em;
       text-decoration: none;
       display: inline-block;
-      transition: all 0.3s;
-      font-family: Georgia, serif;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      font-family: 'Cinzel', serif;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
     }
 
     button:hover, .btn:hover {
-      background: #b8860b;
-      border-color: #b8860b;
+      background: linear-gradient(135deg, #e6c547, #d4af37);
+      border-color: #fff;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+    }
+
+    button:active, .btn:active {
+      transform: translateY(-1px);
     }
 
     .btn-outline {
       background: transparent;
       color: #d4af37;
+      border: 2px solid #d4af37;
+      box-shadow: none;
     }
 
     .btn-outline:hover {
-      background: rgba(212, 175, 55, 0.1);
+      background: rgba(212, 175, 55, 0.15);
+      border-color: #fff;
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
     }
 
     .divider {
@@ -125,17 +145,21 @@
     }
 
     section {
-      padding: 60px 40px;
-      max-width: 1000px;
+      padding: 80px 40px;
+      max-width: 1200px;
       margin: 0 auto;
+    }
+
+    section:nth-of-type(even) {
+      background: linear-gradient(180deg, rgba(212, 175, 55, 0.03), rgba(212, 175, 55, 0.01));
     }
 
     section h2 {
       text-align: center;
       color: #d4af37;
-      font-size: 1.8em;
-      margin-bottom: 10px;
-      font-weight: 400;
+      font-size: 2.2em;
+      margin-bottom: 15px;
+      font-weight: 700;
       letter-spacing: 1px;
     }
 
@@ -175,23 +199,61 @@
       font-size: 1.2em;
     }
 
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+      margin: 50px 0;
+    }
+
     .feature-item {
-      margin: 25px 0;
-      padding: 0;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.05), rgba(212, 175, 55, 0.02));
+      border: 2px solid #d4af37;
+      border-radius: 8px;
+      padding: 30px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-item:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(212, 175, 55, 0.25);
+      border-color: #fff;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));
+    }
+
+    .feature-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .feature-item:hover::before {
+      left: 100%;
     }
 
     .feature-title {
       color: #d4af37;
-      font-size: 1.1em;
-      font-weight: 600;
-      margin-bottom: 8px;
+      font-size: 1.15em;
+      font-weight: 700;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
     }
 
     .feature-desc {
       color: #f5f5dc;
       font-size: 0.95em;
       line-height: 1.7;
-      padding-left: 20px;
+      position: relative;
+      z-index: 1;
     }
 
     .authority-text {
@@ -257,6 +319,7 @@
   <section>
     <p class="section-subtitle">Tudo o que um escritório precisa para ganhar escala, reduzir risco e aumentar produtividade.</p>
 
+    <div class="features-grid">
     <div class="feature-item">
       <div class="feature-title">1. Geração automática de 1.326 tipos de peças jurídicas</div>
       <div class="feature-desc">Petições iniciais, contestações, recursos e manifestações em aproximadamente 30 segundos, com base jurídica real.</div>
@@ -306,6 +369,7 @@
       <div class="feature-title">10. Relatórios mensais e analytics</div>
       <div class="feature-desc">Visão clara da evolução do escritório e apoio à tomada de decisão.</div>
     </div>
+    </div>
   </section>
 
   <div class="divider">────────────────────────────────────<br>PARA CIDADÃOS (SEM ADVOGADO)<br>────────────────────────────────────</div>
@@ -313,6 +377,7 @@
   <section>
     <p class="section-subtitle">Acesso gratuito à informação jurídica, com orientação clara e responsável.</p>
 
+    <div class="features-grid">
     <div class="feature-item">
       <div class="feature-title">1. Triagem jurídica inteligente</div>
       <div class="feature-desc">O cidadão descreve o problema e recebe análise inicial e próximos passos.</div>
@@ -362,6 +427,7 @@
       <div class="feature-title">10. Biblioteca jurídica acessível</div>
       <div class="feature-desc">Leis, códigos e súmulas organizados para o cidadão.</div>
     </div>
+    </div>
   </section>
 
   <div class="divider">────────────────────────────────────<br>DIFERENCIAIS DA DOUTORA IA<br>────────────────────────────────────</div>
@@ -369,6 +435,7 @@
   <section>
     <p class="section-subtitle">Por que a Doutora IA é diferente:</p>
 
+    <div class="features-grid">
     <div class="feature-item">
       <div class="feature-title">• Mais completa</div>
       <div class="feature-desc">1.326 engines jurídicas contra 50–100 da maioria das plataformas.</div>
@@ -392,6 +459,7 @@
     <div class="feature-item">
       <div class="feature-title">• Justa</div>
       <div class="feature-desc">Marketplace de leads com rodízio, sem leilão e sem favorecimento.</div>
+    </div>
     </div>
   </section>
 
