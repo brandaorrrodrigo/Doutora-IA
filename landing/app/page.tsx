@@ -93,7 +93,6 @@ export default function HomePage() {
           <Image src="/logodoutoraia.png" alt="" width={800} height={800} />
         </div>
         <div className="header-content">
-          <h1>DOUTORA IA</h1>
           <Image src="/logo-brilhante.png" alt="Doutora IA" width={300} height={300} priority style={{objectFit: 'contain'}} />
           <p className="subtitle">A maior plataforma de inteligência jurídica já construída no Brasil</p>
           <p className="stats">1.326 engines jurídicas especializadas · 15 áreas do Direito cobertas · 539 PDFs de jurisprudência processados</p>
