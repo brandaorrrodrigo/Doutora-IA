@@ -3,34 +3,387 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Doutora IA</title>
+  <title>Doutora IA - Inteligência Jurídica</title>
+  <link rel="icon" type="image/png" href="/logo-brilhante.png">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: Georgia, serif; background: #0a0a0a; color: #f5f5dc; }
-    header { border-top: 2px solid #d4af37; border-bottom: 2px solid #d4af37; background: linear-gradient(135deg, #1a1410, #2d1f17); padding: 60px 20px; text-align: center; }
-    h1 { font-size: 3em; color: #d4af37; margin: 60px 0; }
-    img { max-width: 400px; margin: 60px auto; display: block; animation: glow 3s infinite; }
-    @keyframes glow {
-      0%, 100% { filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.8)); }
-      50% { filter: drop-shadow(0 0 40px rgba(212, 175, 55, 1)); }
+    html, body { height: 100%; }
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      background: #0a0a0a;
+      color: #f5f5dc;
+      line-height: 1.8;
     }
-    p { font-size: 1.1em; margin: 60px auto; max-width: 900px; line-height: 1.7; }
-    .buttons { margin: 60px 0; }
-    button, a { padding: 16px 40px; background: #d4af37; color: #1a1410; border: none; border-radius: 6px; font-weight: 600; margin: 10px; cursor: pointer; text-decoration: none; }
-    button:hover { background: #b8860b; }
+
+    header {
+      background: linear-gradient(135deg, #1a1410, #2d1f17);
+      padding: 80px 40px;
+      text-align: center;
+      border-bottom: 2px solid #d4af37;
+    }
+
+    h1 {
+      font-size: 3.5em;
+      color: #d4af37;
+      margin-bottom: 30px;
+      font-weight: 400;
+      letter-spacing: 2px;
+    }
+
+    .hero-subtitle {
+      font-size: 1.4em;
+      margin-bottom: 40px;
+      color: #f5f5dc;
+    }
+
+    .hero-stats {
+      font-size: 0.95em;
+      color: #d4af37;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    .hero-text {
+      font-size: 1.05em;
+      max-width: 900px;
+      margin: 40px auto;
+      line-height: 1.8;
+      color: #f5f5dc;
+    }
+
+    .button-group {
+      margin: 50px 0;
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    button, .btn {
+      padding: 14px 35px;
+      background: #d4af37;
+      color: #1a1410;
+      border: 2px solid #d4af37;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.95em;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s;
+      font-family: Georgia, serif;
+    }
+
+    button:hover, .btn:hover {
+      background: #b8860b;
+      border-color: #b8860b;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #d4af37;
+    }
+
+    .btn-outline:hover {
+      background: rgba(212, 175, 55, 0.1);
+    }
+
+    .divider {
+      text-align: center;
+      color: #d4af37;
+      font-size: 0.9em;
+      margin: 60px 0;
+      letter-spacing: 2px;
+    }
+
+    section {
+      padding: 60px 40px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    section h2 {
+      text-align: center;
+      color: #d4af37;
+      font-size: 1.8em;
+      margin-bottom: 10px;
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      font-size: 1.1em;
+      color: #f5f5dc;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    .authority-intro {
+      text-align: center;
+      color: #d4af37;
+      margin-bottom: 30px;
+      font-size: 1.05em;
+    }
+
+    ul {
+      list-style: none;
+      margin: 20px 0;
+    }
+
+    li {
+      padding: 10px 0;
+      padding-left: 30px;
+      position: relative;
+      color: #f5f5dc;
+      line-height: 1.7;
+    }
+
+    li:before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #d4af37;
+      font-size: 1.2em;
+    }
+
+    .feature-item {
+      margin: 25px 0;
+      padding: 0;
+    }
+
+    .feature-title {
+      color: #d4af37;
+      font-size: 1.1em;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .feature-desc {
+      color: #f5f5dc;
+      font-size: 0.95em;
+      line-height: 1.7;
+      padding-left: 20px;
+    }
+
+    .authority-text {
+      text-align: center;
+      color: #f5f5dc;
+      font-size: 0.95em;
+      line-height: 1.8;
+      margin: 30px 0;
+    }
+
+    footer {
+      background: #1a1410;
+      border-top: 2px solid #d4af37;
+      padding: 40px;
+      text-align: center;
+      color: #f5f5dc;
+      font-size: 0.9em;
+    }
+
+    footer p {
+      margin: 8px 0;
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 2.5em; }
+      section { padding: 40px 20px; }
+      header { padding: 50px 20px; }
+      .button-group { flex-direction: column; align-items: center; }
+      button, .btn { width: 100%; max-width: 300px; }
+    }
   </style>
 </head>
 <body>
   <header>
     <h1>DOUTORA IA</h1>
-    <img src="/logo-brilhante.png" alt="Doutora IA" style="width: 400px; height: 400px; object-fit: contain;">
-    <p style="font-size: 1.3em; margin: 60px auto 0;">A maior plataforma de inteligência jurídica já construída no Brasil</p>
-    <p>1.326 engines jurídicas especializadas · 15 áreas do Direito cobertas · 539 PDFs de jurisprudência processados</p>
-    <p>A Doutora IA une automação processual, análise de risco com inteligência artificial, jurisprudência real e gestão completa de escritórios. Uma plataforma jurídica de nova geração, com IA operando localmente no Brasil.</p>
-    <div class="buttons">
-      <a href="/pricing">VER PLANOS</a>
-      <button>ENTRAR</button>
+    <p class="hero-subtitle">A maior plataforma de inteligência jurídica já construída no Brasil</p>
+    <p class="hero-stats">1.326 engines jurídicas · 15 áreas do Direito · 539 PDFs de jurisprudência processados</p>
+    <p class="hero-text">A Doutora IA é uma plataforma jurídica de nova geração que une automação processual, análise de risco, jurisprudência real e gestão completa de escritórios, com inteligência artificial operando localmente no Brasil.</p>
+    <div class="button-group">
+      <button>Conhecer a plataforma</button>
+      <button class="btn-outline">Ver planos e funcionalidades</button>
     </div>
   </header>
+
+  <div class="divider">────────────────────────────────────<br>AUTORIDADE TÉCNICA — OS NÚMEROS<br>────────────────────────────────────</div>
+
+  <section>
+    <p class="authority-intro">Não é promessa. É base técnica.</p>
+    <ul>
+      <li>1.326 engines processuais jurídicas ativas</li>
+      <li>15 áreas do Direito estruturadas</li>
+      <li>539 PDFs reais de jurisprudência processados</li>
+      <li>92% de cobertura jurisprudencial ativa</li>
+    </ul>
+    <p class="authority-text">Esses números representam estrutura já construída, não projeções futuras.<br><br>Plataforma em fase de lançamento, com testes reais em andamento junto a advogados parceiros.</p>
+  </section>
+
+  <div class="divider">────────────────────────────────────<br>PARA ADVOGADOS<br>────────────────────────────────────</div>
+
+  <section>
+    <p class="section-subtitle">Tudo o que um escritório precisa para ganhar escala, reduzir risco e aumentar produtividade.</p>
+
+    <div class="feature-item">
+      <div class="feature-title">1. Geração automática de 1.326 tipos de peças jurídicas</div>
+      <div class="feature-desc">Petições iniciais, contestações, recursos e manifestações em aproximadamente 30 segundos, com base jurídica real.</div>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-title">2. Calculadoras jurídicas automáticas</div>
+      <div class="feature-desc">Honorários, custas processuais, cálculos trabalhistas, previdenciários, juros e correções.</div>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-title">3. IA de análise de risco processual</div>
+      <div class="feature-desc">Estimativa de chance de sucesso, tempo médio do processo, custo estimado e análise jurisprudencial.</div>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-title">4. Dashboard profissional do escritório</div>
+      <div class="feature-desc">KPIs, gráficos de performance, conversão de leads e visão estratégica do negócio jurídico.</div>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-title">5. Alertas automáticos de prazos</div>
+      <div class="feature-desc">Notificações por WhatsApp, e-mail e SMS com antecedência configurável.</div>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-title">6. Jurisprudência automática integrada às peças</div>
+      <div class="feature-desc">Busca em 539 PDFs e inserção contextual nas petições.</div>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-title">7. Marketplace de leads jurídicos</div>
+      <div class="feature-desc">Distribuição por rodízio, sem favorecimento, garantindo acesso justo aos casos.</div>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-title">8. CRM jurídico completo</div>
+      <div class="feature-desc">Gestão de clientes, processos, documentos e histórico de atendimento.</div>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-title">9. Perfil público profissional</div>
+      <div class="feature-desc">Escritório virtual com apresentação, agendamento e avaliações futuras.</div>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-title">10. Relatórios mensais e analytics</div>
+      <div class="feature-desc">Visão clara da evolução do escritório e apoio à tomada de decisão.</div>
+    </div>
+  </section>
+
+  <div class="divider">────────────────────────────────────<br>PARA CIDADÃOS (SEM ADVOGADO)<br>────────────────────────────────────</div>
+
+  <section>
+    <p class="section-subtitle">Acesso gratuito à informação jurídica, com orientação clara e responsável.</p>
+
+    <div class="feature-item">
+      <div class="feature-title">1. Triagem jurídica inteligente</div>
+      <div class="feature-desc">O cidadão descreve o problema e recebe análise inicial e próximos passos.</div>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-title">2. Geração de documentos básicos</div>
+      <div class="feature-desc">Notificações, cartas de cobrança, procurações e petições para Juizado Especial.</div>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-title">3. Chat jurídico 24/7</div>
+      <div class="feature-desc">Respostas em linguagem simples, sem juridiquês.</div>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-title">4. Busca de advogados</div>
+      <div class="feature-desc">Por especialidade, localização, valores e avaliações futuras.</div>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-title">5. Educação jurídica acessível</div>
+      <div class="feature-desc">Artigos, perguntas frequentes e conteúdos sobre direitos.</div>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-title">6. Calculadoras jurídicas</div>
+      <div class="feature-desc">Rescisão, pensão, dívidas, indenizações e valores estimados.</div>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-title">7. Verificação de prescrição</div>
+      <div class="feature-desc">Identifica se ainda há prazo para ingressar com ação.</div>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-title">8. Modelos para Juizado Especial</div>
+      <div class="feature-desc">Possibilidade de autopropositura em causas de até R$ 40.000.</div>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-title">9. Acompanhamento de processos</div>
+      <div class="feature-desc">Consulta de andamento por número do processo.</div>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-title">10. Biblioteca jurídica acessível</div>
+      <div class="feature-desc">Leis, códigos e súmulas organizados para o cidadão.</div>
+    </div>
+  </section>
+
+  <div class="divider">────────────────────────────────────<br>DIFERENCIAIS DA DOUTORA IA<br>────────────────────────────────────</div>
+
+  <section>
+    <p class="section-subtitle">Por que a Doutora IA é diferente:</p>
+
+    <div class="feature-item">
+      <div class="feature-title">• Mais completa</div>
+      <div class="feature-desc">1.326 engines jurídicas contra 50–100 da maioria das plataformas.</div>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-title">• IA de verdade</div>
+      <div class="feature-desc">Predição de risco e análise processual, não apenas chatbot genérico.</div>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-title">• Democrática</div>
+      <div class="feature-desc">Ferramentas gratuitas para cidadãos, gerando leads mais qualificados.</div>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-title">• Privada</div>
+      <div class="feature-desc">IA local, com dados operando no Brasil, respeitando LGPD e confidencialidade.</div>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-title">• Justa</div>
+      <div class="feature-desc">Marketplace de leads com rodízio, sem leilão e sem favorecimento.</div>
+    </div>
+  </section>
+
+  <div class="divider">────────────────────────────────────<br>LANÇAMENTO TRANSPARENTE<br>────────────────────────────────────</div>
+
+  <section>
+    <p class="authority-text">A Doutora IA está em fase de lançamento.<br><br>A plataforma está sendo testada por advogados parceiros (família, colegas e escritórios convidados).<br><br>Não utilizamos depoimentos fictícios. Os primeiros feedbacks públicos serão publicados conforme os testes avançarem.<br><br>Transparência, ética e responsabilidade jurídica fazem parte do projeto desde o primeiro dia.</p>
+  </section>
+
+  <div class="divider">────────────────────────────────────<br>CHAMADA FINAL<br>────────────────────────────────────</div>
+
+  <section style="text-align: center;">
+    <p class="section-subtitle" style="margin-bottom: 40px;">Conheça a plataforma por dentro e veja como a inteligência jurídica pode transformar a forma de advogar.</p>
+    <div class="button-group">
+      <button>Conhecer a plataforma</button>
+      <button class="btn-outline">Ver planos e funcionalidades</button>
+    </div>
+  </section>
+
+  <footer>
+    <p><strong>DOUTORA IA</strong> - Tecnologia Jurídica Brasileira</p>
+    <p>1.326 Engines especializadas · 15 Áreas do Direito cobertas · 539 PDFs de jurisprudência processados</p>
+    <p>&copy; 2026 - Democratizando o acesso à Justiça</p>
+  </footer>
 </body>
 </html>
