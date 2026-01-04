@@ -59,12 +59,17 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Georgia', 'Times New Roman', serif; background: #0a0a0a; color: #f5f5dc; line-height: 1.8; }
 
-        header { position: relative; text-align: center; padding: 30px 20px; background: linear-gradient(135deg, #1a1410, #2d1f17); border-bottom: 2px solid #d4af37; overflow: hidden; }
-        header .header-content { position: relative; z-index: 1; }
-        header h1 { font-family: 'Cinzel', serif !important; font-size: 2.8em; color: #d4af37; font-weight: 400; letter-spacing: 2px; margin: 10px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
-        header .subtitle { font-size: 1.3em; color: #f5f5dc; margin: 15px 0; }
-        header .stats { font-size: 1em; color: #d4af37; margin-top: 20px; font-weight: 300; }
-        header .intro { font-size: 1.1em; color: #f5f5dc; margin-top: 25px; max-width: 800px; margin-left: auto; margin-right: auto; opacity: 0.95; }
+        /* Hero Section - Flex layout com gap controlado */
+        header { position: relative; text-align: center; min-height: 100vh; padding: 60px 20px; background: linear-gradient(135deg, #1a1410, #2d1f17); border-bottom: 2px solid #d4af37; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 32px; }
+        header .header-content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 32px; width: 100%; }
+        /* Remover todas as margins do h1 */
+        header h1 { font-family: 'Cinzel', serif !important; font-size: 2.8em; color: #d4af37; font-weight: 400; letter-spacing: 2px; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        /* Logo centralizada sem margins */
+        header .header-logo { margin: 0; max-width: 100%; }
+        /* Remover margins dos parágrafos */
+        header .subtitle { font-size: 1.3em; color: #f5f5dc; margin: 0; }
+        header .stats { font-size: 1em; color: #d4af37; margin: 0; font-weight: 300; }
+        header .intro { font-size: 1.1em; color: #f5f5dc; margin: 0; max-width: 800px; opacity: 0.95; }
 
         .cta { display: inline-block; padding: 16px 40px; margin: 10px; background: #d4af37; color: #1a1410; text-decoration: none; border-radius: 6px; font-weight: 600; transition: all 0.3s; cursor: pointer; border: none; font-family: inherit; font-size: 1em; }
         .cta:hover { background: #b8860b; transform: translateY(-2px); }
@@ -135,12 +140,17 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Georgia', 'Times New Roman', serif; background: #0a0a0a; color: #f5f5dc; line-height: 1.8; }
 
-        header { position: relative; text-align: center; padding: 30px 20px; background: linear-gradient(135deg, #1a1410, #2d1f17); border-bottom: 2px solid #d4af37; overflow: hidden; }
-        header .header-content { position: relative; z-index: 1; }
-        header h1 { font-family: 'Cinzel', serif !important; font-size: 2.8em; color: #d4af37; font-weight: 400; letter-spacing: 2px; margin: 10px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
-        header .subtitle { font-size: 1.3em; color: #f5f5dc; margin: 15px 0; }
-        header .stats { font-size: 1em; color: #d4af37; margin-top: 20px; font-weight: 300; }
-        header .intro { font-size: 1.1em; color: #f5f5dc; margin-top: 25px; max-width: 800px; margin-left: auto; margin-right: auto; opacity: 0.95; }
+        /* Hero Section - Flex layout com gap controlado */
+        header { position: relative; text-align: center; min-height: 100vh; padding: 60px 20px; background: linear-gradient(135deg, #1a1410, #2d1f17); border-bottom: 2px solid #d4af37; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 32px; }
+        header .header-content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 32px; width: 100%; }
+        /* Remover todas as margins do h1 */
+        header h1 { font-family: 'Cinzel', serif !important; font-size: 2.8em; color: #d4af37; font-weight: 400; letter-spacing: 2px; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        /* Logo centralizada sem margins */
+        header .header-logo { margin: 0; max-width: 100%; }
+        /* Remover margins dos parágrafos */
+        header .subtitle { font-size: 1.3em; color: #f5f5dc; margin: 0; }
+        header .stats { font-size: 1em; color: #d4af37; margin: 0; font-weight: 300; }
+        header .intro { font-size: 1.1em; color: #f5f5dc; margin: 0; max-width: 800px; opacity: 0.95; }
 
         .cta { display: inline-block; padding: 16px 40px; margin: 10px; background: #d4af37; color: #1a1410; text-decoration: none; border-radius: 6px; font-weight: 600; transition: all 0.3s; cursor: pointer; border: none; font-family: inherit; font-size: 1em; }
         .cta:hover { background: #b8860b; transform: translateY(-2px); }
@@ -207,8 +217,8 @@
 
       <header>
         <div class="header-content">
-          <h1 style="margin-bottom: 0.5cm;">DOUTORA IA</h1>
-          <img src="/logo-brilhante.png?v=3" alt="Doutora IA" class="header-logo" style="width: 800px; height: 800px; object-fit: contain; aspect-ratio: 1/1; margin: 0 auto 0.5cm; display: block; filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.8)) drop-shadow(0 0 40px rgba(212, 175, 55, 0.6));">
+          <h1>DOUTORA IA</h1>
+          <img src="/logo-brilhante.png?v=3" alt="Doutora IA" class="header-logo" style="width: 800px; height: 800px; object-fit: contain; aspect-ratio: 1/1; display: block; filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.8)) drop-shadow(0 0 40px rgba(212, 175, 55, 0.6));">
           <p class="subtitle">A maior plataforma de inteligência jurídica já construída no Brasil</p>
           <p class="stats">1.326 engines jurídicas especializadas · 15 áreas do Direito cobertas · 539 PDFs de jurisprudência processados</p>
           <p class="intro">A Doutora IA une automação processual, análise de risco com inteligência artificial, jurisprudência real e gestão completa de escritórios. Uma plataforma jurídica de nova geração, com IA operando localmente no Brasil.</p>
