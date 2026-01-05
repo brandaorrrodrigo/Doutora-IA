@@ -1,3 +1,56 @@
 {
-  "buildCommand": "npm run build"
+  "buildCommand": "next build",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
+  "functions": {
+    "api/**/*.ts": {
+      "memory": 1024,
+      "maxDuration": 60
+    }
+  },
+  "env": {
+    "NEXT_PUBLIC_API_QUESTOES": "@api_questoes_url",
+    "NEXT_PUBLIC_API_MAPAS": "@api_mapas_url"
+  },
+  "headers": [
+    {
+      "source": "/api/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/:path*",
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/estudo",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/questoes/:path*",
+      "destination": "${{ secrets.API_QUESTOES_URL }}/api/questoes/:path*"
+    },
+    {
+      "source": "/api/mapas/:path*",
+      "destination": "${{ secrets.API_MAPAS_URL }}/api/mapas/:path*"
+    }
+  ]
 }
