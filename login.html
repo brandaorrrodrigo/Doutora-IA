@@ -129,35 +129,61 @@
             margin-bottom: 1cm;
         }
 
-        /* Corrigir cores de texto para branco */
+        /* Tudo escuro */
         .form-label {
-            color: #ffffff;
+            color: #1a1a1a;
+            opacity: 0.4;
         }
 
         .form-check-label {
-            color: #ffffff;
+            color: #1a1a1a;
+            opacity: 0.4;
         }
 
         .text-muted {
-            color: #b0b0b0 !important;
+            color: #1a1a1a;
+            opacity: 0.3;
         }
 
         a {
-            color: #d4af37;
+            color: #1a1a1a;
             text-decoration: none;
+            opacity: 0.3;
         }
 
         a:hover {
-            color: #f0d070;
-            text-decoration: underline;
+            color: #1a1a1a;
+            text-decoration: none;
+            opacity: 0.5;
         }
 
         .text-center a {
-            color: #d4af37;
+            color: #1a1a1a;
+            opacity: 0.3;
         }
 
         small {
-            color: #b0b0b0;
+            color: #1a1a1a;
+            opacity: 0.3;
+        }
+
+        .form-control {
+            background: #0a0a0a;
+            border-color: #2a2a2a;
+            color: #1a1a1a;
+        }
+
+        .form-control::placeholder {
+            color: #1a1a1a;
+            opacity: 0.3;
+        }
+
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0 30px #0a0a0a inset !important;
+            -webkit-text-fill-color: #1a1a1a;
         }
     </style>
 </head>
