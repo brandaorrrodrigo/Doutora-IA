@@ -129,7 +129,9 @@
             margin-bottom: 1cm;
         }
 
-        /* Texto branco brilhante em fundo escuro */
+        /* ===== TEXTO BRANCO EM TUDO ===== */
+
+        /* Labels e textos do formulário */
         .form-label {
             color: #ffffff !important;
             font-weight: 500;
@@ -144,51 +146,97 @@
             color: #e0e0e0 !important;
         }
 
+        small {
+            color: #e0e0e0 !important;
+        }
+
+        /* Links */
         a {
-            color: #d4af37;
+            color: #d4af37 !important;
             text-decoration: none;
         }
 
         a:hover {
-            color: #f0d070;
+            color: #f0d070 !important;
             text-decoration: underline;
         }
 
         .text-center a {
-            color: #d4af37;
+            color: #d4af37 !important;
         }
 
         .text-center a:hover {
-            color: #f0d070;
+            color: #f0d070 !important;
         }
 
-        small {
-            color: #e0e0e0;
-        }
-
+        /* Inputs e campos de formulário */
         .form-control {
-            background: #0a0a0a;
-            border-color: #2a2a2a;
-            color: #ffffff;
+            background: #0a0a0a !important;
+            border-color: #2a2a2a !important;
+            color: #ffffff !important;
         }
 
         .form-control:focus {
-            background: #0a0a0a;
-            color: #ffffff;
-            border-color: #d4af37;
-            box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
+            background: #0a0a0a !important;
+            color: #ffffff !important;
+            border-color: #d4af37 !important;
+            box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25) !important;
         }
 
         .form-control::placeholder {
-            color: #808080;
+            color: #808080 !important;
+            opacity: 1;
         }
 
-        input:-webkit-autofill,
-        input:-webkit-autofill:hover,
-        input:-webkit-autofill:focus,
+        /* Autofill do navegador */
+        input:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0 30px #0a0a0a inset !important;
+            -webkit-text-fill-color: #ffffff !important;
+        }
+
+        input:-webkit-autofill:hover {
+            -webkit-box-shadow: 0 0 0 30px #0a0a0a inset !important;
+            -webkit-text-fill-color: #ffffff !important;
+        }
+
+        input:-webkit-autofill:focus {
+            -webkit-box-shadow: 0 0 0 30px #0a0a0a inset !important;
+            -webkit-text-fill-color: #ffffff !important;
+        }
+
         input:-webkit-autofill:active {
             -webkit-box-shadow: 0 0 0 30px #0a0a0a inset !important;
             -webkit-text-fill-color: #ffffff !important;
+        }
+
+        /* Checkbox */
+        .form-check-input {
+            background-color: #1a1a1a !important;
+            border-color: #2a2a2a !important;
+        }
+
+        .form-check-input:checked {
+            background-color: #d4af37 !important;
+            border-color: #d4af37 !important;
+        }
+
+        /* Botão Link do Bootstrap */
+        .btn-link {
+            color: #ffffff !important;
+        }
+
+        .btn-link:hover {
+            color: #d4af37 !important;
+        }
+
+        /* Textos padrão */
+        p, span, li, div {
+            color: inherit;
+        }
+
+        /* Garante que o Bootstrap não sobrescreva */
+        * {
+            color-scheme: dark;
         }
     </style>
 </head>
@@ -317,7 +365,7 @@
         </div>
 
         <div class="text-center mt-3">
-            <a href="/index.html" class=.text-gold">
+            <a href="/index.html" class="text-gold">
                 <i class="fas fa-home"></i> Voltar para Home
             </a>
         </div>
