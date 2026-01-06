@@ -129,53 +129,58 @@
             margin-bottom: 1cm;
         }
 
-        /* Tudo escuro */
+        /* Fundo escuro com texto branco brilhante */
         .form-label {
-            color: #1a1a1a;
-            opacity: 0.4;
+            color: #ffffff;
+            font-weight: 500;
         }
 
         .form-check-label {
-            color: #1a1a1a;
-            opacity: 0.4;
+            color: #ffffff;
+            font-weight: 500;
         }
 
         .text-muted {
-            color: #1a1a1a;
-            opacity: 0.3;
+            color: #e0e0e0 !important;
         }
 
         a {
-            color: #1a1a1a;
+            color: #d4af37;
             text-decoration: none;
-            opacity: 0.3;
         }
 
         a:hover {
-            color: #1a1a1a;
-            text-decoration: none;
-            opacity: 0.5;
+            color: #f0d070;
+            text-decoration: underline;
         }
 
         .text-center a {
-            color: #1a1a1a;
-            opacity: 0.3;
+            color: #d4af37;
+        }
+
+        .text-center a:hover {
+            color: #f0d070;
         }
 
         small {
-            color: #1a1a1a;
-            opacity: 0.3;
+            color: #e0e0e0;
         }
 
         .form-control {
             background: #0a0a0a;
             border-color: #2a2a2a;
-            color: #1a1a1a;
+            color: #ffffff;
+        }
+
+        .form-control:focus {
+            background: #0a0a0a;
+            color: #ffffff;
+            border-color: #d4af37;
+            box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
         }
 
         .form-control::placeholder {
-            color: #1a1a1a;
-            opacity: 0.3;
+            color: #808080;
         }
 
         input:-webkit-autofill,
@@ -183,7 +188,7 @@
         input:-webkit-autofill:focus,
         input:-webkit-autofill:active {
             -webkit-box-shadow: 0 0 0 30px #0a0a0a inset !important;
-            -webkit-text-fill-color: #1a1a1a;
+            -webkit-text-fill-color: #ffffff !important;
         }
     </style>
 </head>
