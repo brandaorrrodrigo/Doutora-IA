@@ -8,8 +8,7 @@ from typing import Optional, List
 from fastapi import FastAPI, HTTPException, Depends, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.orm import Session
 import re
 
 from models import Base, User, Case, Lawyer, Referral, Payment, CitationLog, CaseStatus, ReferralStatus, ProbabilityLevel
@@ -26,6 +25,7 @@ from services.citations import CitationManager
 from services.payments import PaymentService
 from services.queues import LeadQueue
 from services.auth import get_password_hash
+from database import engine, SessionLocal, get_db
 
 # Initialize FastAPI
 app = FastAPI(
@@ -43,21 +43,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Database
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:postgres@localhost:5432/doutora")
-engine = create_engine(DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
 # Create tables
 Base.metadata.create_all(bind=engine)
-
-# Dependencies
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 # OpenAI client for vLLM
 from openai import OpenAI

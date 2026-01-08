@@ -15,7 +15,7 @@ import os
 sys.path.append(os.path.dirname(__file__))
 
 from models import Lawyer, Case
-from main import get_db
+from database import get_db
 from services.jwt_auth import get_current_lawyer, get_optional_lawyer
 
 router = APIRouter()

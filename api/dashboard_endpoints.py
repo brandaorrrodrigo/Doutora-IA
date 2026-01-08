@@ -6,7 +6,7 @@ from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 from typing import List, Dict, Any, Optional
 
-from main import get_db
+from database import get_db
 from services.jwt_auth import get_current_lawyer
 from services.dashboard import DashboardService
 

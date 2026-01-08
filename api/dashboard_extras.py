@@ -9,7 +9,7 @@ from typing import List, Dict, Any
 from datetime import datetime, timedelta
 import json
 
-from main import get_db
+from database import get_db
 from services.jwt_auth import get_current_lawyer
 
 router = APIRouter(prefix="/dashboard", tags=["Dashboard Extras"])

@@ -8,7 +8,7 @@ from pydantic import BaseModel, EmailStr, Field
 from typing import Optional
 from datetime import datetime
 
-from main import get_db
+from database import get_db
 from services.jwt_auth import (
     jwt_service,
     get_current_lawyer,
