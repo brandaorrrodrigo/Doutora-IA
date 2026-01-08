@@ -15,10 +15,37 @@ class RAGSystem:
         self.qdrant_port = int(os.getenv("QDRANT_PORT", "6333"))
         self.embedding_model_name = os.getenv("EMBEDDING_MODEL", "intfloat/multilingual-e5-large")
 
-        # Initialize clients
-        self.client = QdrantClient(host=self.qdrant_host, port=self.qdrant_port)
-        self.encoder = SentenceTransformer(self.embedding_model_name)
+        # Lazy initialization (will be initialized on first use)
+        self._client = None
+        self._encoder = None
 
+        # Initialize collections and hierarchy
+        self._init_collections()
+
+    @property
+    def client(self):
+        """Lazy load Qdrant client on first access"""
+        if self._client is None:
+            try:
+                self._client = QdrantClient(host=self.qdrant_host, port=self.qdrant_port)
+            except Exception as e:
+                print(f"Warning: Could not connect to Qdrant: {e}")
+                return None
+        return self._client
+
+    @property
+    def encoder(self):
+        """Lazy load embedding model on first access"""
+        if self._encoder is None:
+            try:
+                self._encoder = SentenceTransformer(self.embedding_model_name)
+            except Exception as e:
+                print(f"Warning: Could not load embedding model: {e}")
+                return None
+        return self._encoder
+
+    def _init_collections(self):
+        """Initialize collections and hierarchy weights"""
         # Collection names
         self.collections = {
             "legis": "legis",
