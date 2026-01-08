@@ -58,11 +58,30 @@ llm_client = OpenAI(
     api_key=VLLM_API_KEY
 )
 
-# Initialize services
-rag = get_rag_system()
-payment_service = PaymentService()
-lead_queue = LeadQueue()
-citation_manager = CitationManager()
+# Initialize services with error handling
+try:
+    rag = get_rag_system()
+except Exception as e:
+    print(f"Warning: Could not initialize RAG system: {e}")
+    rag = None
+
+try:
+    payment_service = PaymentService()
+except Exception as e:
+    print(f"Warning: Could not initialize payment service: {e}")
+    payment_service = None
+
+try:
+    lead_queue = LeadQueue()
+except Exception as e:
+    print(f"Warning: Could not initialize lead queue: {e}")
+    lead_queue = None
+
+try:
+    citation_manager = CitationManager()
+except Exception as e:
+    print(f"Warning: Could not initialize citation manager: {e}")
+    citation_manager = None
 
 
 @app.on_event("startup")
