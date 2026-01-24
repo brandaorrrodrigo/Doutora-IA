@@ -227,7 +227,9 @@ class Payment(Base):
     status = Column(String(50), default="pending")  # pending, approved, rejected, cancelled
 
     # External IDs
-    external_payment_id = Column(String(255), unique=True)  # Mercado Pago payment ID
+    external_payment_id = Column(String(255), unique=True)  # Payment provider ID
+    provider = Column(String(50), default="stub")  # mercado_pago, stripe, binance_pay, stub
+    payment_url = Column(Text)  # Checkout URL
     pix_qr_code = Column(Text)
     pix_qr_code_base64 = Column(Text)
 

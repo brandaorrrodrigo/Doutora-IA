@@ -1,0 +1,17 @@
+{
+  "id": "tema_106_stj",
+  "tipo": "tema",
+  "area": "bancario",
+  "orgao": "STJ",
+  "titulo": "Tema 106 STJ - Golpe do PIX",
+  "artigo_ou_tema": "Tema 106",
+  "data_publicacao": "2022-05-25",
+  "vigencia_inicio": "2022-05-25",
+  "vigencia_fim": null,
+  "hierarquia": 1.3,
+  "tribunal": "STJ",
+  "classe": "REsp",
+  "numero_processo": "1.9 88.368",
+  "texto": "Responsabilidade civil de instituição financeira por fraudes praticadas por terceiros em operações de PIX. A instituição financeira responde objetivamente pelos danos causados ao correntista por falha na segurança do sistema de pagamentos instantâneos, salvo se comprovar culpa exclusiva do cliente ou de terceiros, ou ainda caso fortuito ou força maior. A mera adesão aos protocolos de segurança não exime automaticamente a instituição de responsabilidade, devendo ser demonstrada a efetiva adoção de medidas de segurança adequadas e a ausência de negligência no monitoramento de transações suspeitas.",
+  "fonte_url": "https://processo.stj.jus.br/repetitivos/temas_repetitivos/"
+}

@@ -34,10 +34,17 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# CORS
+# CORS - Configure allowed origins via environment variable
+# In production, set ALLOWED_ORIGINS=https://doutoraia.com.br,https://app.doutoraia.com.br
+ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "").split(",") if os.getenv("ALLOWED_ORIGINS") else ["*"]
+# Remove empty strings from list
+ALLOWED_ORIGINS = [origin.strip() for origin in ALLOWED_ORIGINS if origin.strip()]
+if not ALLOWED_ORIGINS:
+    ALLOWED_ORIGINS = ["*"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, specify actual origins
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

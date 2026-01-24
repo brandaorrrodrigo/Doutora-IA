@@ -1,0 +1,17 @@
+{
+  "id": "doutrina_familia_alimentos_001",
+  "tipo": "doutrina",
+  "area": "familia",
+  "orgao": "Doutrina",
+  "titulo": "Princípio da Solidariedade Familiar nos Alimentos",
+  "artigo_ou_tema": null,
+  "data_publicacao": "2022-01-01",
+  "vigencia_inicio": "2022-01-01",
+  "vigencia_fim": null,
+  "hierarquia": 0.8,
+  "tribunal": null,
+  "classe": null,
+  "numero_processo": null,
+  "texto": "A obrigação alimentar decorre do princípio da solidariedade familiar, consagrado nos arts. 1.694 a 1.710 do Código Civil. Os alimentos devem ser fixados observando-se o trinômio: necessidade do alimentando, possibilidade do alimentante e proporcionalidade. Segundo a doutrina majoritária (Carlos Roberto Gonçalves, Maria Berenice Dias), a pensão alimentícia possui natureza personalíssima e irrenunciável, podendo ser revista a qualquer tempo mediante demonstração de alteração na situação financeira das partes (cláusula rebus sic stantibus). A jurisprudência tem flexibilizado o critério da necessidade quando se trata de filho maior estudante, exigindo-se a comprovação concreta da impossibilidade de autossustento.",
+  "fonte_url": "https://exemplo.com/doutrina"
+}

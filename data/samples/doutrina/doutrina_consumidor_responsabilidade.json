@@ -1,0 +1,17 @@
+{
+  "id": "doutrina_consumidor_resp_001",
+  "tipo": "doutrina",
+  "area": "consumidor",
+  "orgao": "Doutrina",
+  "titulo": "Responsabilidade Objetiva do Fornecedor",
+  "artigo_ou_tema": null,
+  "data_publicacao": "2021-06-01",
+  "vigencia_inicio": "2021-06-01",
+  "vigencia_fim": null,
+  "hierarquia": 0.8,
+  "tribunal": null,
+  "classe": null,
+  "numero_processo": null,
+  "texto": "O Código de Defesa do Consumidor estabelece a responsabilidade objetiva dos fornecedores de produtos e serviços (arts. 12 a 14), fundamentada na teoria do risco da atividade econômica. Conforme leciona Claudia Lima Marques, a responsabilidade independe de culpa, bastando a demonstração do nexo causal entre o defeito e o dano. As excludentes de responsabilidade são taxativas e de interpretação restrita: culpa exclusiva da vítima ou de terceiro, caso fortuito ou força maior. A doutrina moderna (Bruno Miragem, Flávio Tartuce) reconhece a aplicação da responsabilidade objetiva também nas relações bancárias e financeiras, especialmente em casos de fraudes e falhas de segurança em sistemas eletrônicos.",
+  "fonte_url": "https://exemplo.com/doutrina"
+}

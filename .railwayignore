@@ -1,0 +1,59 @@
+# Railway Ignore - Arquivos que não devem ser enviados no deploy
+
+# Documentation
+*.md
+!README.md
+docs/
+DEPLOY_*.md
+*_GUIDE.md
+railway-vars.txt
+
+# Scripts
+deploy-*.sh
+deploy-*.bat
+
+# Git
+.git/
+.gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+*.cover
+.hypothesis/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Uploads (serão criados em runtime)
+uploads/
+/tmp/
+
+# Logs
+*.log
+
+# Development only
+.env.development
+.env.local
+docker-compose*.yml

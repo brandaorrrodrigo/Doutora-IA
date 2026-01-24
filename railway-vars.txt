@@ -1,0 +1,46 @@
+# ============================================
+# VARIÁVEIS PRONTAS PARA RAILWAY
+# ============================================
+
+# COPIE E COLE ESTE COMANDO NO TERMINAL:
+
+railway variables set \
+  SECRET_KEY="MA9jR3vlo0wAa-Hus9fhPl7lui99WIsGhZKCP313v9FqavWHXmFR1oIYT2gkHfCLhE0eq0z8A-vLZRIhd-BglQ" \
+  ADMIN_SECRET_TOKEN="5OgfMnvIe82EcF9fd-UxhSv5osTyHkVUQ4ANCCb8QN8" \
+  ENV="production" \
+  LLM_BASE_URL="https://api.openai.com/v1" \
+  LLM_MODEL="gpt-4o-mini" \
+  EMAIL_PROVIDER="console" \
+  EMAIL_FROM="noreply@doutora-ia.com" \
+  REDIS_ENABLED="true" \
+  EMBEDDING_DEVICE="cpu" \
+  API_PORT="8000" \
+  WEASYPRINT_CMD="weasyprint"
+
+# ============================================
+# ATENÇÃO: Você precisa adicionar:
+# ============================================
+
+# 1. OPENAI_API_KEY
+railway variables set OPENAI_API_KEY="sk-..."
+
+# 2. (OPCIONAL) RESEND para emails
+railway variables set EMAIL_PROVIDER="resend" RESEND_API_KEY="re_..."
+
+# ============================================
+# CHAVES GERADAS (guardar com segurança!)
+# ============================================
+
+SECRET_KEY: MA9jR3vlo0wAa-Hus9fhPl7lui99WIsGhZKCP313v9FqavWHXmFR1oIYT2gkHfCLhE0eq0z8A-vLZRIhd-BglQ
+ADMIN_SECRET_TOKEN: 5OgfMnvIe82EcF9fd-UxhSv5osTyHkVUQ4ANCCb8QN8
+
+# ============================================
+# ACESSO ADMIN
+# ============================================
+
+Para acessar endpoints /admin/*, use:
+Header: Authorization: Bearer 5OgfMnvIe82EcF9fd-UxhSv5osTyHkVUQ4ANCCb8QN8
+
+Exemplo:
+curl -H "Authorization: Bearer 5OgfMnvIe82EcF9fd-UxhSv5osTyHkVUQ4ANCCb8QN8" \
+  https://[SUA_URL]/admin/analytics/overview

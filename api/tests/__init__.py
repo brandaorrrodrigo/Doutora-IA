@@ -1,0 +1,1 @@
+# Doutora IA - Test Suite
