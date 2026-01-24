@@ -8,11 +8,7 @@
       "maxDuration": 60
     }
   },
-  "env": {
-    "NEXT_PUBLIC_API_QUESTOES": "@api_questoes_url",
-    "NEXT_PUBLIC_API_MAPAS": "@api_mapas_url"
-  },
-  "headers": [
+    "headers": [
     {
       "source": "/(.*).html",
       "headers": [
