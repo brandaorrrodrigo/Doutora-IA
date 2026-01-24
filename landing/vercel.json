@@ -2,24 +2,9 @@
   "buildCommand": "next build",
   "outputDirectory": ".next",
   "framework": "nextjs",
-  "functions": {
-    "api/**/*.ts": {
-      "memory": 1024,
-      "maxDuration": 60
-    }
-  },
-    "headers": [
+  "headers": [
     {
       "source": "/(.*).html",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-cache, no-store, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/api/:path*",
       "headers": [
         {
           "key": "Cache-Control",
@@ -39,23 +24,6 @@
           "value": "nosniff"
         }
       ]
-    }
-  ],
-  "redirects": [
-    {
-      "source": "/",
-      "destination": "/estudo",
-      "permanent": false
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/api/questoes/:path*",
-      "destination": "${{ secrets.API_QUESTOES_URL }}/api/questoes/:path*"
-    },
-    {
-      "source": "/api/mapas/:path*",
-      "destination": "${{ secrets.API_MAPAS_URL }}/api/mapas/:path*"
     }
   ]
 }
