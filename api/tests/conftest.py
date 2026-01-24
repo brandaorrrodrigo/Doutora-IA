@@ -4,15 +4,24 @@ Pytest configuration and fixtures for Doutora IA tests
 
 import pytest
 import os
+import sys
+from unittest.mock import MagicMock
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
-# Set test environment
+# Set test environment BEFORE any imports
 os.environ["ENV"] = "test"
 os.environ["PAYMENTS_PROVIDER"] = "stub"
 os.environ["QDRANT_URL"] = "http://localhost:6333"
+os.environ["DATABASE_URL"] = "sqlite:///:memory:"
+
+# Mock WeasyPrint before importing main (not available on Windows without GTK)
+mock_pdf_module = MagicMock()
+mock_pdf_module.generate_pdf_report = MagicMock(return_value="/tmp/mock_report.pdf")
+sys.modules['services.pdf'] = mock_pdf_module
+sys.modules['weasyprint'] = MagicMock()
 
 from main import app
 from db import Base, get_db
