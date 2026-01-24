@@ -238,6 +238,71 @@
         * {
             color-scheme: dark;
         }
+
+        /* ===== FORÇAR TEXTO CLARO EM TEMA ESCURO ===== */
+
+        /* Texto geral */
+        body,
+        .login-card,
+        .login-body,
+        .login-header,
+        p,
+        label,
+        span,
+        small,
+        a {
+            color: #ffffff !important;
+        }
+
+        /* Labels do Bootstrap */
+        .form-label,
+        .form-check-label {
+            color: #ffffff !important;
+        }
+
+        /* Inputs */
+        .form-control {
+            background-color: #0f0f0f;
+            color: #ffffff;
+            border: 1px solid #444;
+        }
+
+        .form-control::placeholder {
+            color: #bbbbbb;
+        }
+
+        /* Inputs em foco */
+        .form-control:focus {
+            background-color: #0f0f0f;
+            color: #ffffff;
+        }
+
+        /* Links */
+        a {
+            color: #d4af37;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #ffdf7e;
+            text-decoration: underline;
+        }
+
+        /* Checkbox */
+        .form-check-input {
+            background-color: #0f0f0f;
+            border: 1px solid #666;
+        }
+
+        .form-check-input:checked {
+            background-color: #d4af37;
+            border-color: #d4af37;
+        }
+
+        /* Texto muted do Bootstrap */
+        .text-muted {
+            color: #cccccc !important;
+        }
     </style>
 </head>
 <body>
