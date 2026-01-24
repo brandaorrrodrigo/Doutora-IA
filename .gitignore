@@ -90,6 +90,8 @@ temp/
 # Large data files (use Git LFS or cloud storage)
 DOUTORA_IA_ENGINES.txt
 DOUTORA_IA_ESQUELETO.txt
+01-ebooks-recuperados/
+direito/
 
 # Backup files
 *.bak

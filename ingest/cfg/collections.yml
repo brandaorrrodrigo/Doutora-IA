@@ -1,0 +1,55 @@
+# Collections configuration for Doutora IA
+
+collections:
+  legis:
+    name: "Legislação"
+    description: "Leis, códigos e normas jurídicas"
+    hierarquia: 1.0
+    embedding_model: "intfloat/multilingual-e5-large"
+
+  sumulas:
+    name: "Súmulas"
+    description: "Súmulas vinculantes e jurisprudenciais"
+    hierarquia: 0.95
+    embedding_model: "intfloat/multilingual-e5-large"
+
+  temas:
+    name: "Temas de Repercussão Geral/Repetitivos"
+    description: "Temas de repercussão geral (STF) e recursos repetitivos (STJ)"
+    hierarquia: 0.95
+    embedding_model: "intfloat/multilingual-e5-large"
+
+  juris:
+    name: "Jurisprudência"
+    description: "Decisões judiciais e ementas"
+    hierarquia: 0.85
+    embedding_model: "intfloat/multilingual-e5-large"
+
+  regulatorio:
+    name: "Regulatório"
+    description: "Normas regulatórias de agências (ANS, ANAC, BACEN, etc.)"
+    hierarquia: 0.80
+    embedding_model: "intfloat/multilingual-e5-large"
+
+  doutrina:
+    name: "Doutrina"
+    description: "Textos doutrinários e comentários jurídicos"
+    hierarquia: 0.70
+    embedding_model: "intfloat/multilingual-e5-large"
+
+areas:
+  - familia
+  - consumidor
+  - bancario
+  - saude
+  - aereo
+
+orgaos:
+  - Congresso
+  - STJ
+  - STF
+  - TJ
+  - TRF
+  - ANS
+  - ANAC
+  - BACEN
