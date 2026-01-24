@@ -45,13 +45,38 @@ export const apiClient = {
     api.post('/compose', { tipo_peca, metadados, carrinho_citacoes }),
 
   // Auth
-  register: (email: string, password: string, role = 'user') =>
-    api.post('/auth/register', { email, password, role }),
+  register: (data: {
+    name: string
+    email: string
+    password: string
+    oab: string
+    phone: string
+  }) => api.post('/auth/register', data),
 
   login: (email: string, password: string) =>
     api.post<{ access_token: string; user: any }>('/auth/login', { email, password }),
 
   me: () => api.get('/auth/me'),
+
+  logout: () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+  },
+
+  forgotPassword: (email: string) =>
+    api.post('/auth/forgot-password', { email }),
+
+  resetPassword: (token: string, new_password: string) =>
+    api.post('/auth/reset-password', { token, new_password }),
+
+  changePassword: (current_password: string, new_password: string) =>
+    api.post('/auth/change-password', { current_password, new_password }),
+
+  verifyEmail: (token: string) =>
+    api.post('/auth/verify-email', { token }),
+
+  resendVerification: (email: string) =>
+    api.post('/auth/resend-verification', { email }),
 
   // Cases
   getCases: () => api.get<Case[]>('/cases'),
