@@ -24,7 +24,7 @@ openai==1.7.2
 httpx==0.26.0
 
 # Embeddings - Required for RAG (lightweight versions)
-sentence-transformers==2.2.2
+sentence-transformers>=2.6.0
 
 # PDF Generation
 weasyprint==60.2
