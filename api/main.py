@@ -96,8 +96,11 @@ async def startup_event():
     """Initialize services on startup"""
     try:
         # Create Qdrant collections if they don't exist
-        rag.create_collections()
-        print("✓ Qdrant collections ready")
+        if rag and rag.client:
+            rag.create_collections()
+            print("✓ Qdrant collections ready")
+        else:
+            print("⚠ Qdrant not available - RAG features disabled")
     except Exception as e:
         print(f"Warning: Could not initialize Qdrant: {e}")
 
@@ -122,13 +125,19 @@ async def health_check():
 
     # Check Qdrant
     try:
-        rag.client.get_collections()
+        if rag and rag.client:
+            rag.client.get_collections()
+        else:
+            services["qdrant"] = "unavailable"
     except:
         services["qdrant"] = "error"
 
     # Check LLM
     try:
-        llm_client.models.list()
+        if llm_client:
+            llm_client.models.list()
+        else:
+            services["llm"] = "unavailable"
     except:
         services["llm"] = "error"
 
@@ -151,10 +160,16 @@ async def analyze_case(
     Analyze a case and provide free triage or detailed analysis
     """
     # Get RAG context
-    context = rag.get_context_for_case(
-        descricao=request.descricao,
-        limit_per_type=5 if request.detalhado else 3
-    )
+    context = ""
+    if rag and rag.client:
+        try:
+            context = rag.get_context_for_case(
+                descricao=request.descricao,
+                limit_per_type=5 if request.detalhado else 3
+            )
+        except Exception as e:
+            print(f"Warning: RAG error: {e}")
+            context = ""
 
     # Build prompt
     prompt = get_triagem_prompt(

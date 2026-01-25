@@ -11,6 +11,8 @@ from sqlalchemy.orm import Session
 import os
 import secrets
 
+from database import get_db
+
 # Configurações
 SECRET_KEY = os.getenv("SECRET_KEY", "your-secret-key-change-in-production")
 ALGORITHM = "HS256"
@@ -302,7 +304,7 @@ jwt_service = JWTAuthService()
 
 def get_current_lawyer(
     authorization: Optional[str] = Header(None),
-    db: Session = None
+    db: Session = Depends(get_db)
 ):
     """
     Dependency para obter advogado atual autenticado
@@ -401,7 +403,7 @@ def get_current_active_lawyer(
 
 def get_optional_lawyer(
     authorization: Optional[str] = Header(None),
-    db: Session = None
+    db: Session = Depends(get_db)
 ):
     """
     Dependency para rotas que podem ser acessadas com ou sem autenticação

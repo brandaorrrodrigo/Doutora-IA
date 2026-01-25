@@ -6,42 +6,19 @@
   },
   "deploy": {
     "numReplicas": 1,
-    "restartPolicyMaxRetries": 3
-  },
-  "plugins": {
-    "postgres": {
-      "version": "14"
-    }
+    "restartPolicyMaxRetries": 3,
+    "healthcheckPath": "/health",
+    "healthcheckTimeout": 30
   },
   "variables": {
     "PORT": "8080",
     "ENVIRONMENT": "production",
-    "OLLAMA_URL": "http://ollama:11434",
     "DATABASE_URL": "${{Postgres.DATABASE_URL}}",
-    "API_KEY": "${{ secrets.API_KEY }}",
-    "USE_REAL_RAG": "true",
-    "CORS_ORIGINS": "https://doutora-ia-landing.vercel.app,https://www.doutoraia.com"
-  },
-  "services": [
-    {
-      "name": "api-questoes",
-      "buildCommand": "pip install -r requirements.txt",
-      "startCommand": "python -m uvicorn api_questoes:app --host 0.0.0.0 --port 8042",
-      "healthCheck": {
-        "path": "/health",
-        "interval": 30,
-        "timeout": 10
-      }
-    },
-    {
-      "name": "api-mapas",
-      "buildCommand": "pip install -r requirements.txt",
-      "startCommand": "python -m uvicorn api_mapas_flashcards:app --host 0.0.0.0 --port 8041",
-      "healthCheck": {
-        "path": "/health",
-        "interval": 30,
-        "timeout": 10
-      }
-    }
-  ]
+    "ALLOWED_ORIGINS": "https://doutora-ia-landing.vercel.app,https://www.doutoraia.com,https://doutoraia.com",
+    "SECRET_KEY": "${{SECRET_KEY}}",
+    "VLLM_BASE_URL": "http://localhost:8000/v1",
+    "VLLM_API_KEY": "token-placeholder",
+    "QDRANT_HOST": "localhost",
+    "QDRANT_PORT": "6333"
+  }
 }
