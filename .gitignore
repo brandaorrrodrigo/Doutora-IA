@@ -102,3 +102,5 @@ nul
 
 # Claude Code cache
 .claude/
+.vercel
+vector_db/
