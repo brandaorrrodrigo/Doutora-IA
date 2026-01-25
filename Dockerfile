@@ -31,10 +31,18 @@ FROM python:3.11-slim
 # Set working directory
 WORKDIR /app
 
-# Install runtime dependencies
+# Install runtime dependencies (including WeasyPrint requirements)
 RUN apt-get update && apt-get install -y \
     libpq5 \
     curl \
+    fonts-liberation \
+    libgobject-2.0-0 \
+    libpango-1.0-0 \
+    libpangocairo-1.0-0 \
+    libcairo2 \
+    libffi-dev \
+    shared-mime-info \
+    libgdk-pixbuf-2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy Python dependencies from builder
@@ -54,8 +62,7 @@ EXPOSE 8000
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-    CMD curl -f http://localhost:8000/health || exit 1
+    CMD curl -f http://localhost:${PORT:-8080}/health || exit 1
 
-# Run migrations and start server
-CMD alembic upgrade head && \
-    uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000} --workers ${WORKERS:-2}
+# Run the application
+CMD ["sh", "-c", "python -m uvicorn main:app --host 0.0.0.0 --port ${PORT:-8080}"]
