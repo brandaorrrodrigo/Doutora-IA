@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
     libcairo2 \
     libffi-dev \
     shared-mime-info \
-    libgdk-pixbuf2.0-0 \
+    libgdk-pixbuf-2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements (path relative to build context which is repo root)
