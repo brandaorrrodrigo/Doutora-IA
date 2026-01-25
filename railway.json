@@ -17,7 +17,7 @@
     "PORT": "8080",
     "ENVIRONMENT": "production",
     "OLLAMA_URL": "http://ollama:11434",
-    "DATABASE_URL": "${{ database.DATABASE_URL }}",
+    "DATABASE_URL": "${{Postgres.DATABASE_URL}}",
     "API_KEY": "${{ secrets.API_KEY }}",
     "USE_REAL_RAG": "true",
     "CORS_ORIGINS": "https://doutora-ia-landing.vercel.app,https://www.doutoraia.com"
