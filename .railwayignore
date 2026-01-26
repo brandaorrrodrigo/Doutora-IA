@@ -1,5 +1,13 @@
 # Railway Ignore - Arquivos que não devem ser enviados no deploy
 
+# Node.js/Frontend folders (ignorar para usar Dockerfile Python)
+landing/
+web/
+web-app/
+node_modules/
+package.json
+package-lock.json
+
 # Documentation
 *.md
 !README.md
