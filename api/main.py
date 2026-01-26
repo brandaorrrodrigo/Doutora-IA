@@ -706,9 +706,15 @@ try:
     app.include_router(dashboard_extras_router)
     print("✓ Autenticação JWT e Dashboard integrados com sucesso")
 except ImportError as e:
-    print(f"⚠ Aviso: Não foi possível carregar auth/dashboard endpoints: {e}")
+    import traceback
+    print(f"⚠ ERRO IMPORTAÇÃO auth/dashboard: {e}")
+    print(f"⚠ Traceback completo:")
+    traceback.print_exc()
 except Exception as e:
-    print(f"⚠ Erro ao integrar Auth/Dashboard: {e}")
+    import traceback
+    print(f"⚠ ERRO GERAL ao integrar Auth/Dashboard: {e}")
+    print(f"⚠ Traceback completo:")
+    traceback.print_exc()
 
 
 if __name__ == "__main__":
