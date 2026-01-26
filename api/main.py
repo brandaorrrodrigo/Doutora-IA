@@ -4,6 +4,13 @@ Main FastAPI application for Doutora IA
 import os
 import json
 from datetime import datetime, timedelta
+
+# Debug: Track import status
+_import_status = {
+    "auth_endpoints": {"loaded": False, "error": None},
+    "dashboard_endpoints": {"loaded": False, "error": None},
+    "dashboard_extras": {"loaded": False, "error": None},
+}
 from typing import Optional, List
 from fastapi import FastAPI, HTTPException, Depends, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
@@ -149,6 +156,16 @@ async def health_check():
         timestamp=datetime.utcnow(),
         services=services
     )
+
+
+@app.get("/debug/imports")
+async def debug_imports():
+    """Debug endpoint to check auth import status"""
+    return {
+        "imports": _import_status,
+        "routes_count": len(app.routes),
+        "routes": [r.path for r in app.routes if hasattr(r, 'path')]
+    }
 
 
 @app.post("/analyze_case", response_model=AnalysisResponse)
@@ -698,22 +715,35 @@ except Exception as e:
 # =============================================
 try:
     from auth_endpoints import router as auth_router
-    from dashboard_endpoints import router as dashboard_router
-    from dashboard_extras import router as dashboard_extras_router
-
+    _import_status["auth_endpoints"]["loaded"] = True
     app.include_router(auth_router)
-    app.include_router(dashboard_router)
-    app.include_router(dashboard_extras_router)
-    print("✓ Autenticação JWT e Dashboard integrados com sucesso")
-except ImportError as e:
-    import traceback
-    print(f"⚠ ERRO IMPORTAÇÃO auth/dashboard: {e}")
-    print(f"⚠ Traceback completo:")
-    traceback.print_exc()
+    print("✓ auth_endpoints carregado com sucesso")
 except Exception as e:
     import traceback
-    print(f"⚠ ERRO GERAL ao integrar Auth/Dashboard: {e}")
-    print(f"⚠ Traceback completo:")
+    _import_status["auth_endpoints"]["error"] = f"{type(e).__name__}: {str(e)}"
+    print(f"⚠ ERRO auth_endpoints: {e}")
+    traceback.print_exc()
+
+try:
+    from dashboard_endpoints import router as dashboard_router
+    _import_status["dashboard_endpoints"]["loaded"] = True
+    app.include_router(dashboard_router)
+    print("✓ dashboard_endpoints carregado com sucesso")
+except Exception as e:
+    import traceback
+    _import_status["dashboard_endpoints"]["error"] = f"{type(e).__name__}: {str(e)}"
+    print(f"⚠ ERRO dashboard_endpoints: {e}")
+    traceback.print_exc()
+
+try:
+    from dashboard_extras import router as dashboard_extras_router
+    _import_status["dashboard_extras"]["loaded"] = True
+    app.include_router(dashboard_extras_router)
+    print("✓ dashboard_extras carregado com sucesso")
+except Exception as e:
+    import traceback
+    _import_status["dashboard_extras"]["error"] = f"{type(e).__name__}: {str(e)}"
+    print(f"⚠ ERRO dashboard_extras: {e}")
     traceback.print_exc()
 
 
