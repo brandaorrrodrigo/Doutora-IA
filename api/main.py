@@ -34,11 +34,14 @@ from services.queues import LeadQueue
 from services.auth import get_password_hash
 from database import engine, SessionLocal, get_db
 
+# Build version for deployment tracking
+BUILD_VERSION = "2.0.0-auth"  # Change this to track deployments
+
 # Initialize FastAPI
 app = FastAPI(
     title="Doutora IA API",
     description="API for legal case analysis and document generation",
-    version="1.0.0"
+    version=BUILD_VERSION
 )
 
 # CORS - Configure allowed origins via environment variable
@@ -110,6 +113,17 @@ async def startup_event():
             print("⚠ Qdrant not available - RAG features disabled")
     except Exception as e:
         print(f"Warning: Could not initialize Qdrant: {e}")
+
+
+@app.get("/")
+async def root():
+    """Root endpoint with version info"""
+    return {
+        "message": "Doutora IA API",
+        "version": BUILD_VERSION,
+        "auth_loaded": _import_status["auth_endpoints"]["loaded"],
+        "auth_error": _import_status["auth_endpoints"]["error"]
+    }
 
 
 @app.get("/health", response_model=HealthResponse)
