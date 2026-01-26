@@ -1,76 +1,68 @@
 # -*- coding: utf-8 -*-
-# Dockerfile - Doutora IA Engines API
-# Multi-stage build para otimizar tamanho da imagem
+# Dockerfile - Doutora IA API
+# Usa código da pasta api/ com autenticação JWT
 
-# Stage 1: Builder
 FROM python:3.11-slim as builder
 
-# Metadata
 LABEL maintainer="Doutora IA <contato@doutoraai.com>"
-LABEL description="API de Automação Jurídica com 550 Engines"
-LABEL version="2.0"
+LABEL description="API Jurídica com Autenticação"
+LABEL version="2.0.0-auth"
 
-# Variáveis de ambiente para build
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
-    PIP_NO_CACHE_DIR=1 \
-    PIP_DISABLE_PIP_VERSION_CHECK=1
+    PIP_NO_CACHE_DIR=1
 
-# Instala dependências do sistema
+WORKDIR /app
+
+# Instala dependências de build
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     g++ \
+    libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Cria diretório de trabalho
-WORKDIR /app
-
-# Copia requirements e instala dependências Python
-COPY requirements.txt .
+# Copia requirements da API e instala
+COPY ../../api/requirements.txt .
 RUN pip install --user --no-warn-script-location -r requirements.txt
 
 # Stage 2: Runtime
 FROM python:3.11-slim
 
-# Variáveis de ambiente
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PATH=/root/.local/bin:$PATH \
-    PORT=8000 \
-    WORKERS=4 \
-    TIMEOUT=120 \
-    LOG_LEVEL=info
+    PORT=8080
 
-# Instala apenas dependências runtime mínimas
+# Instala dependências runtime (incluindo WeasyPrint)
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    libpq5 \
     curl \
+    fonts-liberation \
+    libgobject-2.0-0 \
+    libpango-1.0-0 \
+    libpangocairo-1.0-0 \
+    libcairo2 \
+    libffi-dev \
+    shared-mime-info \
+    libgdk-pixbuf-2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
-# Cria usuário não-root para segurança
-RUN useradd -m -u 1000 -s /bin/bash appuser
-
-# Cria diretório de trabalho
 WORKDIR /app
 
-# Copia dependências Python do builder
+# Copia dependências Python
 COPY --from=builder /root/.local /root/.local
 
-# Copia código da aplicação
-COPY --chown=appuser:appuser . .
+# Copia código da API
+COPY ../../api/ .
 
-# Cria diretórios necessários
-RUN mkdir -p /app/logs /app/tmp && \
-    chown -R appuser:appuser /app
-
-# Muda para usuário não-root
-USER appuser
+# Cria diretórios
+RUN mkdir -p /app/uploads /app/logs
 
 # Healthcheck
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
     CMD curl -f http://localhost:${PORT}/health || exit 1
 
-# Expõe porta
 EXPOSE ${PORT}
 
-# Script de inicialização
-CMD ["sh", "-c", "uvicorn api_assistente_publico:app --host 0.0.0.0 --port ${PORT} --workers ${WORKERS} --timeout-keep-alive ${TIMEOUT} --log-level ${LOG_LEVEL}"]
+# Inicia API
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT}"]
