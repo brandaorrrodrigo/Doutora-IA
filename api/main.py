@@ -12,9 +12,10 @@ _import_status = {
     "dashboard_extras": {"loaded": False, "error": None},
 }
 from typing import Optional, List
-from fastapi import FastAPI, HTTPException, Depends, BackgroundTasks
+from fastapi import FastAPI, HTTPException, Depends, BackgroundTasks, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, JSONResponse
+from starlette.middleware.base import BaseHTTPMiddleware
 from sqlalchemy.orm import Session
 import re
 
@@ -44,45 +45,105 @@ app = FastAPI(
     version=BUILD_VERSION
 )
 
-# CORS - Configure allowed origins via environment variable
-# IMPORTANTE: Nunca usar ["*"] com allow_credentials=True (spec CORS proíbe)
-# Em produção, defina ALLOWED_ORIGINS=https://www.doutoraia.com,https://doutoraia.com
+# ============================================================
+# CORS CONFIGURATION - SOLUÇÃO DEFINITIVA
+# ============================================================
 
-# Origens padrão para produção (fallback seguro)
-DEFAULT_ORIGINS = [
+ALLOWED_ORIGINS = [
     "https://www.doutoraia.com",
     "https://doutoraia.com",
     "https://doutora-ia-landing.vercel.app",
     "http://localhost:3000",
+    "http://127.0.0.1:3000",
     "http://localhost:5500",
     "http://127.0.0.1:5500",
 ]
 
-# Parse ALLOWED_ORIGINS do ambiente
+# Adiciona origens do ambiente se existirem
 env_origins = os.getenv("ALLOWED_ORIGINS", "")
 if env_origins:
-    ALLOWED_ORIGINS = [origin.strip() for origin in env_origins.split(",") if origin.strip()]
-else:
-    ALLOWED_ORIGINS = DEFAULT_ORIGINS
+    for origin in env_origins.split(","):
+        origin = origin.strip()
+        if origin and origin not in ALLOWED_ORIGINS:
+            ALLOWED_ORIGINS.append(origin)
 
-# Log das origens permitidas (debug)
+CORS_HEADERS = {
+    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS, PATCH",
+    "Access-Control-Allow-Headers": "Authorization, Content-Type, Accept, Origin, X-Requested-With",
+    "Access-Control-Allow-Credentials": "true",
+    "Access-Control-Max-Age": "600",
+}
+
+def get_cors_origin(request_origin: str) -> str:
+    """Retorna a origem se permitida, senão retorna a primeira origem da lista"""
+    if request_origin in ALLOWED_ORIGINS:
+        return request_origin
+    return ALLOWED_ORIGINS[0]
+
+class CORSHandler(BaseHTTPMiddleware):
+    """Middleware CORS customizado que GARANTE headers em TODAS as respostas"""
+
+    async def dispatch(self, request: Request, call_next):
+        origin = request.headers.get("origin", "")
+
+        # Preflight OPTIONS - responde imediatamente
+        if request.method == "OPTIONS":
+            response = Response(status_code=200)
+            response.headers["Access-Control-Allow-Origin"] = get_cors_origin(origin)
+            for key, value in CORS_HEADERS.items():
+                response.headers[key] = value
+            return response
+
+        # Processa requisição normal
+        response = await call_next(request)
+
+        # Adiciona headers CORS em TODAS as respostas
+        response.headers["Access-Control-Allow-Origin"] = get_cors_origin(origin)
+        for key, value in CORS_HEADERS.items():
+            if key not in response.headers:
+                response.headers[key] = value
+
+        return response
+
+# Adiciona o middleware customizado (executa ANTES do CORSMiddleware padrão)
+app.add_middleware(CORSHandler)
+
+# Log das origens permitidas
 print(f"[CORS] Allowed origins: {ALLOWED_ORIGINS}")
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=ALLOWED_ORIGINS,
-    allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-    allow_headers=[
-        "Authorization",
-        "Content-Type",
-        "Accept",
-        "Origin",
-        "X-Requested-With",
-    ],
-    expose_headers=["X-Total-Count", "X-Page", "X-Per-Page"],
-    max_age=600,  # Cache preflight por 10 minutos
-)
+# ============================================================
+# HANDLERS OPTIONS EXPLÍCITOS (fallback extra)
+# ============================================================
+
+@app.options("/auth/register")
+@app.options("/auth/login")
+@app.options("/auth/refresh")
+@app.options("/auth/me")
+@app.options("/auth/forgot-password")
+@app.options("/auth/reset-password")
+@app.options("/auth/verify-email")
+async def auth_options(request: Request):
+    """Handler OPTIONS explícito para endpoints de autenticação"""
+    origin = request.headers.get("origin", ALLOWED_ORIGINS[0])
+    return Response(
+        status_code=200,
+        headers={
+            "Access-Control-Allow-Origin": get_cors_origin(origin),
+            **CORS_HEADERS
+        }
+    )
+
+@app.options("/{path:path}")
+async def global_options(request: Request, path: str):
+    """Handler OPTIONS global para qualquer endpoint"""
+    origin = request.headers.get("origin", ALLOWED_ORIGINS[0])
+    return Response(
+        status_code=200,
+        headers={
+            "Access-Control-Allow-Origin": get_cors_origin(origin),
+            **CORS_HEADERS
+        }
+    )
 
 # Create tables
 Base.metadata.create_all(bind=engine)
