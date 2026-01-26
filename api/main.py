@@ -45,19 +45,43 @@ app = FastAPI(
 )
 
 # CORS - Configure allowed origins via environment variable
-# In production, set ALLOWED_ORIGINS=https://doutoraia.com.br,https://app.doutoraia.com.br
-ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "").split(",") if os.getenv("ALLOWED_ORIGINS") else ["*"]
-# Remove empty strings from list
-ALLOWED_ORIGINS = [origin.strip() for origin in ALLOWED_ORIGINS if origin.strip()]
-if not ALLOWED_ORIGINS:
-    ALLOWED_ORIGINS = ["*"]
+# IMPORTANTE: Nunca usar ["*"] com allow_credentials=True (spec CORS proíbe)
+# Em produção, defina ALLOWED_ORIGINS=https://www.doutoraia.com,https://doutoraia.com
+
+# Origens padrão para produção (fallback seguro)
+DEFAULT_ORIGINS = [
+    "https://www.doutoraia.com",
+    "https://doutoraia.com",
+    "https://doutora-ia-landing.vercel.app",
+    "http://localhost:3000",
+    "http://localhost:5500",
+    "http://127.0.0.1:5500",
+]
+
+# Parse ALLOWED_ORIGINS do ambiente
+env_origins = os.getenv("ALLOWED_ORIGINS", "")
+if env_origins:
+    ALLOWED_ORIGINS = [origin.strip() for origin in env_origins.split(",") if origin.strip()]
+else:
+    ALLOWED_ORIGINS = DEFAULT_ORIGINS
+
+# Log das origens permitidas (debug)
+print(f"[CORS] Allowed origins: {ALLOWED_ORIGINS}")
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+    allow_headers=[
+        "Authorization",
+        "Content-Type",
+        "Accept",
+        "Origin",
+        "X-Requested-With",
+    ],
+    expose_headers=["X-Total-Count", "X-Page", "X-Per-Page"],
+    max_age=600,  # Cache preflight por 10 minutos
 )
 
 # Create tables
