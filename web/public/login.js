@@ -1,5 +1,10 @@
 // Login e Autenticação - Doutora IA
-const API_URL = 'http://localhost:8080';
+// Detecta automaticamente a URL da API baseado no ambiente
+const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://localhost:8080'
+    : window.location.origin.includes('railway.app')
+        ? 'https://doutora-ia-production.up.railway.app'
+        : window.location.origin;
 
 // ==========================================
 // NAVEGAÇÃO ENTRE TABS
