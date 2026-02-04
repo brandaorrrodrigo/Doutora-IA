@@ -185,7 +185,8 @@ class EmailService:
         Returns:
             True se enviado com sucesso
         """
-        verification_url = f"http://localhost:3000/verify-email?token={token}"
+        base_url = os.getenv("BASE_URL", "http://localhost:3000")
+        verification_url = f"{base_url}/verify-email.html?token={token}"
 
         content = f"""
         <h2 style="color: #1a5490;">Bem-vindo à Doutora IA, {lawyer_name}! 🎉</h2>
@@ -243,7 +244,8 @@ class EmailService:
         Returns:
             True se enviado com sucesso
         """
-        reset_url = f"http://localhost:3000/reset-password?token={token}"
+        base_url = os.getenv("BASE_URL", "http://localhost:3000")
+        reset_url = f"{base_url}/reset-password.html?token={token}"
 
         content = f"""
         <h2 style="color: #1a5490;">Redefinição de Senha</h2>
