@@ -17,14 +17,14 @@ RUN apt-get update && apt-get install -y \
     libgdk-pixbuf-2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements (path relative to build context which is repo root)
-COPY api/requirements.txt .
+# Copy requirements
+COPY requirements.txt .
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application code (only api folder)
-COPY api/ .
+# Copy application code
+COPY . .
 
 # Expose port
 EXPOSE 8080
