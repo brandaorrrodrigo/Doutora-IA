@@ -196,13 +196,13 @@
                 <div id="loginTab" class="tab-content active">
                     <form id="loginForm">
                         <div class="mb-3">
-                            <label class="form-label" style="color: #ffffff !important;">Email</label>
-                            <input type="email" class="form-control" id="loginEmail" required>
+                            <label for="loginEmail" class="form-label" style="color: #ffffff !important;">Email</label>
+                            <input type="email" class="form-control" id="loginEmail" name="email" autocomplete="email" required>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label" style="color: #ffffff !important;">Senha</label>
-                            <input type="password" class="form-control" id="loginPassword" required>
+                            <label for="loginPassword" class="form-label" style="color: #ffffff !important;">Senha</label>
+                            <input type="password" class="form-control" id="loginPassword" name="password" autocomplete="current-password" required>
                         </div>
 
                         <div class="mb-3 form-check">
@@ -226,35 +226,35 @@
                 <div id="registerTab" class="tab-content">
                     <form id="registerForm">
                         <div class="mb-3">
-                            <label class="form-label" style="color: #ffffff !important;">Nome Completo</label>
-                            <input type="text" class="form-control" id="regName" required>
+                            <label for="regName" class="form-label" style="color: #ffffff !important;">Nome Completo</label>
+                            <input type="text" class="form-control" id="regName" name="name" autocomplete="name" required>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label" style="color: #ffffff !important;">Email</label>
-                            <input type="email" class="form-control" id="regEmail" required>
+                            <label for="regEmail" class="form-label" style="color: #ffffff !important;">Email</label>
+                            <input type="email" class="form-control" id="regEmail" name="email" autocomplete="email" required>
                         </div>
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label" style="color: #ffffff !important;">OAB</label>
-                                <input type="text" class="form-control" id="regOab" placeholder="OAB/SP 123456" required>
+                                <label for="regOab" class="form-label" style="color: #ffffff !important;">OAB</label>
+                                <input type="text" class="form-control" id="regOab" name="oab" placeholder="OAB/SP 123456" autocomplete="off" required>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label" style="color: #ffffff !important;">Telefone</label>
-                                <input type="tel" class="form-control" id="regPhone" placeholder="(11) 99999-9999" required>
+                                <label for="regPhone" class="form-label" style="color: #ffffff !important;">Telefone</label>
+                                <input type="tel" class="form-control" id="regPhone" name="phone" placeholder="(11) 99999-9999" autocomplete="tel" required>
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label" style="color: #ffffff !important;">Senha</label>
-                            <input type="password" class="form-control" id="regPassword" minlength="6" required>
+                            <label for="regPassword" class="form-label" style="color: #ffffff !important;">Senha</label>
+                            <input type="password" class="form-control" id="regPassword" name="password" minlength="6" autocomplete="new-password" required>
                             <small style="color: #cccccc !important;">Mínimo 6 caracteres</small>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label" style="color: #ffffff !important;">Confirmar Senha</label>
-                            <input type="password" class="form-control" id="regPasswordConfirm" required>
+                            <label for="regPasswordConfirm" class="form-label" style="color: #ffffff !important;">Confirmar Senha</label>
+                            <input type="password" class="form-control" id="regPasswordConfirm" name="password_confirm" autocomplete="new-password" required>
                         </div>
 
                         <div class="mb-3 form-check">
@@ -278,8 +278,8 @@
 
                     <form id="forgotPasswordForm">
                         <div class="mb-3">
-                            <label class="form-label" style="color: #ffffff !important;">Email</label>
-                            <input type="email" class="form-control" id="forgotEmail" required>
+                            <label for="forgotEmail" class="form-label" style="color: #ffffff !important;">Email</label>
+                            <input type="email" class="form-control" id="forgotEmail" name="email" autocomplete="email" required>
                             <small style="color: #cccccc !important;">
                                 Enviaremos um link para resetar sua senha
                             </small>
