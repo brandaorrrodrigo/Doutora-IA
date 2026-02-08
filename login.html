@@ -4,341 +4,281 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Doutora IA</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="/logo-brilhante.png">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="logo-brilhante.png">
+    <link rel="shortcut icon" type="image/png" href="logo-brilhante.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
     <style>
 @keyframes glow-pulse {
-    0%, 100% { 
-        filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.8)) 
-                drop-shadow(0 0 40px rgba(212, 175, 55, 0.6)) 
-                drop-shadow(0 0 60px rgba(212, 175, 55, 0.4)) 
-                drop-shadow(0 0 80px rgba(212, 175, 55, 0.3));
+    0%, 100% {
+        filter: drop-shadow(0 0 20px rgba(212,175,55,.8))
+                drop-shadow(0 0 40px rgba(212,175,55,.6))
+                drop-shadow(0 0 60px rgba(212,175,55,.4));
         transform: scale(1);
     }
-    50% { 
-        filter: drop-shadow(0 0 30px rgba(212, 175, 55, 1)) 
-                drop-shadow(0 0 60px rgba(212, 175, 55, 0.9)) 
-                drop-shadow(0 0 90px rgba(212, 175, 55, 0.7)) 
-                drop-shadow(0 0 120px rgba(212, 175, 55, 0.5)) 
-                drop-shadow(0 0 150px rgba(212, 175, 55, 0.3));
+    50% {
+        filter: drop-shadow(0 0 40px rgba(212,175,55,1))
+                drop-shadow(0 0 80px rgba(212,175,55,.8))
+                drop-shadow(0 0 120px rgba(212,175,55,.6));
         transform: scale(1.02);
     }
 }
-@keyframes old-glow-pulse {
-    0%, 100% { filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.4)) drop-shadow(0 0 20px rgba(212, 175, 55, 0.2)); }
-    50% { filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.8)) drop-shadow(0 0 40px rgba(212, 175, 55, 0.6)) drop-shadow(0 0 60px rgba(212, 175, 55, 0.4)); }
-}
+
 .logo-animated {
     animation: glow-pulse 3s ease-in-out infinite;
 }
-        :root {
-            --primary: #d4af37;
-            --success: #28a745;
-        }
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0a0a0a;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 20px;
-        }
+:root {
+    --gold: #d4af37;
+}
 
-        h1, h2, h3, .login-header h2 {
-            font-family: 'Cinzel', serif;
-        }
+body {
+    background: #0a0a0a;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    font-family: 'Cinzel', serif;
+    color: #ffffff;
+}
 
-        .login-container {
-            max-width: 550px;
-            margin: 0 auto;
-        }
+.login-container {
+    max-width: 550px;
+    margin: 0 auto;
+}
 
-        .login-card {
-            background: linear-gradient(135deg, #1a1410, #2d1f17); border: 2px solid #d4af37;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            overflow: hidden;
-        }
+.login-card {
+    background: linear-gradient(135deg, #1a1410, #2d1f17);
+    border: 2px solid var(--gold);
+    border-radius: 15px;
+    overflow: hidden;
+}
 
-        .login-header {
-            background: linear-gradient(135deg, #2d1f17, #1a1410); border-bottom: 2px solid #d4af37;
-            color: #d4af37; font-weight: 500;
-            padding: 30px;
-            text-align: center;
-        }
+.login-header {
+    background: linear-gradient(135deg, #2d1f17, #1a1410);
+    border-bottom: 2px solid var(--gold);
+    color: var(--gold);
+    padding: 30px;
+    text-align: center;
+}
 
-        .login-header i {
-            font-size: 3rem;
-            margin-bottom: 10px;
-        }
+.login-body {
+    padding: 30px;
+}
 
-        .login-body {
-            padding: 30px;
-        }
+/* ===== TEXTO ===== */
+label,
+p,
+small,
+a,
+.form-label,
+.form-check-label {
+    color: #ffffff !important;
+}
 
-        .form-control:focus {
-            border-color: #d4af37;
-            box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
-        }
+.text-muted {
+    color: #cccccc !important;
+}
 
-        .btn-login {
-            background: linear-gradient(135deg, #2d1f17, #1a1410); border-bottom: 2px solid #d4af37;
-            color: #d4af37; font-weight: 500;
-            padding: 12px;
-            font-size: 1.1rem;
-            border: none;
-        }
+/* ===== INPUTS ===== */
+.form-control {
+    background-color: #0f0f0f;
+    color: #ffffff;
+    border: 1px solid #444;
+}
 
-        .btn-login:hover {
-            background: #b8860b;
-            color: #d4af37; font-weight: 500;
-        }
+.form-control::placeholder {
+    color: #bbbbbb;
+}
 
-        .tabs {
-            display: flex;
-            border-bottom: 2px solid #dee2e6;
-            margin-bottom: 1cm;
-        }
+.form-control:focus {
+    background-color: #0f0f0f;
+    color: #ffffff;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 .2rem rgba(212,175,55,.25);
+}
 
-        .tab {
-            flex: 1;
-            padding: 12px;
-            text-align: center;
-            cursor: pointer;
-            border: none;
-            background: none;
-            color: #d4af37; font-weight: 500; opacity: 0.6;
-            font-weight: 600;
-        }
+/* ===== BOTÕES ===== */
+.btn-login {
+    background: linear-gradient(135deg, #2d1f17, #1a1410);
+    border: 2px solid var(--gold);
+    color: var(--gold);
+    font-weight: 600;
+    padding: 12px;
+}
 
-        .tab.active {
-            color: #d4af37;
-            border-bottom: 3px solid #d4af37; opacity: 1;
-            margin-bottom: -2px;
-        }
+.btn-login:hover {
+    background: var(--gold);
+    color: #1a1410;
+}
 
-        .tab-content {
-            display: none;
-        }
+/* ===== TABS ===== */
+.tabs {
+    display: flex;
+    border-bottom: 2px solid #444;
+    margin-bottom: 1cm;
+}
 
-        .tab-content.active {
-            display: block;
-        }
+.tab {
+    flex: 1;
+    padding: 12px;
+    background: none;
+    border: none;
+    color: var(--gold);
+    opacity: .6;
+    font-weight: 600;
+    cursor: pointer;
+}
 
-        .alert {
-            margin-bottom: 1cm;
-        }
+.tab.active {
+    opacity: 1;
+    border-bottom: 3px solid var(--gold);
+}
 
-        /* Fundo escuro com texto branco brilhante */
-        .form-label {
-            color: #ffffff !important;
-            font-weight: 500;
-            font-size: 0.95rem;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
+/* ===== CHECKBOX ===== */
+.form-check-input {
+    background-color: #0f0f0f;
+    border: 1px solid #666;
+}
 
-        .form-check-label {
-            color: #ffffff !important;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
+.form-check-input:checked {
+    background-color: var(--gold);
+    border-color: var(--gold);
+}
 
-        .text-muted {
-            color: #cccccc !important;
-            font-size: 0.85rem;
-        }
+/* ===== LINKS ===== */
+a {
+    color: var(--gold);
+    text-decoration: none;
+}
 
-        .tab {
-            font-family: 'Inter', sans-serif;
-        }
+a:hover {
+    color: #ffdf7e;
+    text-decoration: underline;
+}
 
-        a {
-            color: #d4af37;
-            text-decoration: none;
-        }
+/* ===== TABS CONTENT ===== */
+.tab-content {
+    display: none;
+}
 
-        a:hover {
-            color: #f0d070;
-            text-decoration: underline;
-        }
+.tab-content.active {
+    display: block;
+}
 
-        .text-center a {
-            color: #d4af37;
-        }
+/* ===== ALERTAS ===== */
+#alertContainer {
+    margin-bottom: 20px;
+}
 
-        .text-center a:hover {
-            color: #f0d070;
-        }
-
-        small {
-            color: #e0e0e0;
-        }
-
-        .form-control {
-            background: #0a0a0a;
-            border-color: #2a2a2a;
-            color: #ffffff;
-        }
-
-        .form-control:focus {
-            background: #0a0a0a;
-            color: #ffffff;
-            border-color: #d4af37;
-            box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
-        }
-
-        .form-control::placeholder {
-            color: #808080;
-        }
-
-        input:-webkit-autofill,
-        input:-webkit-autofill:hover,
-        input:-webkit-autofill:focus,
-        input:-webkit-autofill:active {
-            -webkit-box-shadow: 0 0 0 30px #0a0a0a inset !important;
-            -webkit-text-fill-color: #ffffff !important;
-        }
+.alert {
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
     </style>
 </head>
+
 <body>
-    <div class="login-container">
-        <div class="login-card">
-            <div class="login-header">
-                <h2 style="margin-bottom: 1cm;">DOUTORA IA</h2>
-                <img src="/logo-brilhante.png?v=2" alt="Doutora IA" class="logo-animated" style="width: 700px; height: 700px; object-fit: contain; aspect-ratio: 1/1; margin-bottom: 1cm;">
-                <p class="mb-0">Inteligência Jurídica <span style="background: #d4af37; color: #1a1410; padding: 4px 12px; border-radius: 4px; font-size: 0.75em; font-weight: 600; margin-left: 10px;">BETA</span></p>
-            </div>
-
-            <div class="login-body">
-                <!-- Tabs -->
-                <div class="tabs">
-                    <button class="tab active" onclick="switchTab('login')">
-                        <i class="fas fa-sign-in-alt"></i> Login
-                    </button>
-                    <button class="tab" onclick="switchTab('register')">
-                        <i class="fas fa-user-plus"></i> Cadastro
-                    </button>
-                </div>
-
-                <!-- Alertas -->
-                <div id="alertContainer"></div>
-
-                <!-- Tab de Login -->
-                <div id="loginTab" class="tab-content active">
-                    <form id="loginForm">
-                        <div class="mb-3">
-                            <label for="loginEmail" class="form-label" style="color: #ffffff !important;">Email</label>
-                            <input type="email" class="form-control" id="loginEmail" name="email" autocomplete="email" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="loginPassword" class="form-label" style="color: #ffffff !important;">Senha</label>
-                            <input type="password" class="form-control" id="loginPassword" name="password" autocomplete="current-password" required>
-                        </div>
-
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="rememberMe">
-                            <label class="form-check-label" style="color: #ffffff !important;" for="rememberMe">
-                                Lembrar de mim
-                            </label>
-                        </div>
-
-                        <button type="submit" class="btn btn-login w-100 mb-3">
-                            <i class="fas fa-sign-in-alt"></i> Entrar
-                        </button>
-
-                        <div class="text-center">
-                            <a href="#" onclick="showForgotPassword()">Esqueceu sua senha?</a>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Tab de Cadastro -->
-                <div id="registerTab" class="tab-content">
-                    <form id="registerForm">
-                        <div class="mb-3">
-                            <label for="regName" class="form-label" style="color: #ffffff !important;">Nome Completo</label>
-                            <input type="text" class="form-control" id="regName" name="name" autocomplete="name" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="regEmail" class="form-label" style="color: #ffffff !important;">Email</label>
-                            <input type="email" class="form-control" id="regEmail" name="email" autocomplete="email" required>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="regOab" class="form-label" style="color: #ffffff !important;">OAB</label>
-                                <input type="text" class="form-control" id="regOab" name="oab" placeholder="OAB/SP 123456" autocomplete="off" required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="regPhone" class="form-label" style="color: #ffffff !important;">Telefone</label>
-                                <input type="tel" class="form-control" id="regPhone" name="phone" placeholder="(11) 99999-9999" autocomplete="tel" required>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="regPassword" class="form-label" style="color: #ffffff !important;">Senha</label>
-                            <input type="password" class="form-control" id="regPassword" name="password" minlength="6" autocomplete="new-password" required>
-                            <small style="color: #cccccc !important;">Mínimo 6 caracteres</small>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="regPasswordConfirm" class="form-label" style="color: #ffffff !important;">Confirmar Senha</label>
-                            <input type="password" class="form-control" id="regPasswordConfirm" name="password_confirm" autocomplete="new-password" required>
-                        </div>
-
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="acceptTerms" required>
-                            <label class="form-check-label" style="color: #ffffff !important;" for="acceptTerms">
-                                Aceito os <a href="/termos.html" target="_blank">Termos de Uso</a>
-                            </label>
-                        </div>
-
-                        <button type="submit" class="btn btn-login w-100">
-                            <i class="fas fa-user-plus"></i> Criar Conta
-                        </button>
-                    </form>
-                </div>
-
-                <!-- Modal de Esqueci Senha -->
-                <div id="forgotPasswordSection" class="tab-content">
-                    <button onclick="switchTab('login')" class="btn btn-link mb-3">
-                        <i class="fas fa-arrow-left"></i> Voltar ao Login
-                    </button>
-
-                    <form id="forgotPasswordForm">
-                        <div class="mb-3">
-                            <label for="forgotEmail" class="form-label" style="color: #ffffff !important;">Email</label>
-                            <input type="email" class="form-control" id="forgotEmail" name="email" autocomplete="email" required>
-                            <small style="color: #cccccc !important;">
-                                Enviaremos um link para resetar sua senha
-                            </small>
-                        </div>
-
-                        <button type="submit" class="btn btn-login w-100">
-                            <i class="fas fa-paper-plane"></i> Enviar Link
-                        </button>
-                    </form>
-                </div>
-            </div>
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-header">
+            <h2>DOUTORA IA</h2>
+            <img src="logo-brilhante.png?v=2" class="logo-animated" style="width:300px;height:300px;object-fit:contain;">
+            <p>Inteligência Jurídica
+                <span style="background:#d4af37;color:#1a1410;padding:4px 12px;border-radius:4px;font-size:.75em;font-weight:600;margin-left:10px;">
+                    BETA
+                </span>
+            </p>
         </div>
 
-        <div class="text-center mt-3">
-            <a href="/index.html" class="text-gold">
-                <i class="fas fa-home"></i> Voltar para Home
-            </a>
+        <div class="login-body">
+            <div id="alertContainer"></div>
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('login')">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                <button class="tab" onclick="switchTab('register')">
+                    <i class="fas fa-user-plus"></i> Cadastro
+                </button>
+            </div>
+
+            <div id="loginTab" class="tab-content active">
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <label for="loginEmail" class="form-label">Email</label>
+                        <input type="email" id="loginEmail" name="email" class="form-control" autocomplete="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="loginPassword" class="form-label">Senha</label>
+                        <input type="password" id="loginPassword" name="password" class="form-control" autocomplete="current-password" required>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" id="rememberMe" name="remember" class="form-check-input">
+                        <label for="rememberMe" class="form-check-label">Lembrar de mim</label>
+                    </div>
+                    <button type="submit" class="btn btn-login w-100 mb-3">
+                        <i class="fas fa-sign-in-alt"></i> Entrar
+                    </button>
+                    <div class="text-center">
+                        <a href="#" onclick="showForgotPassword()">Esqueceu sua senha?</a>
+                    </div>
+                </form>
+            </div>
+
+            <div id="registerTab" class="tab-content">
+                <form id="registerForm">
+                    <div class="mb-3">
+                        <label for="registerName" class="form-label">Nome Completo</label>
+                        <input type="text" id="registerName" name="name" class="form-control" autocomplete="name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="registerEmail" class="form-label">Email</label>
+                        <input type="email" id="registerEmail" name="email" class="form-control" autocomplete="email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="registerPassword" class="form-label">Senha</label>
+                        <input type="password" id="registerPassword" name="password" class="form-control" autocomplete="new-password">
+                        <small class="text-muted">Mínimo 6 caracteres</small>
+                    </div>
+                    <button type="submit" class="btn btn-login w-100">
+                        <i class="fas fa-user-plus"></i> Criar Conta
+                    </button>
+                </form>
+            </div>
+
+            <div id="forgotPasswordSection" class="tab-content">
+                <button class="btn btn-link mb-3" onclick="switchTab('login')">
+                    <i class="fas fa-arrow-left"></i> Voltar
+                </button>
+                <form id="forgotPasswordForm">
+                    <div class="mb-3">
+                        <label for="forgotEmail" class="form-label">Email</label>
+                        <input type="email" id="forgotEmail" name="email" class="form-control" autocomplete="email">
+                        <small class="text-muted">Enviaremos um link para redefinir sua senha</small>
+                    </div>
+                    <button type="submit" class="btn btn-login w-100">
+                        <i class="fas fa-paper-plane"></i> Enviar Link
+                    </button>
+                </form>
+            </div>
+
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/web/public/login.js"></script>
+    <div class="text-center mt-3">
+        <a href="/index.html">
+            <i class="fas fa-home"></i> Voltar para Home
+        </a>
+    </div>
+</div>
+
+<script src="login.js"></script>
+
 </body>
 </html>
-<!-- force deploy sáb,  3 de jan de 2026 20:40:55 -->

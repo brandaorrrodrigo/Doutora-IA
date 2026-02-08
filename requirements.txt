@@ -1,0 +1,29 @@
+# Core Dependencies
+langchain==0.1.14
+langchain-community==0.0.34
+langchain-huggingface==0.0.1
+langchain-core==0.1.33
+
+# Vector Database
+chromadb==0.4.24
+sentence-transformers==2.2.2
+
+# LLM Integration
+ollama==0.1.32
+
+# Utilities
+tqdm==4.66.2
+requests==2.31.0
+
+# Data Processing
+numpy==1.24.3
+pandas==2.0.3
+
+# ML/AI
+torch==2.1.2
+transformers==4.35.2
+huggingface-hub==0.19.4
+
+# Additional utilities
+python-dotenv==1.0.0
+colorama==0.4.6
