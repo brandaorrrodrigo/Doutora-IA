@@ -4,6 +4,10 @@ Main FastAPI application for Doutora IA
 import os
 import json
 from datetime import datetime, timedelta
+from dotenv import load_dotenv
+
+# Carregar variáveis de ambiente do .env
+load_dotenv()
 
 # Debug: Track import status
 _import_status = {
@@ -146,7 +150,8 @@ async def global_options(request: Request, path: str):
     )
 
 # Create tables
-Base.metadata.create_all(bind=engine)
+# TEMPORARIAMENTE COMENTADO - tabelas já foram criadas via migrations
+# Base.metadata.create_all(bind=engine)
 
 # OpenAI client for vLLM
 from openai import OpenAI
@@ -193,7 +198,7 @@ async def startup_event():
         # Create Qdrant collections if they don't exist
         if rag and rag.client:
             rag.create_collections()
-            print("✓ Qdrant collections ready")
+            print("[OK] Qdrant collections ready")
         else:
             print("⚠ Qdrant not available - RAG features disabled")
     except Exception as e:
@@ -804,7 +809,7 @@ def parse_analysis_response(text: str) -> dict:
 try:
     from endpoints_fase2_fase3 import router as fase2_fase3_router
     app.include_router(fase2_fase3_router, tags=["Fase 2 + 3"])
-    print("✓ Endpoints Fase 2 + 3 integrados com sucesso")
+    print("[OK] Endpoints Fase 2 + 3 integrados com sucesso")
 except ImportError as e:
     print(f"⚠ Aviso: Não foi possível carregar endpoints_fase2_fase3: {e}")
 except Exception as e:
@@ -817,7 +822,7 @@ try:
     from auth_endpoints import router as auth_router
     _import_status["auth_endpoints"]["loaded"] = True
     app.include_router(auth_router)
-    print("✓ auth_endpoints carregado com sucesso")
+    print("[OK] auth_endpoints carregado com sucesso")
 except Exception as e:
     import traceback
     _import_status["auth_endpoints"]["error"] = f"{type(e).__name__}: {str(e)}"
@@ -828,7 +833,7 @@ try:
     from dashboard_endpoints import router as dashboard_router
     _import_status["dashboard_endpoints"]["loaded"] = True
     app.include_router(dashboard_router)
-    print("✓ dashboard_endpoints carregado com sucesso")
+    print("[OK] dashboard_endpoints carregado com sucesso")
 except Exception as e:
     import traceback
     _import_status["dashboard_endpoints"]["error"] = f"{type(e).__name__}: {str(e)}"
@@ -839,7 +844,7 @@ try:
     from dashboard_extras import router as dashboard_extras_router
     _import_status["dashboard_extras"]["loaded"] = True
     app.include_router(dashboard_extras_router)
-    print("✓ dashboard_extras carregado com sucesso")
+    print("[OK] dashboard_extras carregado com sucesso")
 except Exception as e:
     import traceback
     _import_status["dashboard_extras"]["error"] = f"{type(e).__name__}: {str(e)}"

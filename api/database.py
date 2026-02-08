@@ -2,11 +2,16 @@
 Database configuration and dependencies
 """
 import os
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
 
+# Carregar .env antes de qualquer coisa
+load_dotenv()
+
 # Database
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:postgres@localhost:5432/doutora")
+print(f"[DEBUG] DATABASE_URL being used: {DATABASE_URL}")
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
