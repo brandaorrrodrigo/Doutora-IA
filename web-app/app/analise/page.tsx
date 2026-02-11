@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import Link from 'next/link'
+import { toast } from 'sonner'
 
 export default function AnalisePage() {
   const [descricao, setDescricao] = useState('')
@@ -23,26 +24,18 @@ export default function AnalisePage() {
       return
     }
 
-    setLoading(true)
-    try {
-      const response = await fetch('/api/auth/me')
-      if (!response.ok) {
-        setError('Faça login para acessar a análise completa.')
-        setLoading(false)
-        return
-      }
-      setResult({
-        tipificacao: 'Análise em desenvolvimento. O módulo de IA será ativado em breve.',
-        probabilidade: 'A funcionalidade de análise de risco está sendo implementada.',
-      })
-    } catch {
-      setResult({
-        tipificacao: 'Análise em desenvolvimento. O módulo de IA será ativado em breve.',
-        probabilidade: 'A funcionalidade de análise de risco está sendo implementada.',
-      })
-    } finally {
-      setLoading(false)
+    const token = localStorage.getItem('token')
+    if (!token) {
+      setError('Faça login para acessar a análise completa.')
+      return
     }
+
+    setLoading(true)
+    setResult({
+      tipificacao: 'Análise em desenvolvimento. O módulo de IA será ativado em breve.',
+      probabilidade: 'A funcionalidade de análise de risco está sendo implementada.',
+    })
+    setLoading(false)
   }
 
   return (
@@ -114,7 +107,10 @@ export default function AnalisePage() {
                 <div className="bg-[#d4af37]/10 p-6 rounded-lg border border-[#d4af37]/30">
                   <h3 className="text-xl font-bold mb-2 text-[#d4af37]" style={{ fontFamily: "'Cinzel', serif" }}>Relatório Completo</h3>
                   <p className="mb-4 text-[#f5f5dc]/80">Por apenas R$ 7,00 você recebe o relatório completo em PDF</p>
-                  <Button className="w-full bg-gradient-to-r from-[#d4af37] to-[#e6c547] text-[#1a1410] hover:from-[#e6c547] hover:to-[#d4af37] font-bold">
+                  <Button
+                    className="w-full bg-gradient-to-r from-[#d4af37] to-[#e6c547] text-[#1a1410] hover:from-[#e6c547] hover:to-[#d4af37] font-bold"
+                    onClick={() => toast.info('Módulo de relatórios premium em desenvolvimento')}
+                  >
                     Gerar Relatório Premium - R$ 7,00
                   </Button>
                 </div>
