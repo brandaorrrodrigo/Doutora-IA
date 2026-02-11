@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { apiClient } from '@/services/api'
+import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -34,13 +35,13 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0d2818] to-[#1b3d29] flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#1a1410] to-[#0a0a0a] flex items-center justify-center p-4">
+      <Card className="w-full max-w-md bg-gradient-to-br from-[#1a1410] to-[#2d1f17] border-2 border-[#d4af37]/40">
         <CardHeader>
           <div className="text-center mb-4">
-            <span className="text-5xl">⚖️</span>
+            <Image src="/logo-redonda.png" alt="Doutora IA" width={80} height={80} className="mx-auto" />
           </div>
-          <CardTitle className="text-center text-2xl">Login - Doutora IA</CardTitle>
+          <CardTitle className="text-center text-2xl text-[#d4af37]" style={{ fontFamily: "'Cinzel', serif" }}>Login - Doutora IA</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -57,7 +58,7 @@ export default function LoginPage() {
             <div>
               <div className="flex justify-between items-center">
                 <Label htmlFor="password">Senha</Label>
-                <Link href="/auth/forgot-password" className="text-sm text-primary hover:underline">
+                <Link href="/auth/forgot-password" className="text-sm text-[#d4af37] hover:underline">
                   Esqueceu a senha?
                 </Link>
               </div>
@@ -74,12 +75,12 @@ export default function LoginPage() {
                 {error}
               </div>
             )}
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button type="submit" className="w-full bg-gradient-to-r from-[#d4af37] to-[#e6c547] text-[#1a1410] hover:from-[#e6c547] hover:to-[#d4af37] font-bold" disabled={loading}>
               {loading ? 'Entrando...' : 'Entrar'}
             </Button>
-            <div className="text-center text-sm">
+            <div className="text-center text-sm text-[#f5f5dc]/70">
               Não tem conta?{' '}
-              <Link href="/auth/register" className="text-primary hover:underline">
+              <Link href="/auth/register" className="text-[#d4af37] hover:underline">
                 Cadastre-se
               </Link>
             </div>

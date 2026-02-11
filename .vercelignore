@@ -1,0 +1,14 @@
+api/
+backend/
+landing/
+ingest/
+data/
+*.db
+*.sqlite
+*.pkl
+*.bin
+__pycache__/
+.venv/
+venv/
+node_modules/
+.git/
