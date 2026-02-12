@@ -1,7 +1,7 @@
 import axios from 'axios'
 import type { AnalysisResponse, SearchResult, Report, Case, Lawyer, Lead } from '@/types'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.doutoraia.com'
 
 // Cliente para o backend Python (search, analyze, reports)
 export const api = axios.create({
