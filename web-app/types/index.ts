@@ -35,21 +35,34 @@ export interface Report {
   created_at: string
 }
 
-export interface AnalysisResponse {
-  tipificacao: string
-  estrategias_riscos: string
-  probabilidade: string
-  custos_prazos: string
-  checklist: string[]
-  rascunho: string
-  citacoes: Citation[]
-  vigencia_base: string
+export interface Citation {
+  id: string
+  tipo: string
+  titulo: string
+  texto: string
+  artigo_ou_tema?: string
+  orgao?: string
+  tribunal?: string
+  data?: string
+  fonte_url?: string
+  hierarquia?: number
 }
 
-export interface Citation {
-  tipo: string
-  id: string
-  content: string
+export interface AnalysisResponse {
+  case_id?: number
+  tipificacao: string
+  area: string
+  sub_area?: string
+  estrategias: string
+  riscos: string
+  probabilidade: 'baixa' | 'media' | 'alta'
+  probabilidade_detalhes: string
+  custos: string
+  prazos: string
+  checklist: string[]
+  rascunho_peticao: string
+  citacoes: Citation[]
+  base_atualizada_em: string
 }
 
 export interface SearchResult {

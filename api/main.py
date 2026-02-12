@@ -156,8 +156,9 @@ async def global_options(request: Request, path: str):
 # OpenAI client for vLLM
 from openai import OpenAI
 
-VLLM_BASE_URL = os.getenv("VLLM_BASE_URL", "http://localhost:8000/v1")
-VLLM_API_KEY = os.getenv("VLLM_API_KEY", "token-xyz")
+VLLM_BASE_URL = os.getenv("VLLM_BASE_URL", "http://localhost:11434/v1")
+VLLM_API_KEY = os.getenv("VLLM_API_KEY", "ollama")
+VLLM_MODEL = os.getenv("VLLM_MODEL", "llama3.1:8b")
 CORPUS_UPDATE_DATE = os.getenv("CORPUS_UPDATE_DATE", "09/12/2025")
 
 llm_client = OpenAI(
@@ -228,8 +229,9 @@ async def health_check():
 
     # Check database
     try:
+        from sqlalchemy import text
         db = SessionLocal()
-        db.execute("SELECT 1")
+        db.execute(text("SELECT 1"))
         db.close()
     except:
         services["database"] = "error"
@@ -302,7 +304,7 @@ async def analyze_case(
     # Call LLM
     try:
         response = llm_client.chat.completions.create(
-            model="llama3",
+            model=VLLM_MODEL,
             messages=[
                 {"role": "system", "content": get_system_prompt(CORPUS_UPDATE_DATE)},
                 {"role": "user", "content": prompt}
@@ -510,7 +512,7 @@ async def compose_document(
 
     try:
         response = llm_client.chat.completions.create(
-            model="llama3",
+            model=VLLM_MODEL,
             messages=[
                 {"role": "system", "content": get_system_prompt(CORPUS_UPDATE_DATE)},
                 {"role": "user", "content": prompt}

@@ -12,8 +12,10 @@ RUN apt-get update && apt-get install -y \
 # Copy requirements
 COPY requirements.txt .
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Install Python dependencies (torch CPU-only for embeddings)
+RUN pip install --no-cache-dir -r requirements.txt || \
+    (pip install --no-cache-dir torch==2.1.2 --index-url https://download.pytorch.org/whl/cpu && \
+     pip install --no-cache-dir -r requirements.txt)
 
 # Copy application code
 COPY . .

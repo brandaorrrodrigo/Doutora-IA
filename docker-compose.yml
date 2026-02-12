@@ -1,40 +1,42 @@
 version: '3.8'
 
 services:
-  # vLLM - Llama 3 8B Instruct (OpenAI-compatible API)
-  vllm:
-    image: vllm/vllm-openai:latest
-    container_name: doutora-vllm
-    command:
-      - --model
-      - meta-llama/Meta-Llama-3-8B-Instruct
-      - --dtype
-      - auto
-      - --api-key
-      - ${VLLM_API_KEY:-token-xyz}
-      - --served-model-name
-      - llama3
-      - --max-model-len
-      - "4096"
-    environment:
-      - HF_TOKEN=${HF_TOKEN}
-    ports:
-      - "8000:8000"
-    volumes:
-      - vllm_cache:/root/.cache/huggingface
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+  # ============================================================
+  # vLLM - DESATIVADO (usando Ollama no host via port 11434)
+  # ============================================================
+  # vllm:
+  #   image: vllm/vllm-openai:latest
+  #   container_name: doutora-vllm
+  #   command:
+  #     - --model
+  #     - meta-llama/Meta-Llama-3-8B-Instruct
+  #     - --dtype
+  #     - auto
+  #     - --api-key
+  #     - ${VLLM_API_KEY:-token-xyz}
+  #     - --served-model-name
+  #     - llama3
+  #     - --max-model-len
+  #     - "4096"
+  #   environment:
+  #     - HF_TOKEN=${HF_TOKEN}
+  #   ports:
+  #     - "8000:8000"
+  #   volumes:
+  #     - vllm_cache:/root/.cache/huggingface
+  #   deploy:
+  #     resources:
+  #       reservations:
+  #         devices:
+  #           - driver: nvidia
+  #             count: 1
+  #             capabilities: [gpu]
+  #   restart: unless-stopped
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 3
 
   # Qdrant - Vector Database
   qdrant:
@@ -63,7 +65,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./migrations:/docker-entrypoint-initdb.d
@@ -84,8 +86,9 @@ services:
       - DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-doutora}
       - QDRANT_HOST=qdrant
       - QDRANT_PORT=6333
-      - VLLM_BASE_URL=http://vllm:8000/v1
-      - VLLM_API_KEY=${VLLM_API_KEY:-token-xyz}
+      - VLLM_BASE_URL=http://host.docker.internal:11434/v1
+      - VLLM_API_KEY=ollama
+      - VLLM_MODEL=${VLLM_MODEL:-llama3.1:8b}
       - EMBEDDING_MODEL=intfloat/multilingual-e5-large
       - REDIS_URL=redis://redis:6379
       - SECRET_KEY=${SECRET_KEY:-change-me-in-production}
@@ -94,6 +97,8 @@ services:
       - CORPUS_UPDATE_DATE=${CORPUS_UPDATE_DATE:-2025-12-09}
     ports:
       - "8080:8080"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     volumes:
       - ./api:/app
       - ./data:/data
@@ -101,7 +106,6 @@ services:
     depends_on:
       - db
       - qdrant
-      - vllm
       - redis
     restart: unless-stopped
     healthcheck:
@@ -115,7 +119,7 @@ services:
     image: redis:7-alpine
     container_name: doutora-redis
     ports:
-      - "6379:6379"
+      - "6380:6379"
     volumes:
       - redis_data:/data
     restart: unless-stopped
@@ -132,6 +136,7 @@ services:
       dockerfile: Dockerfile
     container_name: doutora-worker
     environment:
+      - PYTHONUNBUFFERED=1
       - DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-doutora}
       - QDRANT_HOST=qdrant
       - QDRANT_PORT=6333
@@ -147,27 +152,28 @@ services:
       - redis
     restart: unless-stopped
 
-  # Web - Frontend (Next.js or static HTML)
-  web:
-    build:
-      context: ./web
-      dockerfile: Dockerfile
-    container_name: doutora-web
-    environment:
-      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:8080}
-      - NEXT_PUBLIC_MERCADO_PAGO_PUBLIC_KEY=${NEXT_PUBLIC_MERCADO_PAGO_PUBLIC_KEY}
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./web:/app
-      - /app/node_modules
-      - /app/.next
-    depends_on:
-      - api
-    restart: unless-stopped
+  # ============================================================
+  # Web - DESATIVADO (frontend hospedado no Vercel: www.doutoraia.com)
+  # ============================================================
+  # web:
+  #   build:
+  #     context: ./web
+  #     dockerfile: Dockerfile
+  #   container_name: doutora-web
+  #   environment:
+  #     - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:8080}
+  #     - NEXT_PUBLIC_MERCADO_PAGO_PUBLIC_KEY=${NEXT_PUBLIC_MERCADO_PAGO_PUBLIC_KEY}
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ./web:/app
+  #     - /app/node_modules
+  #     - /app/.next
+  #   depends_on:
+  #     - api
+  #   restart: unless-stopped
 
 volumes:
-  vllm_cache:
   qdrant_storage:
   postgres_data:
   redis_data:
