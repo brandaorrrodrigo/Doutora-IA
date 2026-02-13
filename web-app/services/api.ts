@@ -1,5 +1,5 @@
 import axios from 'axios'
-import type { AnalysisResponse, SearchResult, Report, Case, Lawyer, Lead } from '@/types'
+import type { AnalysisResponse, SearchResult, Report, Case, Lawyer, Lead, CheckoutRequest, CheckoutResponse, PaymentStatus } from '@/types'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.doutoraia.com'
 
@@ -111,4 +111,11 @@ export const apiClient = {
   // Leads
   assignLead: (case_id: number, lawyer_id: number) =>
     api.post<Lead>('/leads/assign', { case_id, lawyer_id }),
+
+  // Payments
+  createCheckout: (data: CheckoutRequest) =>
+    api.post<CheckoutResponse>('/payments/create-checkout', data),
+
+  getPaymentStatus: (paymentId: number) =>
+    api.get<PaymentStatus>(`/payments/${paymentId}/status`),
 }

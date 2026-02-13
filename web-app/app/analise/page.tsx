@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import ReactMarkdown from 'react-markdown'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -22,6 +23,8 @@ export default function AnalisePage() {
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<AnalysisResponse | null>(null)
   const [error, setError] = useState('')
+  const [showPayment, setShowPayment] = useState(false)
+  const [paymentLoading, setPaymentLoading] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -43,6 +46,27 @@ export default function AnalisePage() {
       toast.error('Erro na análise')
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handleCheckout = async (provider: 'stripe' | 'mercadopago') => {
+    if (!result?.case_id) {
+      toast.error('ID do caso não disponível')
+      return
+    }
+    setPaymentLoading(true)
+    try {
+      const response = await apiClient.createCheckout({
+        case_id: result.case_id,
+        provider
+      })
+      // Save payment_id for success page
+      localStorage.setItem('pending_payment_id', String(response.data.payment_id))
+      window.location.href = response.data.checkout_url
+    } catch (err: any) {
+      const msg = err.response?.data?.detail || 'Erro ao criar checkout'
+      toast.error(msg)
+      setPaymentLoading(false)
     }
   }
 
@@ -123,7 +147,7 @@ export default function AnalisePage() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-[#f5f5dc]/90 whitespace-pre-wrap leading-relaxed">{result.tipificacao}</div>
+                <div className="text-[#f5f5dc]/90 leading-relaxed prose prose-invert prose-sm max-w-none prose-headings:text-[#d4af37] prose-strong:text-[#f5f5dc] prose-li:text-[#f5f5dc]/90"><ReactMarkdown>{result.tipificacao}</ReactMarkdown></div>
               </CardContent>
             </Card>
 
@@ -137,13 +161,13 @@ export default function AnalisePage() {
                   {result.estrategias && (
                     <div>
                       <h4 className="font-semibold text-[#d4af37]/80 mb-2">Estratégias</h4>
-                      <div className="text-[#f5f5dc]/90 whitespace-pre-wrap leading-relaxed">{result.estrategias}</div>
+                      <div className="text-[#f5f5dc]/90 leading-relaxed prose prose-invert prose-sm max-w-none prose-headings:text-[#d4af37] prose-strong:text-[#f5f5dc] prose-li:text-[#f5f5dc]/90"><ReactMarkdown>{result.estrategias}</ReactMarkdown></div>
                     </div>
                   )}
                   {result.riscos && (
                     <div>
                       <h4 className="font-semibold text-[#d4af37]/80 mb-2">Riscos</h4>
-                      <div className="text-[#f5f5dc]/90 whitespace-pre-wrap leading-relaxed">{result.riscos}</div>
+                      <div className="text-[#f5f5dc]/90 leading-relaxed prose prose-invert prose-sm max-w-none prose-headings:text-[#d4af37] prose-strong:text-[#f5f5dc] prose-li:text-[#f5f5dc]/90"><ReactMarkdown>{result.riscos}</ReactMarkdown></div>
                     </div>
                   )}
                 </CardContent>
@@ -169,7 +193,7 @@ export default function AnalisePage() {
                   </div>
                 </div>
                 {result.probabilidade_detalhes && (
-                  <p className="text-[#f5f5dc]/70 text-sm">{result.probabilidade_detalhes}</p>
+                  <div className="text-[#f5f5dc]/70 text-sm prose prose-invert prose-sm max-w-none prose-p:text-[#f5f5dc]/70"><ReactMarkdown>{result.probabilidade_detalhes}</ReactMarkdown></div>
                 )}
               </CardContent>
             </Card>
@@ -183,7 +207,7 @@ export default function AnalisePage() {
                       <CardTitle className="text-[#d4af37] text-lg" style={{ fontFamily: "'Cinzel', serif" }}>Custos Estimados</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <div className="text-[#f5f5dc]/90 whitespace-pre-wrap">{result.custos}</div>
+                      <div className="text-[#f5f5dc]/90 prose prose-invert prose-sm max-w-none prose-headings:text-[#d4af37] prose-strong:text-[#f5f5dc] prose-li:text-[#f5f5dc]/90"><ReactMarkdown>{result.custos}</ReactMarkdown></div>
                     </CardContent>
                   </Card>
                 )}
@@ -193,7 +217,7 @@ export default function AnalisePage() {
                       <CardTitle className="text-[#d4af37] text-lg" style={{ fontFamily: "'Cinzel', serif" }}>Prazos Estimados</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <div className="text-[#f5f5dc]/90 whitespace-pre-wrap">{result.prazos}</div>
+                      <div className="text-[#f5f5dc]/90 prose prose-invert prose-sm max-w-none prose-headings:text-[#d4af37] prose-strong:text-[#f5f5dc] prose-li:text-[#f5f5dc]/90"><ReactMarkdown>{result.prazos}</ReactMarkdown></div>
                     </CardContent>
                   </Card>
                 )}
@@ -250,9 +274,7 @@ export default function AnalisePage() {
                   <CardTitle className="text-[#d4af37]" style={{ fontFamily: "'Cinzel', serif" }}>Rascunho de Petição</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-[#f5f5dc]/90 whitespace-pre-wrap leading-relaxed bg-[#0a0a0a]/40 p-4 rounded-lg border border-[#d4af37]/20">
-                    {result.rascunho_peticao}
-                  </div>
+                  <div className="text-[#f5f5dc]/90 leading-relaxed bg-[#0a0a0a]/40 p-4 rounded-lg border border-[#d4af37]/20 prose prose-invert prose-sm max-w-none prose-headings:text-[#d4af37] prose-strong:text-[#f5f5dc] prose-li:text-[#f5f5dc]/90"><ReactMarkdown>{result.rascunho_peticao}</ReactMarkdown></div>
                 </CardContent>
               </Card>
             )}
@@ -263,12 +285,40 @@ export default function AnalisePage() {
                 <div className="bg-[#d4af37]/10 p-6 rounded-lg border border-[#d4af37]/30 text-center">
                   <h3 className="text-xl font-bold mb-2 text-[#d4af37]" style={{ fontFamily: "'Cinzel', serif" }}>Relatório Completo em PDF</h3>
                   <p className="mb-4 text-[#f5f5dc]/80">Análise detalhada com jurisprudência, estratégias e petição inicial</p>
-                  <Button
-                    className="w-full max-w-md bg-gradient-to-r from-[#d4af37] to-[#e6c547] text-[#1a1410] hover:from-[#e6c547] hover:to-[#d4af37] font-bold"
-                    onClick={() => toast.info('Módulo de relatórios premium em desenvolvimento')}
-                  >
-                    Gerar Relatório Premium - R$ 7,00
-                  </Button>
+
+                  {!showPayment ? (
+                    <Button
+                      className="w-full max-w-md bg-gradient-to-r from-[#d4af37] to-[#e6c547] text-[#1a1410] hover:from-[#e6c547] hover:to-[#d4af37] font-bold"
+                      onClick={() => result?.case_id ? setShowPayment(true) : toast.error('Realize a análise primeiro')}
+                      disabled={paymentLoading}
+                    >
+                      Gerar Relatório Premium - R$ 7,00
+                    </Button>
+                  ) : (
+                    <div className="space-y-3 max-w-md mx-auto">
+                      <p className="text-[#f5f5dc]/70 text-sm mb-3">Escolha a forma de pagamento:</p>
+                      <Button
+                        className="w-full bg-gradient-to-r from-[#635bff] to-[#7a73ff] text-white hover:from-[#7a73ff] hover:to-[#635bff] font-bold"
+                        onClick={() => handleCheckout('stripe')}
+                        disabled={paymentLoading}
+                      >
+                        {paymentLoading ? 'Redirecionando...' : 'Pagar com Cartão (Stripe)'}
+                      </Button>
+                      <Button
+                        className="w-full bg-gradient-to-r from-[#00b4d8] to-[#0096c7] text-white hover:from-[#0096c7] hover:to-[#00b4d8] font-bold"
+                        onClick={() => handleCheckout('mercadopago')}
+                        disabled={paymentLoading}
+                      >
+                        {paymentLoading ? 'Redirecionando...' : 'Pagar com PIX (Mercado Pago)'}
+                      </Button>
+                      <button
+                        className="text-[#f5f5dc]/50 text-sm hover:text-[#f5f5dc]/80 underline"
+                        onClick={() => setShowPayment(false)}
+                      >
+                        Voltar
+                      </button>
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex items-center gap-2 text-[#f5f5dc]/50 text-xs justify-center">
@@ -279,7 +329,7 @@ export default function AnalisePage() {
                 <Button
                   variant="outline"
                   className="w-full text-[#d4af37] border-[#d4af37] hover:bg-[#d4af37]/15"
-                  onClick={() => { setResult(null); setDescricao(''); setError('') }}
+                  onClick={() => { setResult(null); setDescricao(''); setError(''); setShowPayment(false) }}
                 >
                   Nova Análise
                 </Button>

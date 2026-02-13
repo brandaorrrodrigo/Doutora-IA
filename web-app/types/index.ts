@@ -92,3 +92,22 @@ export interface Lead {
   expires_at: string
   created_at: string
 }
+
+export interface CheckoutRequest {
+  case_id: number
+  provider: 'stripe' | 'mercadopago'
+  payer_email?: string
+}
+
+export interface CheckoutResponse {
+  payment_id: number
+  checkout_url: string
+  provider: string
+}
+
+export interface PaymentStatus {
+  payment_id: number
+  status: string
+  provider: string
+  report_url?: string
+}

@@ -127,7 +127,8 @@ class MultiPaymentService:
     ) -> Dict[str, Any]:
         """Create Mercado Pago payment"""
         try:
-            api_host = os.getenv("API_HOST", "http://localhost:8000")
+            frontend_url = os.getenv("FRONTEND_URL", "http://localhost:3000")
+            api_host = os.getenv("API_HOST", "http://localhost:8080")
 
             preference_data = {
                 "items": [{
@@ -138,12 +139,12 @@ class MultiPaymentService:
                 }],
                 "metadata": metadata,
                 "back_urls": {
-                    "success": f"{api_host}/payments/success",
-                    "failure": f"{api_host}/payments/failure",
-                    "pending": f"{api_host}/payments/pending"
+                    "success": f"{frontend_url}/pagamento/sucesso?case_id={metadata.get('case_id', '')}",
+                    "failure": f"{frontend_url}/analise?payment=failed",
+                    "pending": f"{frontend_url}/pagamento/sucesso?case_id={metadata.get('case_id', '')}"
                 },
                 "auto_return": "approved",
-                "notification_url": f"{api_host}/api/payments/webhook",
+                "notification_url": f"{api_host}/payments/webhook",
                 "statement_descriptor": "DOUTORA IA"
             }
 
@@ -270,7 +271,7 @@ class MultiPaymentService:
     ) -> Dict[str, Any]:
         """Create Stripe payment"""
         try:
-            api_host = os.getenv("API_HOST", "http://localhost:8000")
+            frontend_url = os.getenv("FRONTEND_URL", "http://localhost:3000")
 
             # Create checkout session
             session = self.stripe.checkout.Session.create(
@@ -287,8 +288,8 @@ class MultiPaymentService:
                     "quantity": 1
                 }],
                 mode="payment",
-                success_url=f"{api_host}/payments/success?session_id={{CHECKOUT_SESSION_ID}}",
-                cancel_url=f"{api_host}/payments/failure",
+                success_url=f"{frontend_url}/pagamento/sucesso?session_id={{CHECKOUT_SESSION_ID}}&case_id={metadata.get('case_id', '')}",
+                cancel_url=f"{frontend_url}/analise?payment=cancelled",
                 customer_email=payer_email,
                 metadata=metadata,
                 payment_intent_data={
@@ -339,7 +340,8 @@ class MultiPaymentService:
         self,
         payload: Dict[str, Any],
         headers: Optional[Dict[str, str]] = None,
-        provider: Optional[str] = None
+        provider: Optional[str] = None,
+        raw_body: Optional[bytes] = None
     ) -> Optional[Dict[str, Any]]:
         """
         Verify webhook from any provider
@@ -364,7 +366,7 @@ class MultiPaymentService:
         elif provider == "binance_pay":
             return self._verify_binance_webhook(payload, headers)
         elif provider == "stripe":
-            return self._verify_stripe_webhook(payload, headers)
+            return self._verify_stripe_webhook(payload, headers, raw_body)
         else:
             return self._verify_stub_webhook(payload)
 
@@ -462,15 +464,17 @@ class MultiPaymentService:
     def _verify_stripe_webhook(
         self,
         payload: Dict[str, Any],
-        headers: Optional[Dict[str, str]]
+        headers: Optional[Dict[str, str]],
+        raw_body: Optional[bytes] = None
     ) -> Optional[Dict[str, Any]]:
         """Verify Stripe webhook"""
         try:
             # Construct event with signature verification
             if self.stripe_webhook_secret and headers:
                 sig_header = headers.get("stripe-signature")
+                body = raw_body if raw_body else json.dumps(payload).encode()
                 event = self.stripe.Webhook.construct_event(
-                    json.dumps(payload),
+                    body,
                     sig_header,
                     self.stripe_webhook_secret
                 )

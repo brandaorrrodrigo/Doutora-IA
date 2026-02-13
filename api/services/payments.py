@@ -162,7 +162,8 @@ class PaymentService:
         db: Session,
         payload: dict,
         headers: Optional[dict] = None,
-        provider: Optional[str] = None
+        provider: Optional[str] = None,
+        raw_body: Optional[bytes] = None
     ) -> Optional[dict]:
         """
         Process payment webhook from any provider
@@ -172,6 +173,7 @@ class PaymentService:
             payload: Webhook payload
             headers: HTTP headers (for signature verification)
             provider: Provider name (auto-detected if not specified)
+            raw_body: Raw request body bytes (needed for Stripe signature verification)
 
         Returns:
             Processed webhook data or None if invalid
@@ -199,7 +201,7 @@ class PaymentService:
 
         # Real webhook processing
         try:
-            result = self.multi_service.verify_webhook(payload, headers, provider)
+            result = self.multi_service.verify_webhook(payload, headers, provider, raw_body=raw_body)
 
             if not result:
                 logger.warning("Invalid webhook signature or payload")

@@ -181,6 +181,25 @@ class PaymentWebhookRequest(BaseModel):
     user_id: Optional[str] = None
 
 
+class CreateCheckoutRequest(BaseModel):
+    case_id: int
+    provider: str = Field(default="stripe", pattern="^(stripe|mercado_pago|mercadopago)$")
+    payer_email: Optional[str] = None
+
+
+class CreateCheckoutResponse(BaseModel):
+    payment_id: int
+    checkout_url: str
+    provider: str
+
+
+class PaymentStatusResponse(BaseModel):
+    payment_id: int
+    status: str
+    provider: str
+    report_url: Optional[str] = None
+
+
 class LawyerProfile(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 

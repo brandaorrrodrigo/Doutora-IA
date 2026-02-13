@@ -53,9 +53,15 @@ Forneça uma análise estruturada em 8 seções obrigatórias:
    - Varie por UF quando aplicável
 
 5. **CHECKLIST DE DOCUMENTOS**
-   - Liste todos os documentos necessários para iniciar a ação
-   - Separe em documentos obrigatórios e documentos recomendados
-   - Seja específico (ex: "comprovante de residência atualizado", não apenas "documentos pessoais")
+   - Liste TODOS os documentos necessários para iniciar a ação, sendo ESPECÍFICO
+   - Separe em: **Documentos Obrigatórios** e **Documentos Recomendados**
+   - Exemplos de especificidade esperada conforme a área:
+     * Trabalhista: contrato de trabalho, holerites (últimos 12 meses), carteira de trabalho (CTPS), comprovantes de depósito FGTS, controle/registro de ponto, termo de rescisão (TRCT), guias de seguro-desemprego
+     * Consumidor: nota fiscal ou comprovante de compra, contrato de adesão, prints de conversas/e-mails, protocolo de reclamação no SAC, reclamação no Procon
+     * Família: certidão de casamento/nascimento, comprovante de renda de ambas as partes, declaração de IR, extratos bancários, comprovantes de despesas dos filhos
+     * Geral: documento de identidade (RG/CNH), CPF, comprovante de residência atualizado (últimos 3 meses), procuração (se representado)
+   - Adapte a lista ao caso concreto descrito
+   - NÃO deixe a seção vazia ou genérica
 
 6. **RASCUNHO DE PETIÇÃO**
    - Escreva um rascunho inicial de 300-500 palavras
@@ -83,6 +89,7 @@ IMPORTANTE:
 - NÃO invente dados, números de processos ou artigos
 - Seja honesto sobre limitações da análise
 - Priorize clareza e utilidade prática
+- COMPLETE TODAS as 8 seções sem truncar. Cada seção deve ter conteúdo substantivo.
 """
 
 

@@ -28,7 +28,8 @@ from schemas import (
     AnalyzeCaseRequest, AnalysisResponse, ReportRequest, ReportResponse,
     SearchRequest, SearchResult, ComposeRequest, ComposeResponse,
     LawyerRegisterRequest, LawyerSubscribeRequest, LeadAssignRequest,
-    PaymentWebhookRequest, HealthResponse, Citation, CitationType
+    PaymentWebhookRequest, HealthResponse, Citation, CitationType,
+    CreateCheckoutRequest, CreateCheckoutResponse, PaymentStatusResponse
 )
 from rag import get_rag_system
 from prompts import get_system_prompt, get_triagem_prompt, get_relatorio_prompt, get_compose_prompt
@@ -112,6 +113,15 @@ class CORSHandler(BaseHTTPMiddleware):
 # Adiciona o middleware customizado (executa ANTES do CORSMiddleware padrão)
 app.add_middleware(CORSHandler)
 
+# Adiciona também o CORSMiddleware padrão do FastAPI como fallback
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=ALLOWED_ORIGINS,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # Log das origens permitidas
 print(f"[CORS] Allowed origins: {ALLOWED_ORIGINS}")
 
@@ -159,7 +169,7 @@ from openai import OpenAI
 VLLM_BASE_URL = os.getenv("VLLM_BASE_URL", "http://localhost:11434/v1")
 VLLM_API_KEY = os.getenv("VLLM_API_KEY", "ollama")
 VLLM_MODEL = os.getenv("VLLM_MODEL", "llama3.1:8b")
-CORPUS_UPDATE_DATE = os.getenv("CORPUS_UPDATE_DATE", "09/12/2025")
+CORPUS_UPDATE_DATE = datetime.now().strftime('%d/%m/%Y')
 
 llm_client = OpenAI(
     base_url=VLLM_BASE_URL,
@@ -310,7 +320,7 @@ async def analyze_case(
                 {"role": "user", "content": prompt}
             ],
             temperature=0.3,
-            max_tokens=2048 if request.detalhado else 1024
+            max_tokens=4096
         )
 
         analysis_text = response.choices[0].message.content
@@ -367,11 +377,20 @@ async def analyze_case(
 
     db.commit()
 
+    # Normalize citation type to valid enum values
+    _CITATION_TYPE_MAP = {
+        "lei": "lei", "legislação": "lei", "legislacao": "lei",
+        "sumula": "sumula", "súmula": "sumula",
+        "juris": "juris", "jurisprudência": "juris", "jurisprudencia": "juris",
+        "regulatorio": "regulatorio", "regulatório": "regulatorio",
+        "doutrina": "doutrina",
+    }
+
     # Convert citations to schema
     citations_schema = [
         Citation(
             id=cit.get("id", ""),
-            tipo=CitationType(cit.get("tipo", "lei")),
+            tipo=CitationType(_CITATION_TYPE_MAP.get(cit.get("tipo", "lei").lower(), "lei")),
             titulo=cit.get("titulo", ""),
             texto=cit.get("texto", ""),
             artigo_ou_tema=cit.get("artigo_ou_tema"),
@@ -518,7 +537,7 @@ async def compose_document(
                 {"role": "user", "content": prompt}
             ],
             temperature=0.2,
-            max_tokens=1536
+            max_tokens=4096
         )
 
         llm_output = response.choices[0].message.content
@@ -692,6 +711,75 @@ async def assign_lead(
     }
 
 
+@app.post("/payments/create-checkout", response_model=CreateCheckoutResponse)
+async def create_checkout(
+    request: CreateCheckoutRequest,
+    db: Session = Depends(get_db)
+):
+    """Create a payment checkout session (Stripe or Mercado Pago)"""
+    if not payment_service:
+        raise HTTPException(status_code=503, detail="Payment service unavailable")
+
+    case = db.query(Case).filter(Case.id == request.case_id).first()
+    if not case:
+        raise HTTPException(status_code=404, detail="Case not found")
+
+    if case.report_paid:
+        raise HTTPException(status_code=400, detail="Report already paid")
+
+    try:
+        # Normalize provider name
+        provider = request.provider
+        if provider == "mercadopago":
+            provider = "mercado_pago"
+
+        payment = payment_service.create_payment(
+            db=db,
+            case_id=request.case_id,
+            amount=7.0,
+            description="Relatório Premium Doutora IA",
+            payer_email=request.payer_email,
+            provider=provider
+        )
+
+        return CreateCheckoutResponse(
+            payment_id=payment.id,
+            checkout_url=payment.payment_url,
+            provider=payment.provider
+        )
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error creating checkout: {str(e)}")
+
+
+@app.get("/payments/{payment_id}/status", response_model=PaymentStatusResponse)
+async def get_payment_status(
+    payment_id: int,
+    db: Session = Depends(get_db)
+):
+    """Check payment status and return report URL if paid"""
+    if not payment_service:
+        raise HTTPException(status_code=503, detail="Payment service unavailable")
+
+    status = payment_service.check_payment_status(db, payment_id)
+    if status == "not_found":
+        raise HTTPException(status_code=404, detail="Payment not found")
+
+    payment = db.query(Payment).filter(Payment.id == payment_id).first()
+    report_url = None
+    if status == "approved" and payment and payment.case_id:
+        case = db.query(Case).filter(Case.id == payment.case_id).first()
+        if case and case.report_url:
+            report_url = case.report_url
+
+    return PaymentStatusResponse(
+        payment_id=payment_id,
+        status=status,
+        provider=payment.provider if payment else "unknown",
+        report_url=report_url
+    )
+
+
 @app.post("/payments/webhook")
 async def payment_webhook(
     request: PaymentWebhookRequest,
@@ -699,22 +787,18 @@ async def payment_webhook(
 ):
     """Handle Mercado Pago webhook for payment confirmation"""
     try:
-        # Process payment confirmation
         if request.type == "payment":
             payment_id = request.data.get("id") if request.data else None
 
             if payment_id:
-                # Get payment from database
                 payment = db.query(Payment).filter(
                     Payment.external_payment_id == str(payment_id)
                 ).first()
 
                 if payment:
-                    # Update payment status
                     payment.status = "approved"
                     payment.approved_at = datetime.utcnow()
 
-                    # Mark case as paid
                     case = db.query(Case).filter(Case.id == payment.case_id).first()
                     if case:
                         case.report_paid = True
@@ -730,9 +814,38 @@ async def payment_webhook(
         return {"status": "error", "message": str(e)}
 
 
+@app.post("/payments/webhook/stripe")
+async def stripe_webhook(
+    request: Request,
+    db: Session = Depends(get_db)
+):
+    """Handle Stripe webhook with signature verification"""
+    if not payment_service:
+        raise HTTPException(status_code=503, detail="Payment service unavailable")
+
+    try:
+        raw_body = await request.body()
+        payload = json.loads(raw_body)
+        headers = dict(request.headers)
+
+        result = payment_service.process_webhook(
+            db=db,
+            payload=payload,
+            headers=headers,
+            provider="stripe",
+            raw_body=raw_body
+        )
+
+        return {"status": "ok", "processed": result is not None}
+
+    except Exception as e:
+        print(f"Stripe webhook error: {e}")
+        return {"status": "error", "message": str(e)}
+
+
 # Helper functions
 def parse_analysis_response(text: str) -> dict:
-    """Parse LLM response into structured data"""
+    """Parse LLM response into structured data by extracting numbered sections"""
     result = {
         "tipificacao": "",
         "area": "",
@@ -749,22 +862,86 @@ def parse_analysis_response(text: str) -> dict:
         "score_prob": 50.0
     }
 
-    # Extract sections (basic regex parsing)
-    # In production, use more robust parsing
+    # Define section headers to split on
+    section_patterns = [
+        (r'(?:1\.\s*\*?\*?)?TIPIFICA[ÇC][ÃA]O\s*(?:DA\s*CAUSA)?\*?\*?', 'tipificacao'),
+        (r'(?:2\.\s*\*?\*?)?ESTRAT[ÉE]GIAS?\s*(?:E\s*RISCOS?)?\*?\*?', 'estrategias'),
+        (r'(?:3\.\s*\*?\*?)?PROBABILIDADE\s*(?:DE\s*[ÊE]XITO)?\*?\*?', 'probabilidade_section'),
+        (r'(?:4\.\s*\*?\*?)?CUSTOS?\s*(?:E\s*PRAZOS?)?\*?\*?', 'custos_prazos'),
+        (r'(?:5\.\s*\*?\*?)?CHECKLIST\s*(?:DE\s*DOCUMENTOS?)?\*?\*?', 'checklist_section'),
+        (r'(?:6\.\s*\*?\*?)?RASCUNHO\s*(?:DE\s*PETI[ÇC][ÃA]O)?\*?\*?', 'rascunho'),
+        (r'(?:7\.\s*\*?\*?)?CITA[ÇC][ÕO]ES?\s*(?:DA\s*BASE)?\*?\*?', 'citacoes_section'),
+        (r'(?:8\.\s*\*?\*?)?BASE\s*ATUALIZADA\*?\*?', 'base'),
+    ]
 
-    # Extract probability
-    if "PROBABILIDADE:" in text or "Probabilidade:" in text:
-        if "ALTA" in text.upper():
-            result["probabilidade"] = ProbabilityLevel.ALTA
-            result["score_prob"] = 75.0
-        elif "BAIXA" in text.upper():
-            result["probabilidade"] = ProbabilityLevel.BAIXA
-            result["score_prob"] = 25.0
-        else:
-            result["probabilidade"] = ProbabilityLevel.MEDIA
-            result["score_prob"] = 50.0
+    # Find all section positions
+    sections = []
+    for pattern, name in section_patterns:
+        match = re.search(pattern, text, re.IGNORECASE)
+        if match:
+            sections.append((match.start(), match.end(), name))
 
-    # Extract citations
+    sections.sort(key=lambda x: x[0])
+
+    # Extract text between sections
+    section_texts = {}
+    for i, (start, end, name) in enumerate(sections):
+        next_start = sections[i + 1][0] if i + 1 < len(sections) else len(text)
+        section_texts[name] = text[end:next_start].strip().strip('*').strip(':').strip()
+
+    # Fill result fields
+    result["tipificacao"] = section_texts.get("tipificacao", text)
+
+    estrategias_text = section_texts.get("estrategias", "")
+    # Split estrategias and riscos if both are in same section
+    riscos_match = re.search(r'\*?\*?(?:Riscos?|RISCOS?|Pontos?\s*de\s*aten[çc][ãa]o)\*?\*?', estrategias_text)
+    if riscos_match:
+        result["estrategias"] = estrategias_text[:riscos_match.start()].strip()
+        result["riscos"] = estrategias_text[riscos_match.start():].strip()
+    else:
+        result["estrategias"] = estrategias_text
+
+    # Probabilidade - look for "Classificação: X" first, then fallback
+    prob_text = section_texts.get("probabilidade_section", "")
+    classif_match = re.search(r'classifica[çc][ãa]o[:\s]+(\w+)', prob_text, re.IGNORECASE)
+    if classif_match:
+        classif = classif_match.group(1).upper()
+    else:
+        # Fallback: check first line only
+        first_line = prob_text.split('\n')[0].upper() if prob_text else ""
+        classif = first_line
+
+    if "ALTA" in classif:
+        result["probabilidade"] = ProbabilityLevel.ALTA
+        result["score_prob"] = 75.0
+    elif "BAIXA" in classif:
+        result["probabilidade"] = ProbabilityLevel.BAIXA
+        result["score_prob"] = 25.0
+    else:
+        result["probabilidade"] = ProbabilityLevel.MEDIA
+        result["score_prob"] = 50.0
+    result["probabilidade_detalhes"] = prob_text
+
+    # Custos e Prazos
+    custos_text = section_texts.get("custos_prazos", "")
+    prazos_match = re.search(r'\*?\*?(?:Prazos?|PRAZOS?|Tramita[çc][ãa]o)\*?\*?', custos_text)
+    if prazos_match:
+        result["custos"] = custos_text[:prazos_match.start()].strip()
+        result["prazos"] = custos_text[prazos_match.start():].strip()
+    else:
+        result["custos"] = custos_text
+
+    # Checklist
+    checklist_text = section_texts.get("checklist_section", "")
+    items = re.findall(r'[-•*]\s*(.+)', checklist_text)
+    if not items:
+        items = re.findall(r'\d+[.)]\s*(.+)', checklist_text)
+    result["checklist"] = [item.strip() for item in items if item.strip()]
+
+    # Rascunho de petição
+    result["rascunho_peticao"] = section_texts.get("rascunho", "")
+
+    # Citations from <fonte> tags
     citations = []
     fonte_pattern = r'<fonte>(.*?)</fonte>'
     matches = re.findall(fonte_pattern, text, re.DOTALL)
@@ -774,7 +951,7 @@ def parse_analysis_response(text: str) -> dict:
             "id": f"cit_{len(citations)}",
             "tipo": "lei",
             "titulo": "",
-            "texto": match[:200],
+            "texto": match.strip(),
             "artigo_ou_tema": None,
             "orgao": None,
             "tribunal": None,
@@ -783,24 +960,48 @@ def parse_analysis_response(text: str) -> dict:
             "hierarquia": 1.0
         }
 
-        # Parse citation fields
         if "Tipo:" in match:
             tipo_match = re.search(r'Tipo:\s*(\w+)', match)
             if tipo_match:
                 citation["tipo"] = tipo_match.group(1).lower()
 
-        if "Título:" in match:
-            titulo_match = re.search(r'Título:\s*(.+?)(?:\n|Órgão|Tribunal)', match)
+        if "Título:" in match or "Titulo:" in match:
+            titulo_match = re.search(r'T[ií]tulo:\s*(.+?)(?:\n|$)', match)
             if titulo_match:
                 citation["titulo"] = titulo_match.group(1).strip()
+
+        if "Trecho relevante:" in match:
+            trecho_match = re.search(r'Trecho relevante:\s*(.+?)(?:\n|$)', match, re.DOTALL)
+            if trecho_match:
+                citation["texto"] = trecho_match.group(1).strip()
+
+        if "Órgão" in match or "Tribunal:" in match:
+            org_match = re.search(r'(?:Órgão|Tribunal)[/:]?\s*(.+?)(?:\n|$)', match)
+            if org_match:
+                citation["tribunal"] = org_match.group(1).strip()
 
         citations.append(citation)
 
     result["citacoes"] = citations
 
-    # Store full text in appropriate fields (simplified)
-    result["tipificacao"] = text[:500]
-    result["estrategias"] = text[:500]
+    # If no sections were found, use the full text as tipificacao
+    if not sections:
+        result["tipificacao"] = text
+
+    # Detect area from tipificacao
+    area_lower = result["tipificacao"].lower()
+    if "trabalh" in area_lower:
+        result["area"] = "Trabalhista"
+    elif "consum" in area_lower:
+        result["area"] = "Consumidor"
+    elif "famíli" in area_lower or "alimento" in area_lower or "divórcio" in area_lower:
+        result["area"] = "Família"
+    elif "bancári" in area_lower or "financei" in area_lower:
+        result["area"] = "Bancário"
+    elif "saúde" in area_lower or "plano" in area_lower:
+        result["area"] = "Saúde"
+    elif "aére" in area_lower or "voo" in area_lower or "vôo" in area_lower:
+        result["area"] = "Aéreo"
 
     return result
 
