@@ -58,8 +58,12 @@ ALLOWED_ORIGINS = [
     "https://www.doutoraia.com",
     "https://doutoraia.com",
     "https://doutora-ia-landing.vercel.app",
+    "https://www.nutrifitvision.com",
+    "https://nutrifitvision.com",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "http://localhost:3002",
+    "http://127.0.0.1:3002",
     "http://localhost:5500",
     "http://127.0.0.1:5500",
 ]
